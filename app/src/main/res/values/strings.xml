@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TAL Ping Pong</string>
+    <string name="login_success">Logged in!</string>
+    <string name="login_error">Login error %1$s</string>
+</resources>
