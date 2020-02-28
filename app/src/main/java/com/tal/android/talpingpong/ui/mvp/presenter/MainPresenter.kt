@@ -7,5 +7,9 @@ import com.tal.android.talpingpong.ui.mvp.view.MainView
 
 class MainPresenter(view: MainView, model: MainModel) :
     BaseActivityPresenter<MainView, MainModel>(view, model) {
-
+    init {
+        val userName = model.currentUser?.displayName
+        val userEmail = model.currentUser?.email
+        view.loadUserData(userName, userEmail)
+    }
 }
