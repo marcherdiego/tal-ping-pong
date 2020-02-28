@@ -16,7 +16,7 @@ class MainActivity : BaseActivity<MainPresenter>() {
 
         presenter = MainPresenter(
             MainView(this),
-            MainModel(this)
+            MainModel()
         )
     }
 }

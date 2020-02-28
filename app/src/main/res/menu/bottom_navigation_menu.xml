@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_challenges"
+        android:icon="@drawable/ic_racket"
+        android:title="Challenges" />
+
+    <item
+        android:id="@+id/menu_new_match"
+        android:icon="@drawable/ic_sword"
+        android:title="Find a Rival" />
+
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_user"
+        android:title="Profile" />
+
+</menu>
