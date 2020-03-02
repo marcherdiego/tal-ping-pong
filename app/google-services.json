@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "603999982489",
+    "firebase_url": "https://tal-ping-pong.firebaseio.com",
+    "project_id": "tal-ping-pong",
+    "storage_bucket": "tal-ping-pong.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603999982489:android:2d0709388fb2d731acf908",
+        "android_client_info": {
+          "package_name": "com.tal.android.pingpong"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603999982489-q4lku3m80chbab5fnj2fkgmruir0l1ca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj-CffAi65g3uHqOmRTG_4j1KzsqMLL8s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603999982489-q4lku3m80chbab5fnj2fkgmruir0l1ca.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
