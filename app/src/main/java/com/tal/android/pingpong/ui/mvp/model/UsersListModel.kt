@@ -1,16 +1,20 @@
 package com.tal.android.pingpong.ui.mvp.model
 
-import android.util.Log
 import com.nerdscorner.mvplib.events.model.BaseEventsModel
+import com.tal.android.pingpong.data.ChallengesManager
 import com.tal.android.pingpong.data.UsersManager
+import com.tal.android.pingpong.domain.Challenge
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidChallengeTimeException
 import java.util.*
 
-class UsersListModel : BaseEventsModel() {
+class UsersListModel(private val loggedUserEmail: String?) : BaseEventsModel() {
 
     fun fetchUsers() {
-        bus.post(UsersFetchedSuccessfullyEvent(UsersManager.users))
+        val filteredUsers = UsersManager.users.filter {
+            it.userEmail != loggedUserEmail
+        }
+        bus.post(UsersFetchedSuccessfullyEvent(filteredUsers))
     }
 
     @Throws(InvalidChallengeTimeException::class)
@@ -21,8 +25,13 @@ class UsersListModel : BaseEventsModel() {
         if (selectedDateTime.before(now)) {
             throw InvalidChallengeTimeException()
         }
-        Log.e("Challenge", "$userEmail, $year, $monthOfYear, $dayOfMonth, $hourOfDay, $minute")
+        val challenge = Challenge().apply {
+            challengerEmail = loggedUserEmail
+            challengedEmail = userEmail
+            matchDate = selectedDateTime.time
+        }
+        ChallengesManager.save(challenge)
     }
 
-    class UsersFetchedSuccessfullyEvent(val usersList: MutableList<User>)
+    class UsersFetchedSuccessfullyEvent(val usersList: List<User>)
 }

@@ -37,7 +37,7 @@ object UsersManager {
                         first.userName?.compareTo(second.userName ?: EMPTY_STRING) ?: 0
                     })
                 }
-                Bus.defaultBus.post(ProductsListUpdatedEvent())
+                Bus.defaultBus.post(UsersListUpdatedEvent())
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -61,5 +61,5 @@ object UsersManager {
 
     fun getUserKey(user: User) = user.userKey ?: usersDatabase.push().key
 
-    class ProductsListUpdatedEvent
+    class UsersListUpdatedEvent
 }

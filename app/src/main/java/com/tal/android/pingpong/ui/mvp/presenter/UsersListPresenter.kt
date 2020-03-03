@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
+import com.tal.android.pingpong.data.UsersManager
 import com.tal.android.pingpong.exceptions.InvalidChallengeTimeException
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
 import com.tal.android.pingpong.ui.mvp.model.UsersListModel
@@ -30,6 +31,11 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
 
     @Subscribe
     fun onRefreshLists(event: UsersListView.RefreshUsersListsEvent) {
+        model.fetchUsers()
+    }
+
+    @Subscribe
+    fun onUsersListUpdated(event: UsersManager.UsersListUpdatedEvent) {
         model.fetchUsers()
     }
 
