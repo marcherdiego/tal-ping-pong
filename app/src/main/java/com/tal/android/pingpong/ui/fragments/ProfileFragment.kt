@@ -11,6 +11,7 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.mvp.model.ProfileModel
 import com.tal.android.pingpong.ui.mvp.presenter.ProfilePresenter
 import com.tal.android.pingpong.ui.mvp.view.ProfileView
+import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class ProfileFragment : BaseFragment<ProfilePresenter>() {
     override fun onCreateView(
@@ -29,10 +30,10 @@ class ProfileFragment : BaseFragment<ProfilePresenter>() {
                     .requestEmail()
                     .build()
             )
-            val loggedUser = GoogleSignIn.getLastSignedInAccount(it)
+            val sharedPreferences = SharedPreferencesUtils(it)
             presenter = ProfilePresenter(
                 ProfileView(this),
-                ProfileModel(googleSignInClient, loggedUser)
+                ProfileModel(googleSignInClient, sharedPreferences)
             )
         }
     }

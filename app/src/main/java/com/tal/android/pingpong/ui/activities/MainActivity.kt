@@ -1,9 +1,7 @@
 package com.tal.android.pingpong.ui.activities
 
 import android.os.Bundle
-
 import com.nerdscorner.mvplib.events.activity.BaseActivity
-
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.mvp.model.MainModel
 import com.tal.android.pingpong.ui.mvp.presenter.MainPresenter

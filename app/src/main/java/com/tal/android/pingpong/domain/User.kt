@@ -2,16 +2,7 @@ package com.tal.android.pingpong.domain
 
 class User {
 
-    constructor()
-
-    constructor(userName: String?, userEmail: String?, userImage: String?) {
-        this.userName = userName
-        this.userEmail = userEmail
-        this.userImage = userImage
-        this.isActive = true
-    }
-
-    var userKey: String? = null
+    var userToken: String? = null
     var userName: String? = null
     var userEmail: String? = null
     var userImage: String? = null
@@ -29,6 +20,16 @@ class User {
         } else {
             (matchesWon.toFloat() / matchesLost.toFloat()).toString()
         }
+
+    constructor()
+
+    constructor(userToken: String?, userName: String?, userEmail: String?, userImage: String?) {
+        this.userToken = userToken
+        this.userName = userName
+        this.userEmail = userEmail
+        this.userImage = userImage
+        this.isActive = true
+    }
 
     fun printStats(): String {
         val matchesWon = matchesWon

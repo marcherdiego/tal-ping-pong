@@ -3,9 +3,8 @@ package com.tal.android.pingpong.domain
 import java.util.*
 
 class Challenge {
-    var challengeKey: String? = null
-    var challengerEmail: String? = null
-    var challengedEmail: String? = null
+    var challengerUser: User? = null
+    var challengedUser: User? = null
     var matchDate: Date? = null
 
     var challengerScore: Int = 0

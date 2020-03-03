@@ -10,6 +10,7 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.mvp.model.LoginModel
 import com.tal.android.pingpong.ui.mvp.presenter.LoginPresenter
 import com.tal.android.pingpong.ui.mvp.view.LoginView
+import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class LoginActivity : BaseActivity<LoginPresenter>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,9 +25,10 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
                 .build()
         )
 
+        val sharedPreferences = SharedPreferencesUtils(this)
         presenter = LoginPresenter(
             LoginView(this),
-            LoginModel(googleSignInClient)
+            LoginModel(googleSignInClient, sharedPreferences)
         )
     }
 }

@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.data.UsersManager
+import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidChallengeTimeException
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
 import com.tal.android.pingpong.ui.mvp.model.UsersListModel
@@ -18,7 +18,6 @@ import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.GlideUtils
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
-
 
 class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     BaseFragmentPresenter<UsersListView, UsersListModel>(view, model) {
@@ -30,12 +29,13 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     }
 
     @Subscribe
-    fun onRefreshLists(event: UsersListView.RefreshUsersListsEvent) {
-        model.fetchUsers()
+    fun onUsersFetchFailed(event: UsersListModel.UsersFetchFailedEvent) {
+        view.showToast(R.string.failed_to_load_users_list)
+        view.setRefreshing(false)
     }
 
     @Subscribe
-    fun onUsersListUpdated(event: UsersManager.UsersListUpdatedEvent) {
+    fun onRefreshLists(event: UsersListView.RefreshUsersListsEvent) {
         model.fetchUsers()
     }
 
@@ -64,20 +64,20 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
                 .setPositiveButtonText(R.string.challenge)
                 .setNegativeButtonText(R.string.cancel)
                 .setPositiveButtonListener {
-                    openChallengeDateSelectionDialog(user.userEmail ?: return@setPositiveButtonListener)
+                    openChallengeDateSelectionDialog(user)
                 }
                 .build()
                 .show()
         }
     }
 
-    private fun openChallengeDateSelectionDialog(userEmail: String) {
+    private fun openChallengeDateSelectionDialog(user: User) {
         view.withActivity {
             val today = Calendar.getInstance()
             val datePickerDialog = DatePickerDialog(
                 this,
                 OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                    openChallengeTimeSelectionDialog(userEmail, year, monthOfYear, dayOfMonth)
+                    openChallengeTimeSelectionDialog(user, year, monthOfYear, dayOfMonth)
                 },
                 today[Calendar.YEAR],
                 today[Calendar.MONTH],
@@ -88,17 +88,17 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
         }
     }
 
-    private fun openChallengeTimeSelectionDialog(userEmail: String, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+    private fun openChallengeTimeSelectionDialog(user: User, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         view.withActivity {
             val now = Calendar.getInstance()
             val timePickerDialog = TimePickerDialog(
                 this,
                 OnTimeSetListener { _, hourOfDay, minute ->
                     try {
-                        model.challengeUser(userEmail, year, monthOfYear, dayOfMonth, hourOfDay, minute)
+                        model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
                     } catch (e: InvalidChallengeTimeException) {
                         view.showToast(R.string.invalid_time_in_the_past)
-                        openChallengeTimeSelectionDialog(userEmail, year, monthOfYear, dayOfMonth)
+                        openChallengeTimeSelectionDialog(user, year, monthOfYear, dayOfMonth)
                     }
                 },
                 now[Calendar.HOUR_OF_DAY],
