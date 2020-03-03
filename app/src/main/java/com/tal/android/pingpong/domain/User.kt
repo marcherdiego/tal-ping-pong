@@ -1,8 +1,17 @@
 package com.tal.android.pingpong.domain
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+class User {
 
-class User(googleUser: GoogleSignInAccount) {
+    constructor()
+
+    constructor(userName: String?, userEmail: String?, userImage: String?) {
+        this.userName = userName
+        this.userEmail = userEmail
+        this.userImage = userImage
+        this.isActive = true
+    }
+
+    var userKey: String? = null
     var userName: String? = null
     var userEmail: String? = null
     var userImage: String? = null
@@ -10,6 +19,10 @@ class User(googleUser: GoogleSignInAccount) {
 
     var matchesWon: Int = 0
     var matchesLost: Int = 0
+
+    var isActive: Boolean? = null
+
+    @Transient
     var matchesRatio: String? = null
         get() = if (matchesLost == 0) {
             "---"
@@ -17,22 +30,16 @@ class User(googleUser: GoogleSignInAccount) {
             (matchesWon.toFloat() / matchesLost.toFloat()).toString()
         }
 
-    init {
-        userName = googleUser.displayName
-        userEmail = googleUser.email
-        userImage = googleUser.photoUrl?.toString()
-    }
-
-    fun getStats(): String {
+    fun printStats(): String {
         val matchesWon = matchesWon
-        val matchesLost = matchesLost ?: 0
+        val matchesLost = matchesLost
         val matchesRatio = matchesWon.toFloat() / matchesLost.toFloat()
         return "W: $matchesWon / L: $matchesLost | Ratio: $matchesRatio"
     }
 
-    fun getFullStats(): String {
-        val matchesWon = matchesWon ?: 0
-        val matchesLost = matchesLost ?: 0
+    fun printFullStats(): String {
+        val matchesWon = matchesWon
+        val matchesLost = matchesLost
         val matchesRatio = matchesWon.toFloat() / matchesLost.toFloat()
         val matchesRatioString = if (matchesLost == 0) {
             "---"

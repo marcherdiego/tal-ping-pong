@@ -16,10 +16,10 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
 
-
         val googleSignInClient = GoogleSignIn.getClient(
             this,
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build()
         )

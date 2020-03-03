@@ -1,26 +1,16 @@
 package com.tal.android.pingpong.ui.mvp.model
 
-import android.content.Context
 import android.util.Log
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.nerdscorner.mvplib.events.model.BaseEventsModel
+import com.tal.android.pingpong.data.UsersManager
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidChallengeTimeException
 import java.util.*
 
-class UsersListModel(context: Context) : BaseEventsModel() {
-    private val currentUser = GoogleSignIn.getLastSignedInAccount(context)
+class UsersListModel : BaseEventsModel() {
 
     fun fetchUsers() {
-        bus.post(UsersFetchedSuccessfullyEvent(mutableListOf<User>().apply {
-            add(User(currentUser ?: return))
-            add(User(currentUser ?: return))
-            add(User(currentUser ?: return))
-            add(User(currentUser ?: return))
-            add(User(currentUser ?: return))
-            add(User(currentUser ?: return))
-            add(User(currentUser ?: return))
-        }))
+        bus.post(UsersFetchedSuccessfullyEvent(UsersManager.users))
     }
 
     @Throws(InvalidChallengeTimeException::class)

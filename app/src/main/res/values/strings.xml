@@ -2,7 +2,7 @@
     <string name="app_name">TAL Ping Pong</string>
     <string name="login_success">Logged in!</string>
     <string name="login_error">Login error %1$s</string>
-    <string name="challenge_user">Chalenge user</string>
+    <string name="challenge_user">Challenge user</string>
     <string name="challenge">Challenge</string>
     <string name="cancel">Cancel</string>
     <string name="user_stats">Matches won: %1$d\nMatches lost: %2$d\nMatches win ratio: %3$s</string>

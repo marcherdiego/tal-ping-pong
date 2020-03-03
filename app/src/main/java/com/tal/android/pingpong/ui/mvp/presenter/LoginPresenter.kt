@@ -8,6 +8,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
+import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.activities.MainActivity
 import com.tal.android.pingpong.ui.mvp.model.LoginModel
 import com.tal.android.pingpong.ui.mvp.view.LoginView
@@ -34,12 +35,16 @@ class LoginPresenter(view: LoginView, model: LoginModel) :
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            completedTask.getResult(ApiException::class.java)
-            view.showToast(R.string.login_success)
-            goToActivity(MainActivity::class.java)
-        } catch (e: ApiException) {
-            view.showToast(R.string.login_error, e.message)
+        view.withActivity {
+            try {
+                completedTask.getResult(ApiException::class.java)?.let {
+                    model.saveUser(User(it.displayName, it.email, it.photoUrl?.toString()))
+                    view.showToast(R.string.login_success)
+                    goToActivity(MainActivity::class.java)
+                }
+            } catch (e: ApiException) {
+                view.showToast(R.string.login_error, e.message)
+            }
         }
     }
 

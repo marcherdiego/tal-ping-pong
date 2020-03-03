@@ -19,11 +19,9 @@ class UsersListFragment : BaseFragment<UsersListPresenter>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        context?.let {
-            presenter = UsersListPresenter(
-                UsersListView(this),
-                UsersListModel(it)
-            )
-        }
+        presenter = UsersListPresenter(
+            UsersListView(this),
+            UsersListModel()
+        )
     }
 }
