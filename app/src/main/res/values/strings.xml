@@ -9,4 +9,5 @@
     <string name="user_rank">General rank: %1$d</string>
     <string name="invalid_time_in_the_past">Please select a time in the future</string>
     <string name="failed_to_load_users_list">Failed to load users list</string>
+    <string name="no_match_history">No match history</string>
 </resources>

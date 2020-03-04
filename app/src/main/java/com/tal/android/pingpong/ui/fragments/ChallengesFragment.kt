@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.nerdscorner.mvplib.events.fragment.BaseFragment
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.mvp.model.ChallengesModel
@@ -19,9 +20,13 @@ class ChallengesFragment : BaseFragment<ChallengesPresenter>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        presenter = ChallengesPresenter(
-            ChallengesView(this),
-            ChallengesModel()
-        )
+
+        context?.let {
+            val googleUser = GoogleSignIn.getLastSignedInAccount(it)
+            presenter = ChallengesPresenter(
+                ChallengesView(this),
+                ChallengesModel(googleUser)
+            )
+        }
     }
 }

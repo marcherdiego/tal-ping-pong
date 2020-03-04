@@ -14,6 +14,10 @@ import org.greenrobot.eventbus.Subscribe
 class MainPresenter(view: MainView, model: MainModel) :
     BaseActivityPresenter<MainView, MainModel>(view, model) {
 
+    init {
+        onNavigationItemSelected(MainView.NavigationItemSelectedEvent(R.id.menu_challenges))
+    }
+
     @Subscribe
     fun onNavigationItemSelected(event: MainView.NavigationItemSelectedEvent) {
         val currentState = model.currentState

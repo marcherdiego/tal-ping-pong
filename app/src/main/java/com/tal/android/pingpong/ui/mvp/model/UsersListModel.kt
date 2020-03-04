@@ -2,6 +2,7 @@ package com.tal.android.pingpong.ui.mvp.model
 
 import com.nerdscorner.mvplib.events.model.BaseEventsModel
 import com.tal.android.pingpong.domain.Challenge
+import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidChallengeTimeException
 import com.tal.android.pingpong.extensions.enqueueResponseNotNull
@@ -39,8 +40,10 @@ class UsersListModel(private val loggedUserEmail: String?) : BaseEventsModel() {
             throw InvalidChallengeTimeException()
         }
         val challenge = Challenge().apply {
-            challengedUser = user
-            matchDate = selectedDateTime.time
+            this.challengeMatch = MatchRecord().apply {
+                visitor = user
+                matchDate = selectedDateTime.time
+            }
         }
         challengesService
             .challengeUser(challenge)

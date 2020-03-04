@@ -6,7 +6,7 @@ import com.nerdscorner.mvplib.events.model.BaseEventsModel
 class MainModel(
     @State
     @get:State
-    var currentState: Int = CHALLENGES
+    var currentState: Int = UNSET
 ) : BaseEventsModel() {
 
     companion object {
@@ -14,9 +14,10 @@ class MainModel(
          * Possible screen states
          */
         @Retention(AnnotationRetention.SOURCE)
-        @IntDef(CHALLENGES, FIND_RIVAL, PROFILE)
+        @IntDef(UNSET, CHALLENGES, FIND_RIVAL, PROFILE)
         annotation class State
 
+        const val UNSET = -1
         const val CHALLENGES = 0
         const val FIND_RIVAL = 1
         const val PROFILE = 2
