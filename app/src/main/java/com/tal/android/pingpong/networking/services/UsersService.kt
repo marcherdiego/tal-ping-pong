@@ -8,9 +8,12 @@ import retrofit2.http.POST
 
 interface UsersService {
 
-    @POST("/user")
-    fun login(@Body user: User): Call<Unit>
+    @POST("/login.php")
+    fun login(@Body user: User): Call<User>
 
-    @GET("/users")
+    @POST("/logout.php")
+    fun logout(@Body user: User): Call<Any>
+
+    @GET("/getUsers.php")
     fun getUsers(): Call<List<User>>
 }

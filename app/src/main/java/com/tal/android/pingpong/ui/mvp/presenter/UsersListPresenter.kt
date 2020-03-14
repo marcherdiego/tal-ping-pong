@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.User
-import com.tal.android.pingpong.exceptions.InvalidChallengeTimeException
+import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
 import com.tal.android.pingpong.ui.mvp.model.UsersListModel
 import com.tal.android.pingpong.ui.mvp.view.UsersListView
@@ -96,7 +96,7 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
                 OnTimeSetListener { _, hourOfDay, minute ->
                     try {
                         model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
-                    } catch (e: InvalidChallengeTimeException) {
+                    } catch (e: InvalidMatchTimeException) {
                         view.showToast(R.string.invalid_time_in_the_past)
                         openChallengeTimeSelectionDialog(user, year, monthOfYear, dayOfMonth)
                     }

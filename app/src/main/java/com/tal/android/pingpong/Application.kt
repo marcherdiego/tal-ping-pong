@@ -13,7 +13,7 @@ class Application : Application() {
         super.onCreate()
 
         val sharedPreferences = SharedPreferencesUtils(this)
-        ServiceGenerator.baseUrl = "https://api.tal-staging.com/"
+        ServiceGenerator.baseUrl = "http://192.168.0.102/"
         ServiceGenerator.httpClient = OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -21,7 +21,7 @@ class Application : Application() {
                 var request = chain.request()
                 val requestBuilder = request.newBuilder()
                     .addHeader(ACCEPT_HEADER, APPLICATION_JSON_HEADER)
-                sharedPreferences.getUserToken()?.let {
+                sharedPreferences.getUser()?.userToken?.let {
                     requestBuilder.addHeader(AUTHORIZATION, "Bearer $it")
                 } ?: run {
                     requestBuilder.removeHeader(AUTHORIZATION)

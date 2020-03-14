@@ -1,13 +1,21 @@
 package com.tal.android.pingpong.domain
 
-import java.util.*
+import com.google.gson.annotations.SerializedName
 
 class MatchRecord {
+    @SerializedName("local")
     var local: User? = null
-    var visitor: User? = null
-    var matchDate: Date? = null
 
+    @SerializedName("visitor")
+    var visitor: User? = null
+
+    @SerializedName("date")
+    var matchDate: String? = null
+
+    @SerializedName("localScore")
     var localScore: Int = 0
+
+    @SerializedName("visitorScore")
     var visitorScore: Int = 0
 
     fun myVictory(myEmail: String?): Boolean {

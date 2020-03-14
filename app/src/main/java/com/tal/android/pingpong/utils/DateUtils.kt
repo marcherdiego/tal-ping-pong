@@ -1,16 +1,24 @@
 package com.tal.android.pingpong.utils
 
 import android.text.format.DateFormat
-import java.util.*
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 object DateUtils {
 
     private const val DATE_FORMAT_US = "MMM dd, yyyy hh:mm a"
+    private const val DATE_INPUT_FORMAT = "yyyy-MM-dd HH:mm:ss"
+    private val format = SimpleDateFormat(DATE_INPUT_FORMAT)
 
-    fun formatDate(date: Date?): String? {
+    fun formatDate(date: String?): String? {
         if (date == null) {
             return null
         }
-        return DateFormat.format(DATE_FORMAT_US, date).toString()
+        try {
+            return DateFormat.format(DATE_FORMAT_US, format.parse(date)).toString()
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return null
     }
 }

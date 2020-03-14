@@ -24,7 +24,7 @@ class LoginModel(val googleSignInClient: GoogleSignInClient, private val sharedP
             .login(user)
             .enqueueResponseNotNull(
                 success = {
-                    sharedPreferences.saveUserToken(googleUser.idToken)
+                    sharedPreferences.saveUser(it)
                     bus.post(UserLoggedInSuccessfullyEvent())
                 },
                 fail = {

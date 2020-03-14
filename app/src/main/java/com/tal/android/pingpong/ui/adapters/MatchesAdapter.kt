@@ -8,12 +8,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.domain.Challenge
-import com.tal.android.pingpong.ui.adapters.ChallengesAdapter.ViewHolder
+import com.tal.android.pingpong.domain.Match
+import com.tal.android.pingpong.ui.adapters.MatchesAdapter.ViewHolder
 import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.GlideUtils
 
-class ChallengesAdapter(private val challenges: List<Challenge>, private val myEmail: String?) : RecyclerView.Adapter<ViewHolder>() {
+class MatchesAdapter(private val matches: List<Match>, private val myEmail: String?) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -21,9 +21,9 @@ class ChallengesAdapter(private val challenges: List<Challenge>, private val myE
                 .from(parent.context)
                 .inflate(
                     if (viewType == VIEW_TYPE_LOCAL) {
-                        R.layout.challenge_local_item_row
+                        R.layout.match_local_item_row
                     } else {
-                        R.layout.challenge_visitor_item_row
+                        R.layout.match_visitor_item_row
                     },
                     parent,
                     false
@@ -32,35 +32,34 @@ class ChallengesAdapter(private val challenges: List<Challenge>, private val myE
     }
 
     override fun getItemViewType(position: Int): Int {
-        val challenge = challenges[position]
-        return when (challenge.challengeMatch?.local?.userEmail) {
+        val match = matches[position]
+        return when (match.match?.local?.userEmail) {
             myEmail -> VIEW_TYPE_LOCAL
             else -> VIEW_TYPE_VISITOR
         }
     }
 
-    override fun getItemCount() = challenges.size
+    override fun getItemCount() = matches.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val challenge = challenges[position]
-        val challengeMatch = challenge.challengeMatch
+        val match = matches[position]
         val context = holder.itemView.context
         val rival = if (holder.itemViewType == VIEW_TYPE_LOCAL) {
-            challengeMatch?.visitor
+            match.match?.visitor
         } else {
-            challengeMatch?.local
+            match.match?.local
         }
         with(holder) {
-            GlideUtils.loadImage(challengeMatch?.local?.userImage, localImage, R.drawable.ic_incognito, true)
+            GlideUtils.loadImage(match.match?.local?.userImage, localImage, R.drawable.ic_incognito, true)
             userName.text = rival?.userName
-            challenge.matchesHistory?.forEach { matchRecord ->
+            match.matchesHistory?.forEach { matchRecord ->
                 LayoutInflater
                     .from(context)
                     .inflate(
                         if (matchRecord.myVictory(myEmail)) {
-                            R.layout.challenge_match_record_win_view
+                            R.layout.match_record_win_view
                         } else {
-                            R.layout.challenge_match_record_lose_view
+                            R.layout.match_record_lose_view
                         },
                         matchesHistory,
                         true
@@ -70,8 +69,8 @@ class ChallengesAdapter(private val challenges: List<Challenge>, private val myE
                     setText(R.string.no_match_history)
                 })
             }
-            matchDate.text = DateUtils.formatDate(challengeMatch?.matchDate)
-            GlideUtils.loadImage(challengeMatch?.visitor?.userImage, visitorImage, R.drawable.ic_incognito, true)
+            matchDate.text = DateUtils.formatDate(match.match?.matchDate)
+            GlideUtils.loadImage(match.match?.visitor?.userImage, visitorImage, R.drawable.ic_incognito, true)
         }
     }
 

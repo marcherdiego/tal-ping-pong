@@ -3,6 +3,8 @@ package com.tal.android.pingpong.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.google.gson.Gson
+import com.tal.android.pingpong.domain.User
 
 class SharedPreferencesUtils(context: Context) {
 
@@ -12,16 +14,30 @@ class SharedPreferencesUtils(context: Context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
-    fun saveUserToken(userToken: String?) {
+    fun getUser(): User? {
+        val userJson = preferences?.getString(USER, null)
+        return if (userJson == null) {
+            null
+        } else {
+            gson.fromJson(userJson, User::class.java)
+        }
+    }
+
+    fun saveUser(user: User?) {
+        val userJson = if (user == null) {
+            null
+        } else {
+            gson.toJson(user)
+        }
         preferences
             ?.edit()
-            ?.putString(USER_TOKEN, userToken)
+            ?.putString(USER, userJson)
             ?.apply()
     }
 
-    fun getUserToken() = preferences?.getString(USER_TOKEN, null)
-
     companion object {
-        private const val USER_TOKEN = "user_token"
+        private const val USER = "user"
+
+        private val gson = Gson()
     }
 }

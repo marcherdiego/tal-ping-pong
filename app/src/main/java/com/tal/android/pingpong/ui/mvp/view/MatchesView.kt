@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.ChallengesAdapter
+import com.tal.android.pingpong.ui.adapters.MatchesAdapter
 
-class ChallengesView(fragment: Fragment) : BaseFragmentView(fragment) {
+class MatchesView(fragment: Fragment) : BaseFragmentView(fragment) {
     private val challengesList: RecyclerView? = fragment.view?.findViewById(R.id.challenges_list)
     private val refreshLayout: SwipeRefreshLayout? = activity?.findViewById(R.id.refresh_layout)
 
@@ -18,11 +18,11 @@ class ChallengesView(fragment: Fragment) : BaseFragmentView(fragment) {
         )
 
         refreshLayout?.setOnRefreshListener {
-            bus.post(RefreshChallengesEvent())
+            bus.post(RefreshMatchesEvent())
         }
     }
 
-    fun setChallengesAdapter(adapter: ChallengesAdapter) {
+    fun setMatchesAdapter(adapter: MatchesAdapter) {
         challengesList?.adapter = adapter
     }
 
@@ -30,5 +30,5 @@ class ChallengesView(fragment: Fragment) : BaseFragmentView(fragment) {
         refreshLayout?.isRefreshing = refreshing
     }
 
-    class RefreshChallengesEvent
+    class RefreshMatchesEvent
 }

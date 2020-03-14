@@ -3,7 +3,7 @@ package com.tal.android.pingpong.ui.mvp.presenter
 import androidx.fragment.app.Fragment
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.fragments.ChallengesFragment
+import com.tal.android.pingpong.ui.fragments.MatchesFragment
 import com.tal.android.pingpong.ui.fragments.ProfileFragment
 import com.tal.android.pingpong.ui.fragments.UsersListFragment
 
@@ -15,14 +15,14 @@ class MainPresenter(view: MainView, model: MainModel) :
     BaseActivityPresenter<MainView, MainModel>(view, model) {
 
     init {
-        onNavigationItemSelected(MainView.NavigationItemSelectedEvent(R.id.menu_challenges))
+        onNavigationItemSelected(MainView.NavigationItemSelectedEvent(R.id.menu_matches))
     }
 
     @Subscribe
     fun onNavigationItemSelected(event: MainView.NavigationItemSelectedEvent) {
         val currentState = model.currentState
         val (newState, fragment) = when (event.itemId) {
-            R.id.menu_challenges -> Pair(MainModel.CHALLENGES, ChallengesFragment())
+            R.id.menu_matches -> Pair(MainModel.MATCHES, MatchesFragment())
             R.id.menu_new_match -> Pair(MainModel.FIND_RIVAL, UsersListFragment())
             R.id.menu_profile -> Pair(MainModel.PROFILE, ProfileFragment())
             else -> return

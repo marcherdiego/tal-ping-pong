@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_challenges"
+        android:id="@+id/menu_matches"
         android:icon="@drawable/ic_racket"
-        android:title="Challenges" />
+        android:title="Matches" />
 
     <item
         android:id="@+id/menu_new_match"
