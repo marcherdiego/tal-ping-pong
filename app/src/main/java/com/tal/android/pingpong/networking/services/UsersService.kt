@@ -16,4 +16,7 @@ interface UsersService {
 
     @GET("/getUsers.php")
     fun getUsers(): Call<List<User>>
+
+    @GET("/getRanking.php")
+    fun getRanking(): Call<List<User>>
 }

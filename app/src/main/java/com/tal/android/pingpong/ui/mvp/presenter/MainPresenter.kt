@@ -5,6 +5,7 @@ import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.fragments.MatchesFragment
 import com.tal.android.pingpong.ui.fragments.ProfileFragment
+import com.tal.android.pingpong.ui.fragments.RankingFragment
 import com.tal.android.pingpong.ui.fragments.UsersListFragment
 
 import com.tal.android.pingpong.ui.mvp.model.MainModel
@@ -24,6 +25,7 @@ class MainPresenter(view: MainView, model: MainModel) :
         val (newState, fragment) = when (event.itemId) {
             R.id.menu_matches -> Pair(MainModel.MATCHES, MatchesFragment())
             R.id.menu_new_match -> Pair(MainModel.FIND_RIVAL, UsersListFragment())
+            R.id.menu_ranking -> Pair(MainModel.RANKING, RankingFragment())
             R.id.menu_profile -> Pair(MainModel.PROFILE, ProfileFragment())
             else -> return
         }

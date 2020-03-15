@@ -12,6 +12,11 @@
         android:title="Find a Rival" />
 
     <item
+        android:id="@+id/menu_ranking"
+        android:icon="@drawable/ic_podium"
+        android:title="Ranking" />
+
+    <item
         android:id="@+id/menu_profile"
         android:icon="@drawable/ic_user"
         android:title="Profile" />

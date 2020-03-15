@@ -15,6 +15,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="Local"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/local_image"
+        app:layout_constraintStart_toStartOf="@+id/local_image"
+        app:layout_constraintTop_toBottomOf="@+id/local_image" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -61,5 +72,16 @@
         app:layout_constraintBottom_toTopOf="@+id/match_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="Visitor"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/visitor_image"
+        app:layout_constraintStart_toStartOf="@+id/visitor_image"
+        app:layout_constraintTop_toBottomOf="@+id/visitor_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

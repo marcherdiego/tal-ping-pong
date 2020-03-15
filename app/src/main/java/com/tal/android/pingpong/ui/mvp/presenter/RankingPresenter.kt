@@ -5,27 +5,27 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
 import com.tal.android.pingpong.ui.dialogs.ChallengeUserDialog
-import com.tal.android.pingpong.ui.mvp.model.UsersListModel
-import com.tal.android.pingpong.ui.mvp.view.UsersListView
+import com.tal.android.pingpong.ui.mvp.model.RankingModel
+import com.tal.android.pingpong.ui.mvp.view.RankingView
 import org.greenrobot.eventbus.Subscribe
 
-class UsersListPresenter(view: UsersListView, model: UsersListModel) :
-    BaseFragmentPresenter<UsersListView, UsersListModel>(view, model) {
+class RankingPresenter(view: RankingView, model: RankingModel) :
+    BaseFragmentPresenter<RankingView, RankingModel>(view, model) {
 
     @Subscribe
-    fun onUsersFetchedSuccessfully(event: UsersListModel.UsersFetchedSuccessfullyEvent) {
+    fun onUsersFetchedSuccessfully(event: RankingModel.UsersFetchedSuccessfullyEvent) {
         view.setUsersListAdapter(UsersListAdapter(event.usersList, model.getBus()))
         view.setRefreshing(false)
     }
 
     @Subscribe
-    fun onUsersFetchFailed(event: UsersListModel.UsersFetchFailedEvent) {
+    fun onUsersFetchFailed(event: RankingModel.UsersFetchFailedEvent) {
         view.showToast(R.string.failed_to_load_users_list)
         view.setRefreshing(false)
     }
 
     @Subscribe
-    fun onRefreshLists(event: UsersListView.RefreshUsersListsEvent) {
+    fun onRefreshLists(event: RankingView.RefreshUsersListsEvent) {
         model.fetchUsers()
     }
 
