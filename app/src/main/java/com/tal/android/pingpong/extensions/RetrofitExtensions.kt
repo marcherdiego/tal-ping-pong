@@ -24,8 +24,8 @@ fun <T> Call<T>.enqueue(
                 successCacheCheck(response.isFromCache(), body)
                 Log.d(
                     TAG,
-                    "${call.request().method()}: " +
-                            "${call.request().url()} -> Response from " +
+                    "${call.request().method}: " +
+                            "${call.request().url} -> Response from " +
                             if (response.isFromCache()) {
                                 "Cache"
                             } else {
@@ -84,4 +84,4 @@ fun <T> Call<T>.fireAndForget() {
     })
 }
 
-fun Response<*>.isFromCache() = raw().networkResponse() == null
+fun Response<*>.isFromCache() = raw().networkResponse == null

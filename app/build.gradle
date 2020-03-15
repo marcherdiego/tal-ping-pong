@@ -23,10 +23,21 @@ android {
         }
     }
 
+    android {
+        compileOptions {
+            targetCompatibility = "8"
+            sourceCompatibility = "8"
+        }
+    }
+
+    // For Kotlin projects
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
-	implementation 'com.nerdscorner.mvp:events:6.1.2'
+    implementation 'com.nerdscorner.mvp:events:6.1.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
@@ -40,15 +51,14 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'jp.wasabeef:glide-transformations:4.1.0'
 
-    implementation("com.squareup.retrofit2:retrofit:2.4.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.4.0")
+    implementation('com.squareup.retrofit2:retrofit:2.7.1')
+    implementation('com.squareup.retrofit2:converter-gson:2.7.1')
 
-    implementation("com.facebook.stetho:stetho:1.4.2")
-    implementation("com.facebook.stetho:stetho-okhttp3:1.4.2")
+    implementation('com.facebook.stetho:stetho:1.5.1')
+    implementation('com.facebook.stetho:stetho-okhttp3:1.5.1')
 
-    implementation("com.squareup.okhttp3:logging-interceptor:3.10.0")
-    implementation("com.squareup.okhttp3:okhttp:3.10.0")
+    implementation('com.squareup.okhttp3:logging-interceptor:4.4.0')
+    implementation('com.squareup.okhttp3:okhttp:4.4.0')
 }

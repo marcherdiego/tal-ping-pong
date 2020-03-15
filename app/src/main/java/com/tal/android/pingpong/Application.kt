@@ -26,7 +26,7 @@ class Application : Application() {
                 } ?: run {
                     requestBuilder.removeHeader(AUTHORIZATION)
                 }
-                request = requestBuilder.url(request.url()).build()
+                request = requestBuilder.url(request.url).build()
                 chain.proceed(request)
             }
             .addNetworkInterceptor(StethoInterceptor())
