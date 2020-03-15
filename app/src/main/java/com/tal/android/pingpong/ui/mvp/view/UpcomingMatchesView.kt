@@ -8,9 +8,9 @@ import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.MatchesAdapter
 
-class MatchesView(fragment: Fragment) : BaseFragmentView(fragment) {
+class UpcomingMatchesView(fragment: Fragment) : BaseFragmentView(fragment) {
     private val challengesList: RecyclerView? = fragment.view?.findViewById(R.id.challenges_list)
-    private val refreshLayout: SwipeRefreshLayout? = activity?.findViewById(R.id.refresh_layout)
+    private val refreshLayout: SwipeRefreshLayout? = fragment.view?.findViewById(R.id.refresh_layout)
 
     init {
         challengesList?.addItemDecoration(

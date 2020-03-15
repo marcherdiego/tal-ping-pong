@@ -8,7 +8,4 @@ class Match {
 
     @SerializedName("matchesHistory")
     var matchesHistory: List<MatchRecord>? = null
-
-    @Transient
-    var label: String? = null
 }

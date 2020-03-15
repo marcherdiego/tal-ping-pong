@@ -2,26 +2,26 @@ package com.tal.android.pingpong.ui.mvp.presenter
 
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.ui.adapters.MatchesAdapter
-import com.tal.android.pingpong.ui.mvp.model.MatchesModel
-import com.tal.android.pingpong.ui.mvp.view.MatchesView
+import com.tal.android.pingpong.ui.mvp.model.PastMatchesModel
+import com.tal.android.pingpong.ui.mvp.view.PastMatchesView
 import org.greenrobot.eventbus.Subscribe
 
-class MatchesPresenter(view: MatchesView, model: MatchesModel) :
-    BaseFragmentPresenter<MatchesView, MatchesModel>(view, model) {
+class PastMatchesPresenter(view: PastMatchesView, model: PastMatchesModel) :
+    BaseFragmentPresenter<PastMatchesView, PastMatchesModel>(view, model) {
 
     @Subscribe
-    fun onMatchesFetchedSuccessfully(event: MatchesModel.MatchesFetchedSuccessfullyEvent) {
+    fun onMatchesFetchedSuccessfully(event: PastMatchesModel.MatchesFetchedSuccessfullyEvent) {
         view.setRefreshing(false)
         view.setMatchesAdapter(MatchesAdapter(event.matches, model.getUserEmail()))
     }
 
     @Subscribe
-    fun onMatchesFetchFailed(event: MatchesModel.MatchesFetchFailedEvent) {
+    fun onMatchesFetchFailed(event: PastMatchesModel.MatchesFetchFailedEvent) {
         view.setRefreshing(false)
     }
 
     @Subscribe
-    fun onRefreshMatches(event: MatchesView.RefreshMatchesEvent) {
+    fun onRefreshMatches(event: PastMatchesView.RefreshMatchesEvent) {
         model.fetchUserMatches()
     }
 

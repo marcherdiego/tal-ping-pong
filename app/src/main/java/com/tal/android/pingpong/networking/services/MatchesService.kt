@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
+import java.util.*
 
 interface MatchesService {
 
@@ -13,5 +14,9 @@ interface MatchesService {
     fun challengeUser(@Body match: Match): Call<Unit>
 
     @GET("/getMatches.php")
-    fun getMyMatches(@Query("userId") userId: Int): Call<List<Match>>
+    fun getMyMatches(
+        @Query("userId") userId: Int,
+        @Query("startDate") startDate: Long? = null,
+        @Query("endDate") endDate: Long? = null
+    ): Call<List<Match>>
 }
