@@ -1,7 +1,7 @@
 package com.tal.android.pingpong.ui.mvp.presenter
 
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
-import com.tal.android.pingpong.ui.adapters.MatchesAdapter
+import com.tal.android.pingpong.ui.adapters.PastMatchesAdapter
 import com.tal.android.pingpong.ui.mvp.model.PastMatchesModel
 import com.tal.android.pingpong.ui.mvp.view.PastMatchesView
 import org.greenrobot.eventbus.Subscribe
@@ -12,7 +12,7 @@ class PastMatchesPresenter(view: PastMatchesView, model: PastMatchesModel) :
     @Subscribe
     fun onMatchesFetchedSuccessfully(event: PastMatchesModel.MatchesFetchedSuccessfullyEvent) {
         view.setRefreshing(false)
-        view.setMatchesAdapter(MatchesAdapter(event.matches, model.getUserEmail()))
+        view.setMatchesAdapter(PastMatchesAdapter(event.matches, model.getUserEmail()))
     }
 
     @Subscribe

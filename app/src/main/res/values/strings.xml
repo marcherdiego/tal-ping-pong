@@ -12,4 +12,5 @@
     <string name="no_match_history">No match history</string>
     <string name="upcoming_matches">Upcoming</string>
     <string name="past_matches">Past</string>
+    <string name="no_matches_yet">No matches yet...</string>
 </resources>
