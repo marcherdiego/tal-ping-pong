@@ -1,11 +1,13 @@
 package com.tal.android.pingpong.ui.adapters
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.Match
@@ -54,8 +56,30 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
             matchDate.text = DateUtils.formatDate(match.match?.matchDate)
             GlideUtils.loadImage(match.match?.visitor?.userImage, visitorImage, R.drawable.ic_incognito, true)
 
-            localScore.text = match.match?.localScore?.toString()
-            visitorScore.text = match.match?.visitorScore?.toString()
+            val localPlayerScore = match.match?.localScore ?: 0
+            val visitorPlayerScore = match.match?.visitorScore ?: 0
+            localScore.text = localPlayerScore.toString()
+            visitorScore.text = visitorPlayerScore.toString()
+
+            if (localPlayerScore > visitorPlayerScore) {
+                localScore.setTypeface(localScore.typeface, Typeface.BOLD)
+                visitorScore.setTypeface(visitorScore.typeface, Typeface.NORMAL)
+            } else {
+                localScore.setTypeface(localScore.typeface, Typeface.NORMAL)
+                visitorScore.setTypeface(visitorScore.typeface, Typeface.BOLD)
+            }
+
+            itemView.setBackgroundColor(
+                ContextCompat.getColor
+                    (
+                    itemView.context,
+                    if (match.match?.myVictory(myEmail) == true) {
+                        R.color.victory_background_color
+                    } else {
+                        R.color.defeat_background_color
+                    }
+                )
+            )
         }
     }
 

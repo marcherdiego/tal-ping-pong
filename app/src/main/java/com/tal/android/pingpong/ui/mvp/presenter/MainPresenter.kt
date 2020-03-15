@@ -7,6 +7,7 @@ import com.tal.android.pingpong.ui.fragments.*
 
 import com.tal.android.pingpong.ui.mvp.model.MainModel
 import com.tal.android.pingpong.ui.mvp.view.MainView
+import com.tal.android.pingpong.ui.mvp.view.MatchesListView
 import org.greenrobot.eventbus.Subscribe
 
 class MainPresenter(view: MainView, model: MainModel) :
@@ -34,12 +35,26 @@ class MainPresenter(view: MainView, model: MainModel) :
         updateCurrentFragment(fragment)
     }
 
+    @Subscribe
+    fun onNewMatchButtonClicked(event: MatchesListView.NewMatchButtonClickedEvent) {
+        view.setSelectedTab(R.id.menu_new_match)
+    }
+
     private fun updateCurrentFragment(fragment: Fragment) {
         view.withFragmentTransaction {
             if (!fragment.isAdded) {
                 replace(R.id.frame_container, fragment)
             }
             commitNow()
+        }
+    }
+
+    override fun onBackPressed(): Boolean {
+        return if (model.currentState == MainModel.MATCHES) {
+            super.onBackPressed()
+        } else {
+            view.setSelectedTab(R.id.menu_matches)
+            true
         }
     }
 }
