@@ -37,7 +37,9 @@ class User : Serializable {
         get() = if (matchesLost == 0) {
             "---"
         } else {
-            (matchesWon.toFloat() / matchesLost.toFloat()).toString()
+            val ratio = matchesWon.toFloat() / (matchesWon + matchesLost).toFloat()
+            val percentage = ratio * 100
+            String.format("%.2f %%", percentage)
         }
 
     constructor()

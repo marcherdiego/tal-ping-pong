@@ -11,6 +11,7 @@ import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.GlideUtils
+import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import java.util.*
 
 class ChallengeUserDialog(private val user: User) {
@@ -32,16 +33,21 @@ class ChallengeUserDialog(private val user: User) {
         userEmail.text = user.userEmail
         userStats.text = context.getString(R.string.user_stats, user.matchesWon, user.matchesLost, user.matchesRatio)
 
-        DialogFactory
+        val myEmail = SharedPreferencesUtils(context).getUser()?.userEmail
+
+        val challengeDialogBuilder = DialogFactory
             .newBuilder(context)
             .setCancelable(true)
-            .setTitle(R.string.challenge_user)
+            .setTitle(R.string.user_details)
             .setView(challengeDialogView)
-            .setPositiveButtonText(R.string.challenge)
-            .setNegativeButtonText(R.string.cancel)
-            .setPositiveButtonListener {
-                openChallengeDateSelectionDialog(context, user)
-            }
+        if (user.userEmail != myEmail) {
+            challengeDialogBuilder
+                .setPositiveButtonText(R.string.challenge)
+                .setPositiveButtonListener {
+                    openChallengeDateSelectionDialog(context, user)
+                }
+        }
+        challengeDialogBuilder.setNegativeButtonText(R.string.close)
             .build()
             .show()
     }
