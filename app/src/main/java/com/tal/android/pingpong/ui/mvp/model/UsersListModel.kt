@@ -9,9 +9,10 @@ import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
 import com.tal.android.pingpong.networking.services.UsersService
+import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import java.util.*
 
-class UsersListModel(private val loggedUserEmail: String?) : BaseEventsModel() {
+class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils) : BaseEventsModel() {
     private val userService = ServiceGenerator.createService(UsersService::class.java)
     private val matchesService = ServiceGenerator.createService(MatchesService::class.java)
 
@@ -21,7 +22,7 @@ class UsersListModel(private val loggedUserEmail: String?) : BaseEventsModel() {
             .enqueueResponseNotNull(
                 success = {
                     val filteredUsers = it.filter { user ->
-                        user.userEmail != loggedUserEmail
+                        user.userEmail != sharedPreferencesUtils.getUser()?.userEmail
                     }
                     bus.post(UsersFetchedSuccessfullyEvent(filteredUsers))
                 },
@@ -41,6 +42,7 @@ class UsersListModel(private val loggedUserEmail: String?) : BaseEventsModel() {
         }
         val challenge = Match().apply {
             this.match = MatchRecord().apply {
+                local = sharedPreferencesUtils.getUser()
                 visitor = user
                 matchDate = selectedDateTime.time.toString()
             }

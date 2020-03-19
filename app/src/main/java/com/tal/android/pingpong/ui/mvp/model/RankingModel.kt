@@ -1,5 +1,6 @@
 package com.tal.android.pingpong.ui.mvp.model
 
+import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import com.nerdscorner.mvplib.events.model.BaseEventsModel
 import com.tal.android.pingpong.domain.Match
 import com.tal.android.pingpong.domain.MatchRecord
@@ -11,7 +12,7 @@ import com.tal.android.pingpong.networking.services.MatchesService
 import com.tal.android.pingpong.networking.services.UsersService
 import java.util.*
 
-class RankingModel : BaseEventsModel() {
+class RankingModel(private val sharedPreferencesUtils: SharedPreferencesUtils) : BaseEventsModel() {
     private val userService = ServiceGenerator.createService(UsersService::class.java)
     private val matchesService = ServiceGenerator.createService(MatchesService::class.java)
 
@@ -38,6 +39,7 @@ class RankingModel : BaseEventsModel() {
         }
         val challenge = Match().apply {
             this.match = MatchRecord().apply {
+                local = sharedPreferencesUtils.getUser()
                 visitor = user
                 matchDate = selectedDateTime.time.toString()
             }

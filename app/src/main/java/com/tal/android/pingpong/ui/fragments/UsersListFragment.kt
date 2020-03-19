@@ -10,6 +10,7 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.mvp.model.UsersListModel
 import com.tal.android.pingpong.ui.mvp.presenter.UsersListPresenter
 import com.tal.android.pingpong.ui.mvp.view.UsersListView
+import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class UsersListFragment : BaseFragment<UsersListPresenter>() {
     override fun onCreateView(
@@ -21,10 +22,9 @@ class UsersListFragment : BaseFragment<UsersListPresenter>() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         context?.let {
-            val user = GoogleSignIn.getLastSignedInAccount(it)
             presenter = UsersListPresenter(
                 UsersListView(this),
-                UsersListModel(user?.email)
+                UsersListModel(SharedPreferencesUtils(it))
             )
         }
     }
