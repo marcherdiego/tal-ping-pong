@@ -15,20 +15,28 @@
       },
       "oauth_client": [
         {
+          "client_id": "603999982489-kn2fcd43uvsjmnbp6o2eiv5a47amgbom.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tal.android.pingpong",
+            "certificate_hash": "379c1e0b9ae5e819efbb31cf6c838e84256ea757"
+          }
+        },
+        {
           "client_id": "603999982489-q4lku3m80chbab5fnj2fkgmruir0l1ca.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDj-CffAi65g3uHqOmRTG_4j1KzsqMLL8s"
+          "current_key": "AIzaSyAddiyFh_5FmqelH3Jziq_v8ykNp7spa_k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "603999982489-q4lku3m80chbab5fnj2fkgmruir0l1ca.apps.googleusercontent.com",
+              "client_id": "603999982489-33j9t4oeb56o1gujmko6ufrml72v3t8a.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -11,6 +11,9 @@ interface UsersService {
     @POST("/login.php")
     fun login(@Body user: User): Call<User>
 
+    @POST("/setPushToken.php")
+    fun setPushToken(@Body user: User): Call<User>
+
     @POST("/logout.php")
     fun logout(@Body user: User): Call<Any>
 

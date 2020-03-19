@@ -2,6 +2,9 @@ package com.tal.android.pingpong.ui.mvp.model
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.nerdscorner.mvplib.events.model.BaseEventsModel
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.extensions.enqueueResponseNotNull
@@ -14,12 +17,13 @@ class LoginModel(val googleSignInClient: GoogleSignInClient, private val sharedP
     private val userService = ServiceGenerator.createService(UsersService::class.java)
 
     fun login(googleUser: GoogleSignInAccount) {
-        val user = User(
-            googleUser.idToken,
-            googleUser.displayName,
-            googleUser.email,
-            googleUser.photoUrl?.toString()
-        )
+        val user = User().apply {
+            userToken = googleUser.idToken
+            userName = googleUser.displayName
+            userEmail = googleUser.email
+            userImage = googleUser.photoUrl?.toString()
+            pushToken = FirebaseInstanceId.getInstance().id
+        }
         userService
             .login(user)
             .enqueueResponseNotNull(

@@ -32,6 +32,9 @@ class User : Serializable {
     @SerializedName("active")
     var isActive: Boolean? = null
 
+    @SerializedName("pushToken")
+    var pushToken: String? = null
+
     @Transient
     var matchesRatio: String? = null
         get() = if (matchesLost == 0) {
@@ -39,37 +42,6 @@ class User : Serializable {
         } else {
             val ratio = matchesWon.toFloat() / (matchesWon + matchesLost).toFloat()
             val percentage = ratio * 100
-            String.format("%.2f %%", percentage)
+            String.format("%.2f%%", percentage)
         }
-
-    constructor()
-
-    constructor(userToken: String?, userName: String?, userEmail: String?, userImage: String?) {
-        this.userToken = userToken
-        this.userName = userName
-        this.userEmail = userEmail
-        this.userImage = userImage
-        this.isActive = true
-    }
-
-    fun printStats(): String {
-        val matchesWon = matchesWon
-        val matchesLost = matchesLost
-        val matchesRatio = matchesWon.toFloat() / matchesLost.toFloat()
-        return "W: $matchesWon / L: $matchesLost | Ratio: $matchesRatio"
-    }
-
-    fun printFullStats(): String {
-        val matchesWon = matchesWon
-        val matchesLost = matchesLost
-        val matchesRatio = matchesWon.toFloat() / matchesLost.toFloat()
-        val matchesRatioString = if (matchesLost == 0) {
-            "---"
-        } else {
-            matchesRatio.toString()
-        }
-        return "Matches won: $matchesWon\n" +
-                "Matches lost: $matchesLost\n" +
-                "Matches win ratio: $matchesRatioString"
-    }
 }
