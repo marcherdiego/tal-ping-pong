@@ -1,8 +1,11 @@
 package com.tal.android.pingpong
 
 import android.app.Application
+import android.os.Build
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.tal.android.pingpong.networking.ServiceGenerator
+import com.tal.android.pingpong.notifications.ChannelDescriptors
+import com.tal.android.pingpong.notifications.NotificationsManager
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -32,6 +35,12 @@ class Application : Application() {
             .addNetworkInterceptor(StethoInterceptor())
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ChannelDescriptors.channelsList.forEach {
+                NotificationsManager.createNotificationChannel(this, it)
+            }
+        }
     }
 
     companion object {

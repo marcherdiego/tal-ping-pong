@@ -1,11 +1,11 @@
-package com.tal.android.pingpong.ui.fragments
+package com.tal.android.pingpong.services
 
-import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.tal.android.pingpong.extensions.fireAndForget
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.UsersService
+import com.tal.android.pingpong.notifications.NotificationsManager
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class MessagingService : FirebaseMessagingService() {
@@ -22,6 +22,6 @@ class MessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.e("MessagingService", "onMessageReceived")
+        NotificationsManager.showNotification(applicationContext, remoteMessage.data)
     }
 }
