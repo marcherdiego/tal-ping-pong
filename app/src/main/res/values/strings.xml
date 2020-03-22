@@ -7,12 +7,21 @@
     <string name="challenge">Challenge</string>
     <string name="close">Close</string>
     <string name="cancel">Cancel</string>
+    <string name="x_stats">%1$s\'s stats</string>
     <string name="user_stats">Matches won: %1$d\nMatches lost: %2$d\nMatches win rate: %3$s</string>
+    <string name="matches_won">Matches won: %1$d</string>
+    <string name="matches_lost">Matches lost: %1$d</string>
+    <string name="matches_win_rate">Matches win rate: %1$s</string>
+    <string name="x_matches_won">%1$s\'s matches won: %2$d</string>
+    <string name="x_matches_lost">%1$s\'s matches lost: %2$d</string>
+    <string name="x_matches_win_rate">%1$s\'s matches win rate: %2$s</string>
+    <string name="win_chances">Win chances: %1$s</string>
     <string name="user_rank">General rank: %1$d</string>
     <string name="invalid_time_in_the_past">Please select a time in the future</string>
     <string name="failed_to_load_users_list">Failed to load users list</string>
     <string name="no_match_history">No match history</string>
     <string name="upcoming_matches">Upcoming</string>
     <string name="past_matches">Past</string>
-    <string name="no_matches_yet">No matches yet...</string>
+    <string name="no_matches_yet">Nothing to show here…</string>
+    <string name="accept">Accept</string>
 </resources>

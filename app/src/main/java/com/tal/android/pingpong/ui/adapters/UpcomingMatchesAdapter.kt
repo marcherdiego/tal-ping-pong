@@ -12,7 +12,8 @@ import com.tal.android.pingpong.domain.Match
 import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.GlideUtils
 
-class UpcomingMatchesAdapter(private val matches: List<Match>, private val myEmail: String?) : RecyclerView.Adapter<UpcomingMatchesAdapter.ViewHolder>() {
+class UpcomingMatchesAdapter(private val matches: List<Match>, private val myEmail: String?) :
+    RecyclerView.Adapter<UpcomingMatchesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -52,22 +53,24 @@ class UpcomingMatchesAdapter(private val matches: List<Match>, private val myEma
             matchesHistory.removeAllViews()
             GlideUtils.loadImage(match.match?.local?.userImage, localImage, R.drawable.ic_incognito, true)
             userName.text = rival?.userName
-            match.matchesHistory?.forEach { matchRecord ->
-                LayoutInflater
-                    .from(context)
-                    .inflate(
-                        if (matchRecord.myVictory(myEmail)) {
-                            R.layout.match_record_win_view
-                        } else {
-                            R.layout.match_record_lose_view
-                        },
-                        matchesHistory,
-                        true
-                    )
-            } ?: run {
+            if (match.matchesHistory.isEmpty()) {
                 matchesHistory.addView(TextView(context).apply {
                     setText(R.string.no_match_history)
                 })
+            } else {
+                match.matchesHistory.forEach { matchRecord ->
+                    LayoutInflater
+                        .from(context)
+                        .inflate(
+                            if (matchRecord.myVictory(myEmail)) {
+                                R.layout.match_record_win_view
+                            } else {
+                                R.layout.match_record_lose_view
+                            },
+                            matchesHistory,
+                            true
+                        )
+                }
             }
             matchDate.text = DateUtils.formatDate(match.match?.matchDate)
             GlideUtils.loadImage(match.match?.visitor?.userImage, visitorImage, R.drawable.ic_incognito, true)

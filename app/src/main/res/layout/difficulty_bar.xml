@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:orientation="horizontal"
+        android:padding="@dimen/difficulty_bar_margin"
+        app:layout_constraintBottom_toBottomOf="@+id/selector"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/selector">
+
+        <View
+            android:id="@+id/chances_0_5"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_weight="1"
+            android:background="@color/chances_0_5" />
+
+        <View
+            android:id="@+id/chances_5_10"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_5_10" />
+
+        <View
+            android:id="@+id/chances_10_15"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_10_15" />
+
+        <View
+            android:id="@+id/chances_15_20"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_15_20" />
+
+        <View
+            android:id="@+id/chances_20_25"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_20_25" />
+
+        <View
+            android:id="@+id/chances_25_30"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_25_30" />
+
+        <View
+            android:id="@+id/chances_30_35"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_30_35" />
+
+        <View
+            android:id="@+id/chances_35_40"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_35_40" />
+
+        <View
+            android:id="@+id/chances_40_45"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_40_45" />
+
+        <View
+            android:id="@+id/chances_45_50"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_45_50" />
+
+        <View
+            android:id="@+id/chances_50_55"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_50_55" />
+
+        <View
+            android:id="@+id/chances_55_60"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_55_60" />
+
+        <View
+            android:id="@+id/chances_60_65"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_60_65" />
+
+        <View
+            android:id="@+id/chances_65_70"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_65_70" />
+
+        <View
+            android:id="@+id/chances_70_75"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_70_75" />
+
+        <View
+            android:id="@+id/chances_75_80"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_75_80" />
+
+        <View
+            android:id="@+id/chances_80_85"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_80_85" />
+
+        <View
+            android:id="@+id/chances_85_90"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_85_90" />
+
+        <View
+            android:id="@+id/chances_90_95"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_90_95" />
+
+        <View
+            android:id="@+id/chances_95_100"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/difficulty_bar_height"
+            android:layout_marginStart="@dimen/difficulty_bar_margin"
+            android:layout_weight="1"
+            android:background="@color/chances_95_100" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <View
+        android:id="@+id/selector"
+        android:layout_width="25dp"
+        android:layout_height="15dp"
+        android:background="@drawable/rectangle"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_up_arrow_2"
+        app:layout_constraintEnd_toEndOf="@+id/selector"
+        app:layout_constraintStart_toStartOf="@+id/selector"
+        app:layout_constraintTop_toBottomOf="@+id/selector" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

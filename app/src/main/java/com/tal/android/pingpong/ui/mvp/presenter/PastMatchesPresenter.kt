@@ -1,13 +1,14 @@
 package com.tal.android.pingpong.ui.mvp.presenter
 
+import com.nerdscorner.mvplib.events.bus.Bus
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.ui.adapters.PastMatchesAdapter
 import com.tal.android.pingpong.ui.mvp.model.PastMatchesModel
 import com.tal.android.pingpong.ui.mvp.view.PastMatchesView
 import org.greenrobot.eventbus.Subscribe
 
-class PastMatchesPresenter(view: PastMatchesView, model: PastMatchesModel) :
-    BaseFragmentPresenter<PastMatchesView, PastMatchesModel>(view, model) {
+class PastMatchesPresenter(view: PastMatchesView, model: PastMatchesModel, bus: Bus) :
+    BaseFragmentPresenter<PastMatchesView, PastMatchesModel>(view, model, bus) {
 
     @Subscribe
     fun onMatchesFetchedSuccessfully(event: PastMatchesModel.MatchesFetchedSuccessfullyEvent) {

@@ -1,8 +1,9 @@
 package com.tal.android.pingpong.domain
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class MatchRecord {
+class MatchRecord : Serializable {
     @SerializedName("local")
     var local: User? = null
 

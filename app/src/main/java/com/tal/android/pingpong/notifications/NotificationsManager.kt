@@ -16,16 +16,23 @@ import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tal.android.pingpong.R
+import com.tal.android.pingpong.domain.Match
+import com.tal.android.pingpong.domain.MatchRecord
+import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.activities.MainActivity
 
 object NotificationsManager {
     private val gson = Gson()
     private val mapType = object : TypeToken<Map<String, String>>() {}.type
 
-    const val KEY_NOTIFICATION_TITLE = "title"
-    const val KEY_NOTIFICATION_BODY = "body"
-    const val KEY_NOTIFICATION_DATA = "data"
-    const val KEY_NOTIFICATION_TYPE = "notification_type"
+    private const val KEY_NOTIFICATION_TITLE = "title"
+    private const val KEY_NOTIFICATION_BODY = "body"
+    private const val KEY_NOTIFICATION_DATA = "data"
+    private const val KEY_NOTIFICATION_TYPE = "notification_type"
+    private const val KEY_NOTIFICATION_SCREEN = "screen"
+    private const val KEY_NOTIFICATION_MATCH = "match"
+
+    private const val VALUE_SCREEN_MATCHES = "matches"
 
     fun showNotification(context: Context, data: Map<String, String>) {
         val logoBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_racket_icon)
@@ -37,7 +44,7 @@ object NotificationsManager {
             .setLargeIcon(logoBitmap)
             .setContentTitle(data[KEY_NOTIFICATION_TITLE])
             .setContentText(data[KEY_NOTIFICATION_BODY])
-            .setContentIntent(buildNotificationPendingIntent(context, data))
+            .setContentIntent(buildNotificationPendingIntent(context, notificationData))
             .setStyle(NotificationCompat.BigTextStyle().bigText(data[KEY_NOTIFICATION_BODY]))
             .setVibrate(LongArray(0))
             .setAutoCancel(true)
@@ -48,7 +55,13 @@ object NotificationsManager {
     }
 
     private fun buildNotificationPendingIntent(context: Context, data: Map<String, String>): PendingIntent? {
-        val intent = Intent(context, MainActivity::class.java)
+        val intent = when(data[KEY_NOTIFICATION_SCREEN]){
+            VALUE_SCREEN_MATCHES -> {
+                Intent(context, MainActivity::class.java)
+                    .putExtra(MainActivity.EXTRA_CHALLENGE_MATCH, gson.fromJson(data[KEY_NOTIFICATION_MATCH], MatchRecord::class.java))
+            }
+            else -> Intent(context, MainActivity::class.java)
+        }
         val stackBuilder = TaskStackBuilder.create(context.applicationContext)
         stackBuilder.addNextIntentWithParentStack(intent)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -7,9 +7,9 @@ import java.util.*
 
 object DateUtils {
 
-    private const val DATE_FORMAT_US = "MMM dd, yyyy hh:mm a"
+    private const val DATE_FORMAT_US = "MMM dd, yyyy HH:mm"
     private const val DATE_INPUT_FORMAT = "yyyy-MM-dd HH:mm:ss"
-    private val format = SimpleDateFormat(DATE_INPUT_FORMAT)
+    private val format = SimpleDateFormat(DATE_INPUT_FORMAT, Locale.US)
 
     fun formatDate(date: String?): String? {
         if (date == null) {
@@ -23,7 +23,7 @@ object DateUtils {
         return null
     }
 
-    fun toDate(date: String?) : Date? {
+    fun toDate(date: String?): Date? {
         if (date == null) {
             return null
         }

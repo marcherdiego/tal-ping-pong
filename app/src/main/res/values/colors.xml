@@ -7,4 +7,29 @@
     <color name="green">#1B5E20</color>
     <color name="victory_background_color">#E8F5E9</color>
     <color name="defeat_background_color">#FFEBEE</color>
+
+    <!-- Chances colors -->
+    <color name="chances_0_5">#B71C1C</color>
+    <color name="chances_5_10">#C62828</color>
+    <color name="chances_10_15">#D32F2F</color>
+    <color name="chances_15_20">#E53935</color>
+    <color name="chances_20_25">#F44336</color>
+
+    <color name="chances_25_30">#F57C00</color>
+    <color name="chances_30_35">#FB8C00</color>
+    <color name="chances_35_40">#FF9800</color>
+    <color name="chances_40_45">#FFA726</color>
+    <color name="chances_45_50">#FFB74D</color>
+
+    <color name="chances_50_55">#FDD835</color>
+    <color name="chances_55_60">#FFEB3B</color>
+    <color name="chances_60_65">#FFEE58</color>
+    <color name="chances_65_70">#DCE775</color>
+    <color name="chances_70_75">#D4E157</color>
+
+    <color name="chances_75_80">#9CCC65</color>
+    <color name="chances_80_85">#8BC34A</color>
+    <color name="chances_85_90">#66BB6A</color>
+    <color name="chances_90_95">#43A047</color>
+    <color name="chances_95_100">#2E7D32</color>
 </resources>

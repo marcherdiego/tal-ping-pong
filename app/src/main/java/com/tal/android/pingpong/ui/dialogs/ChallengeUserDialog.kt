@@ -36,7 +36,7 @@ class ChallengeUserDialog(private val user: User) {
         val myEmail = SharedPreferencesUtils(context).getUser()?.userEmail
 
         val challengeDialogBuilder = DialogFactory
-            .newBuilder(context)
+            .Builder()
             .setCancelable(true)
             .setTitle(R.string.user_details)
             .setView(challengeDialogView)
@@ -47,8 +47,9 @@ class ChallengeUserDialog(private val user: User) {
                     openChallengeDateSelectionDialog(context, user)
                 }
         }
-        challengeDialogBuilder.setNegativeButtonText(R.string.close)
-            .build()
+        challengeDialogBuilder
+            .setNegativeButtonText(R.string.close)
+            .build(context)
             .show()
     }
 

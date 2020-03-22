@@ -7,9 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 
 object DialogFactory {
-    fun newBuilder(context: Context) = Builder(context)
-
-    class Builder(val context: Context) {
+    class Builder {
 
         private var view: View? = null
 
@@ -102,25 +100,25 @@ object DialogFactory {
             return this
         }
 
-        fun build(): AlertDialog {
+        fun build(context: Context): AlertDialog {
             val builder = AlertDialog
                 .Builder(context)
                 .setCancelable(cancelable)
                 .setView(view)
-                .setTitle(getString(title, titleResId))
-                .setMessage(getString(message, messageResId))
+                .setTitle(getString(context, title, titleResId))
+                .setMessage(getString(context, message, messageResId))
                 .setOnDismissListener(onDismissListener)
                 .setOnCancelListener(onCancelListener)
-            getString(positiveButtonText, positiveButtonTextResId)?.let {
+            getString(context, positiveButtonText, positiveButtonTextResId)?.let {
                 builder.setPositiveButton(it) { _, _ -> positiveButtonListener() }
             }
-            getString(negativeButtonText, negativeButtonTextResId)?.let {
+            getString(context, negativeButtonText, negativeButtonTextResId)?.let {
                 builder.setNegativeButton(it) { _, _ -> negativeButtonListener() }
             }
             return builder.create()
         }
 
-        fun getString(value: CharSequence?, resId: Int): CharSequence? {
+        private fun getString(context: Context, value: CharSequence?, resId: Int): CharSequence? {
             if (value != null) {
                 return value
             }
