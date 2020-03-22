@@ -24,4 +24,7 @@
     <string name="past_matches">Past</string>
     <string name="no_matches_yet">Nothing to show here…</string>
     <string name="accept">Accept</string>
+    <string name="low">Low</string>
+    <string name="winning_chances">Winning chances</string>
+    <string name="high">High</string>
 </resources>

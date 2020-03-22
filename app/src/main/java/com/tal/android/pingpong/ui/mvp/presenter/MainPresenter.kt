@@ -40,7 +40,7 @@ class MainPresenter(view: MainView, model: MainModel) :
             val localUserMatchesWon = challengeDialogView.findViewById<TextView>(R.id.user_matches_won)
             val localUserMatchesLost = challengeDialogView.findViewById<TextView>(R.id.user_matches_lost)
             val localUserWinRate = challengeDialogView.findViewById<TextView>(R.id.user_matches_win_rate)
-            val winChances = challengeDialogView.findViewById<TextView>(R.id.win_chances)
+            val winChancesLabel = challengeDialogView.findViewById<TextView>(R.id.win_chances_label)
             val difficultyLevelGuideline = challengeDialogView.findViewById<Guideline>(R.id.guideline)
 
             val matchDate = challengeDialogView.findViewById<TextView>(R.id.match_date)
@@ -74,7 +74,9 @@ class MainPresenter(view: MainView, model: MainModel) :
                 localUser.matchesRatio
             )
 
-            difficultyLevelGuideline.setGuidelinePercent(visitorUser.chancesToWin(localUser))
+            val winChances = visitorUser.chancesToWin(localUser)
+            difficultyLevelGuideline.setGuidelinePercent(winChances)
+            winChancesLabel.text = (100 * winChances).asPercentString(digits = 0)
 
             DialogFactory
                 .Builder()

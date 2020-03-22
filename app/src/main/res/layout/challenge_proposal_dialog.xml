@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/local_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:padding="8dp"
             app:layout_constraintBottom_toTopOf="@+id/match_date"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,9 +37,8 @@
             app:layout_constraintTop_toBottomOf="@+id/local_image" />
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:padding="8dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_table_tennis_cross"
             app:layout_constraintBottom_toBottomOf="@+id/visitor_image"
             app:layout_constraintEnd_toStartOf="@+id/visitor_image"
@@ -58,8 +57,8 @@
 
         <ImageView
             android:id="@+id/visitor_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:padding="8dp"
             app:layout_constraintBottom_toTopOf="@+id/match_date"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +83,6 @@
         layout="@layout/difficulty_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/header"
         app:layout_constraintStart_toStartOf="@+id/header"
         app:layout_constraintTop_toBottomOf="@+id/header" />
@@ -104,44 +102,43 @@
         android:id="@+id/user_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_name"
         tools:text="user@email.com" />
 
-    <TextView
-        android:id="@+id/user_matches_won"
+    <LinearLayout
+        android:id="@+id/user_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_email"
-        tools:text="@string/matches_won" />
+        app:layout_constraintTop_toBottomOf="@+id/user_email">
 
-    <TextView
-        android:id="@+id/user_matches_lost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_matches_won"
-        tools:text="@string/matches_lost" />
+        <TextView
+            android:id="@+id/user_matches_won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="@string/matches_won" />
 
-    <TextView
-        android:id="@+id/user_matches_win_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_matches_lost"
-        tools:text="@string/matches_win_rate" />
+        <TextView
+            android:id="@+id/user_matches_lost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="@string/matches_lost" />
+
+        <TextView
+            android:id="@+id/user_matches_win_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="@string/matches_win_rate" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/user_achievements"
@@ -151,7 +148,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_matches_win_rate">
+        app:layout_constraintTop_toBottomOf="@+id/user_stats">
 
         <ImageView
             android:layout_width="30dp"
