@@ -14,4 +14,39 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="collapsingToolbarLayoutTitleColor" parent="AppTheme">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="expandedToolbarLayoutTitleColor" parent="AppTheme">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="ui_textview_title_black">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="ui_textview_large_black">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="ui_textview_normal_regular_black">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="FabStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="borderWidth">1dp</item>
+        <item name="elevation">6dp</item>
+        <item name="pressedTranslationZ">12dp</item>
+        <item name="rippleColor">@android:color/white</item>
+    </style>
+
 </resources>

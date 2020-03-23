@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 class MatchRecord : Serializable {
+    @SerializedName("id")
+    var id: Int? = null
+
     @SerializedName("local")
     var local: User? = null
 

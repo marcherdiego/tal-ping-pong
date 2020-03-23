@@ -1,6 +1,7 @@
 package com.tal.android.pingpong.networking.services
 
 import com.tal.android.pingpong.domain.Match
+import com.tal.android.pingpong.domain.MatchRecord
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -11,7 +12,13 @@ import java.util.*
 interface MatchesService {
 
     @POST("/challengeUser.php")
-    fun challengeUser(@Body match: Match): Call<Unit>
+    fun challengeUser(@Body match: MatchRecord): Call<Unit>
+
+    @POST("/acceptChallenge.php")
+    fun acceptChallenge(@Body match: MatchRecord): Call<Unit>
+
+    @POST("declineChallenge.php")
+    fun declineChallenge(@Body match: MatchRecord): Call<Unit>
 
     @GET("/getMatches.php")
     fun getMyMatches(

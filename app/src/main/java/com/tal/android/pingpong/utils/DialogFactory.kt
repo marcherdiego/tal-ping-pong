@@ -12,6 +12,7 @@ object DialogFactory {
         private var view: View? = null
 
         private var cancelable: Boolean = true
+        private var autoDismiss: Boolean = true
 
         private var title: CharSequence? = null
         private var titleResId: Int = 0
@@ -30,8 +31,17 @@ object DialogFactory {
         private var negativeButtonText: CharSequence? = null
         private var negativeButtonTextResId: Int = 0
 
+        private var neutralButtonListener: () -> Unit = {}
+        private var neutralButtonText: CharSequence? = null
+        private var neutralButtonTextResId: Int = 0
+
         fun setCancelable(cancelable: Boolean = true): Builder {
             this.cancelable = cancelable
+            return this
+        }
+
+        fun setAutoDismiss(autoDismiss: Boolean = true): Builder {
+            this.autoDismiss = autoDismiss
             return this
         }
 
@@ -95,6 +105,21 @@ object DialogFactory {
             return this
         }
 
+        fun setNeutralButtonListener(callback: () -> Unit): Builder {
+            this.neutralButtonListener = callback
+            return this
+        }
+
+        fun setNeutralButtonText(neutralButtonText: CharSequence?): Builder {
+            this.neutralButtonText = neutralButtonText
+            return this
+        }
+
+        fun setNeutralButtonText(neutralButtonText: Int?): Builder {
+            neutralButtonTextResId = neutralButtonText ?: 0
+            return this
+        }
+
         fun setView(view: View?): Builder {
             this.view = view
             return this
@@ -110,12 +135,39 @@ object DialogFactory {
                 .setOnDismissListener(onDismissListener)
                 .setOnCancelListener(onCancelListener)
             getString(context, positiveButtonText, positiveButtonTextResId)?.let {
-                builder.setPositiveButton(it) { _, _ -> positiveButtonListener() }
+                builder.setPositiveButton(it, null)
             }
             getString(context, negativeButtonText, negativeButtonTextResId)?.let {
-                builder.setNegativeButton(it) { _, _ -> negativeButtonListener() }
+                builder.setNegativeButton(it, null)
             }
-            return builder.create()
+            getString(context, neutralButtonText, neutralButtonTextResId)?.let {
+                builder.setNeutralButton(it, null)
+            }
+            val dialog = builder.create()
+            dialog.setOnShowListener {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.let {
+                    it.setOnClickListener {
+                        positiveButtonListener()
+                        if (autoDismiss) {
+                            dialog.dismiss()
+                        }
+                    }
+                }
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.let {
+                    it.setOnClickListener {
+                        negativeButtonListener()
+                        if (autoDismiss) {
+                            dialog.dismiss()
+                        }
+                    }
+                }
+                dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.let {
+                    it.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                }
+            }
+            return dialog
         }
 
         private fun getString(context: Context, value: CharSequence?, resId: Int): CharSequence? {

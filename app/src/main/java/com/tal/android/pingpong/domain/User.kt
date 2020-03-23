@@ -3,6 +3,8 @@ package com.tal.android.pingpong.domain
 import com.google.gson.annotations.SerializedName
 import com.tal.android.pingpong.utils.asPercentString
 import java.io.Serializable
+import kotlin.math.max
+import kotlin.math.min
 
 class User : Serializable {
 
@@ -36,7 +38,6 @@ class User : Serializable {
     @SerializedName("pushToken")
     var pushToken: String? = null
 
-    @Transient
     var matchesRatioValue: Float = 0f
         get() = if (matchesLost == 0) {
             0f
@@ -44,7 +45,6 @@ class User : Serializable {
             matchesWon.toFloat() / (matchesWon + matchesLost).toFloat()
         }
 
-    @Transient
     var matchesRatio: String? = null
         get() = if (matchesLost == 0) {
             "---"
@@ -54,13 +54,27 @@ class User : Serializable {
         }
 
     fun chancesToWin(user: User): Float {
+        if (this.matchesRatioValue * user.matchesRatioValue == 0f) {
+            // If any of the two is zero, then there is not enough data to process
+            return UNKNOWN
+        }
         val ratioSum = this.matchesRatioValue + user.matchesRatioValue
-        return this.matchesRatioValue / ratioSum
+        val ratio = this.matchesRatioValue / ratioSum
+
+        // Limit value to CHANCES_LOWER_BOUND% and CHANCES_UPPER_BOUND%
+        return max(CHANCES_LOWER_BOUND, min(ratio, CHANCES_UPPER_BOUND))
     }
 
     fun firstName() = userName?.substringBefore(SPACE)
 
     companion object {
         private const val SPACE = " "
+
+        const val UNKNOWN = -1f
+        const val CHANCES_HALF = 0.5f
+
+        // Limit value to 5% and 95%
+        const val CHANCES_LOWER_BOUND = 0.05f
+        const val CHANCES_UPPER_BOUND = 0.95f
     }
 }

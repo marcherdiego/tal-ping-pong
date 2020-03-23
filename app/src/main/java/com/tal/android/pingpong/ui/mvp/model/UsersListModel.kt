@@ -40,15 +40,13 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
         if (selectedDateTime.before(now)) {
             throw InvalidMatchTimeException()
         }
-        val challenge = Match().apply {
-            this.match = MatchRecord().apply {
-                local = sharedPreferencesUtils.getUser()
-                visitor = user
-                matchDate = selectedDateTime.time.toString()
-            }
+        val match = MatchRecord().apply {
+            local = sharedPreferencesUtils.getUser()
+            visitor = user
+            matchDate = selectedDateTime.time.toString()
         }
         matchesService
-            .challengeUser(challenge)
+            .challengeUser(match)
             .enqueueResponseNotNull(
                 success = {
                     bus.post(ChallengeSubmittedSuccessfullyEvent())

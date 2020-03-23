@@ -21,6 +21,7 @@ class LoginActivity : BaseActivity<LoginPresenter>() {
             this,
             GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestProfile()
                 .requestEmail()
                 .build()
         )

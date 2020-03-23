@@ -8,17 +8,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.nerdscorner.mvplib.events.fragment.BaseFragment
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.mvp.model.ProfileModel
-import com.tal.android.pingpong.ui.mvp.presenter.ProfilePresenter
-import com.tal.android.pingpong.ui.mvp.view.ProfileView
+import com.tal.android.pingpong.domain.User
+import com.tal.android.pingpong.ui.mvp.model.UserProfileModel
+import com.tal.android.pingpong.ui.mvp.presenter.UserProfilePresenter
+import com.tal.android.pingpong.ui.mvp.view.UserProfileView
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
-class ProfileFragment : BaseFragment<ProfilePresenter>() {
+class UserProfileFragment : BaseFragment<UserProfilePresenter>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.profile_fragment, container, false)
+    ): View = inflater.inflate(R.layout.user_profile_fragment, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -27,14 +28,20 @@ class ProfileFragment : BaseFragment<ProfilePresenter>() {
                 it,
                 GoogleSignInOptions
                     .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestProfile()
                     .requestEmail()
                     .build()
             )
             val sharedPreferences = SharedPreferencesUtils(it)
-            presenter = ProfilePresenter(
-                ProfileView(this),
-                ProfileModel(googleSignInClient, sharedPreferences)
+            val user = (arguments?.getSerializable(USER) as? User) ?: sharedPreferences.getUser() ?: return
+            presenter = UserProfilePresenter(
+                UserProfileView(this),
+                UserProfileModel(googleSignInClient, sharedPreferences, user)
             )
         }
+    }
+
+    companion object {
+        const val USER = "user"
     }
 }

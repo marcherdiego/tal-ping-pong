@@ -7,7 +7,8 @@ import com.tal.android.pingpong.R
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 
 object GlideUtils {
-    fun loadImage(url: String?, imageView: ImageView, @DrawableRes fallbackImage: Int? = null, rounded: Boolean = false) {
+    fun loadImage(url: String?, imageView: ImageView?, @DrawableRes fallbackImage: Int? = null, rounded: Boolean = false) {
+        imageView ?: return
         var builder = Glide
             .with(imageView.context)
             .load(url)

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/email_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/email_label"
+            style="@style/ui_textview_large_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/email"
+            style="@style/ui_textview_normal_regular_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email_label"
+            tools:text="panadero@theappraisallane.com" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/stats_title"
+        style="@style/ui_textview_title_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Last 30 days stats"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/email_container"
+        app:layout_constraintTop_toBottomOf="@+id/email_container" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/matches_won_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats_title"
+        android:layout_marginTop="4dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="@+id/stats_title"
+        app:layout_constraintTop_toBottomOf="@+id/stats_title">
+
+        <TextView
+            android:id="@+id/matches_won_label"
+            style="@style/ui_textview_large_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Matches won"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/matches_won"
+            style="@style/ui_textview_normal_regular_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/matches_won_label"
+            app:layout_constraintStart_toStartOf="@+id/matches_won_label"
+            app:layout_constraintTop_toBottomOf="@+id/matches_won_label"
+            tools:text="2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/matches_lost_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats_title"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/matches_win_rate_container"
+        app:layout_constraintStart_toEndOf="@+id/matches_won_container"
+        app:layout_constraintTop_toTopOf="@+id/matches_won_container">
+
+        <TextView
+            android:id="@+id/matches_lost_label"
+            style="@style/ui_textview_large_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Matches lost"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/matches_lost"
+            style="@style/ui_textview_normal_regular_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/matches_lost_label"
+            app:layout_constraintStart_toStartOf="@+id/matches_lost_label"
+            app:layout_constraintTop_toBottomOf="@+id/matches_lost_label"
+            tools:text="28" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/matches_win_rate_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats_title"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/matches_lost_container">
+
+        <TextView
+            android:id="@+id/matches_win_rate_label"
+            style="@style/ui_textview_large_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Matches win rate"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/matches_win_rate"
+            style="@style/ui_textview_normal_regular_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/matches_win_rate_label"
+            app:layout_constraintStart_toStartOf="@+id/matches_win_rate_label"
+            app:layout_constraintTop_toBottomOf="@+id/matches_win_rate_label"
+            tools:text="27%" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/last_ten_matches_label"
+        style="@style/ui_textview_large_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Last 10 matches"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/matches_lost_container" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/last_ten_matches"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/last_ten_matches_label" />
+
+    <ProgressBar
+        android:id="@+id/matches_loader_progress_bar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/last_ten_matches_label" />
+</androidx.constraintlayout.widget.ConstraintLayout>

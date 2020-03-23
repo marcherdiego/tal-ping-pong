@@ -27,4 +27,13 @@
     <string name="low">Low</string>
     <string name="winning_chances">Winning chances</string>
     <string name="high">High</string>
+    <string name="incoming_challenge">Incoming challenge</string>
+    <string name="unknown">Unknown</string>
+    <string name="challenge_accepted">Challenge accepted!</string>
+    <string name="challenge_declined">Challenge declined</string>
+    <string name="failed_to_accept_challenge">Failed to accept challenge, please try again</string>
+    <string name="failed_to_decline_challenge">Failed to decline challenge, please try again</string>
+    <string name="confirm_logout">Are you sure you want to log out?</string>
+    <string name="logout">Logout</string>
+    <string name="decline">Decline</string>
 </resources>
