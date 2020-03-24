@@ -57,6 +57,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="15" />
 
+        <ImageView
+            android:id="@+id/confirmed_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
+            android:src="@drawable/ic_verified"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_score"
+            app:layout_constraintStart_toEndOf="@+id/local_score"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/visitor_score"
             android:layout_width="wrap_content"

@@ -22,6 +22,9 @@ class MatchRecord : Serializable {
     @SerializedName("visitorScore")
     var visitorScore: Int = 0
 
+    @SerializedName("confirmed")
+    var confirmed: Boolean? = null
+
     fun myVictory(myEmail: String?): Boolean {
         return if (local?.userEmail == myEmail) {
             localScore > visitorScore

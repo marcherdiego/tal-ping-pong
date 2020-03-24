@@ -11,7 +11,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:padding="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/match_date"
+        app:layout_constraintBottom_toTopOf="@+id/match_date_container"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,22 +54,43 @@
             android:orientation="horizontal" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/match_date"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/match_date_container"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Wed, 3rd Oct 2020 15:50" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/match_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/confirmed_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Wed, 3rd Oct 2020 15:50" />
+
+        <ImageView
+            android:id="@+id/confirmed_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="4dp"
+            android:padding="2dp"
+            android:src="@drawable/ic_verified"
+            app:layout_constraintBottom_toBottomOf="@+id/match_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/match_date"
+            app:layout_constraintTop_toTopOf="@+id/match_date" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/visitor_image"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:padding="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/match_date"
+        app:layout_constraintBottom_toTopOf="@+id/match_date_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
