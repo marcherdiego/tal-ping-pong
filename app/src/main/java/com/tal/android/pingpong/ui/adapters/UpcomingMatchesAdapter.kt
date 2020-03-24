@@ -40,8 +40,8 @@ class UpcomingMatchesAdapter(private val matches: List<Match>, private val myEma
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
         with(holder) {
             val match = matches[position]
-            val matchRecord = match.match ?: return
-            bindBasicMatchData(matchRecord)
+            bindBasicMatchData(match.match ?: return)
+
             matchesHistory?.removeAllViews()
             if (match.matchesHistory.isEmpty()) {
                 matchesHistory?.addView(TextView(itemView.context).apply {
@@ -62,13 +62,6 @@ class UpcomingMatchesAdapter(private val matches: List<Match>, private val myEma
                         )
                 }
             }
-            confirmedIcon.setImageResource(
-                if (matchRecord.confirmed == true) {
-                    R.drawable.ic_verified
-                } else {
-                    R.drawable.ic_warning
-                }
-            )
         }
     }
 }

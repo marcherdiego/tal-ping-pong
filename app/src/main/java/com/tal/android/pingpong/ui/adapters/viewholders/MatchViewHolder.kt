@@ -12,11 +12,11 @@ import com.tal.android.pingpong.utils.GlideUtils
 
 class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     // Common fields
-    val localImage: ImageView = itemView.findViewById(R.id.local_image)
-    val userName: TextView = itemView.findViewById(R.id.user_name)
-    val matchDate: TextView = itemView.findViewById(R.id.match_date)
-    val visitorImage: ImageView = itemView.findViewById(R.id.visitor_image)
-    val confirmedIcon: ImageView = itemView.findViewById(R.id.confirmed_icon)
+    private val localImage: ImageView = itemView.findViewById(R.id.local_image)
+    private val userName: TextView = itemView.findViewById(R.id.user_name)
+    private val matchDate: TextView = itemView.findViewById(R.id.match_date)
+    private val visitorImage: ImageView = itemView.findViewById(R.id.visitor_image)
+    private val confirmedIcon: ImageView = itemView.findViewById(R.id.confirmed_icon)
 
     // Upcoming matches fields
     val matchesHistory: LinearLayout? = itemView.findViewById(R.id.matches_history)
@@ -35,6 +35,14 @@ class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         userName.text = rival?.userName
         matchDate.text = DateUtils.formatDate(match.matchDate)
         GlideUtils.loadImage(match.visitor?.userImage, visitorImage, R.drawable.ic_incognito, true)
+
+        confirmedIcon.setImageResource(
+            if (match.confirmed == true) {
+                R.drawable.ic_verified
+            } else {
+                R.drawable.ic_warning
+            }
+        )
     }
 
     companion object {
