@@ -4,7 +4,7 @@ import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import java.util.*
 
-class UpcomingMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatchesListModel(sharedPreferences) {
+class UnconfirmedMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatchesListModel(sharedPreferences) {
 
     override fun fetchUserMatches() {
         val userId = getUserId()
@@ -13,7 +13,7 @@ class UpcomingMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatc
             return
         }
         matchesService
-            .getMyMatches(userId = userId, startDate = Date().time, endDate = null, confirmed = true)
+            .getMyMatches(userId = userId, startDate = Date().time, endDate = null, confirmed = false)
             .enqueueResponseNotNull(
                 success = {
                     bus.post(MatchesFetchedSuccessfullyEvent(it))

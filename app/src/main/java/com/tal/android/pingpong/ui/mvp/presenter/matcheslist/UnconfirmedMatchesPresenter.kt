@@ -3,12 +3,12 @@ package com.tal.android.pingpong.ui.mvp.presenter.matcheslist
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.ui.adapters.UpcomingMatchesAdapter
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
-import com.tal.android.pingpong.ui.mvp.model.matcheslist.UpcomingMatchesModel
+import com.tal.android.pingpong.ui.mvp.model.matcheslist.UnconfirmedMatchesModel
 import com.tal.android.pingpong.ui.mvp.view.matcheslist.BaseMatchesListView
 import org.greenrobot.eventbus.Subscribe
 
-class UpcomingMatchesPresenter(view: BaseMatchesListView, model: UpcomingMatchesModel, bus: Bus) :
-    BaseMatchesListPresenter<BaseMatchesListView, UpcomingMatchesModel>(view, model, bus) {
+class UnconfirmedMatchesPresenter(view: BaseMatchesListView, model: UnconfirmedMatchesModel, bus: Bus) :
+    BaseMatchesListPresenter<BaseMatchesListView, UnconfirmedMatchesModel>(view, model, bus) {
 
     @Subscribe
     fun onMatchesFetchedSuccessfully(event: BaseMatchesListModel.MatchesFetchedSuccessfullyEvent) {

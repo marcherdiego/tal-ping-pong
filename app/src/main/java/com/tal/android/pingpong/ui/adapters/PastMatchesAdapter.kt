@@ -9,8 +9,7 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.Match
 import com.tal.android.pingpong.ui.adapters.viewholders.MatchViewHolder
 
-class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: String?) :
-    RecyclerView.Adapter<MatchViewHolder>() {
+class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: String?) : RecyclerView.Adapter<MatchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
         return MatchViewHolder(
@@ -42,7 +41,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
         with(holder) {
             val match = matches[position]
             val matchRecord = match.match ?: return
-            
+
             bindBasicMatchData(matchRecord)
 
             val localPlayerScore = matchRecord.localScore

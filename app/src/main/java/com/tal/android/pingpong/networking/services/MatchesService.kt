@@ -24,6 +24,7 @@ interface MatchesService {
     fun getMyMatches(
         @Query("userId") userId: Int,
         @Query("startDate") startDate: Long? = null,
-        @Query("endDate") endDate: Long? = null
+        @Query("endDate") endDate: Long? = null,
+        @Query("confirmed") confirmed: Boolean = true
     ): Call<List<Match>>
 }

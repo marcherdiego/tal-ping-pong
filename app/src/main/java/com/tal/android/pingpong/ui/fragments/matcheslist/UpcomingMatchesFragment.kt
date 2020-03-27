@@ -9,7 +9,7 @@ import com.nerdscorner.mvplib.events.fragment.BaseFragment
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.UpcomingMatchesModel
 import com.tal.android.pingpong.ui.mvp.presenter.matcheslist.UpcomingMatchesPresenter
-import com.tal.android.pingpong.ui.mvp.view.matcheslist.UpcomingMatchesView
+import com.tal.android.pingpong.ui.mvp.view.matcheslist.BaseMatchesListView
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class UpcomingMatchesFragment : BaseFragment<UpcomingMatchesPresenter>() {
@@ -25,7 +25,7 @@ class UpcomingMatchesFragment : BaseFragment<UpcomingMatchesPresenter>() {
         context?.let {
             val sharedPreferences = SharedPreferencesUtils(it)
             presenter = UpcomingMatchesPresenter(
-                UpcomingMatchesView(this),
+                BaseMatchesListView(this),
                 UpcomingMatchesModel(sharedPreferences),
                 Bus.newInstance
             )

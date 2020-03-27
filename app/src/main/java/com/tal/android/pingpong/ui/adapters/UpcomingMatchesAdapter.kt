@@ -8,8 +8,7 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.Match
 import com.tal.android.pingpong.ui.adapters.viewholders.MatchViewHolder
 
-class UpcomingMatchesAdapter(private val matches: List<Match>, private val myEmail: String?) :
-    RecyclerView.Adapter<MatchViewHolder>() {
+class UpcomingMatchesAdapter(private val matches: List<Match>, private val myEmail: String?) : RecyclerView.Adapter<MatchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
         return MatchViewHolder(
