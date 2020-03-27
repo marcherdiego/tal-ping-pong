@@ -72,7 +72,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_margin="4dp"
-            android:src="@drawable/ic_goal" />
+            android:src="@drawable/ic_first_place_trophy" />
 
         <ImageView
             android:layout_width="30dp"
