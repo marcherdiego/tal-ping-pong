@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.fragments
+package com.tal.android.pingpong.ui.fragments.matcheslist
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.nerdscorner.mvplib.events.fragment.BaseFragment
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.mvp.model.UpcomingMatchesModel
-import com.tal.android.pingpong.ui.mvp.presenter.UpcomingMatchesPresenter
-import com.tal.android.pingpong.ui.mvp.view.UpcomingMatchesView
+import com.tal.android.pingpong.ui.mvp.model.matcheslist.PastMatchesModel
+import com.tal.android.pingpong.ui.mvp.presenter.matcheslist.PastMatchesPresenter
+import com.tal.android.pingpong.ui.mvp.view.matcheslist.PastMatchesView
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
-class UpcomingMatchesFragment : BaseFragment<UpcomingMatchesPresenter>() {
+class PastMatchesFragment : BaseFragment<PastMatchesPresenter>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,9 +24,9 @@ class UpcomingMatchesFragment : BaseFragment<UpcomingMatchesPresenter>() {
 
         context?.let {
             val sharedPreferences = SharedPreferencesUtils(it)
-            presenter = UpcomingMatchesPresenter(
-                UpcomingMatchesView(this),
-                UpcomingMatchesModel(sharedPreferences),
+            presenter = PastMatchesPresenter(
+                PastMatchesView(this),
+                PastMatchesModel(sharedPreferences),
                 Bus.newInstance
             )
         }

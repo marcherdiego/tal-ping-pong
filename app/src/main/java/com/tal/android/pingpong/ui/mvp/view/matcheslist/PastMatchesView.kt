@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.mvp.view
+package com.tal.android.pingpong.ui.mvp.view.matcheslist
 
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -8,9 +8,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.EmptyAdapter
-import com.tal.android.pingpong.ui.adapters.UpcomingMatchesAdapter
+import com.tal.android.pingpong.ui.adapters.PastMatchesAdapter
 
-class UpcomingMatchesView(fragment: Fragment) : BaseFragmentView(fragment) {
+class PastMatchesView(fragment: Fragment) : BaseFragmentView(fragment) {
     private val emptyListLayout: View? = fragment.view?.findViewById(R.id.empty_list_layout)
     private val challengesList: RecyclerView? = fragment.view?.findViewById(R.id.challenges_list)
     private val refreshLayout: SwipeRefreshLayout? = fragment.view?.findViewById(R.id.refresh_layout)
@@ -25,7 +25,7 @@ class UpcomingMatchesView(fragment: Fragment) : BaseFragmentView(fragment) {
         }
     }
 
-    fun setMatchesAdapter(adapter: UpcomingMatchesAdapter) {
+    fun setMatchesAdapter(adapter: PastMatchesAdapter) {
         if (adapter.itemCount == 0) {
             emptyListLayout?.visibility = View.VISIBLE
             challengesList?.adapter = EmptyAdapter()

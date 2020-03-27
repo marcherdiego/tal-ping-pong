@@ -1,10 +1,10 @@
-package com.tal.android.pingpong.ui.mvp.presenter
+package com.tal.android.pingpong.ui.mvp.presenter.matcheslist
 
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.ui.adapters.PastMatchesAdapter
-import com.tal.android.pingpong.ui.mvp.model.PastMatchesModel
-import com.tal.android.pingpong.ui.mvp.view.PastMatchesView
+import com.tal.android.pingpong.ui.mvp.model.matcheslist.PastMatchesModel
+import com.tal.android.pingpong.ui.mvp.view.matcheslist.PastMatchesView
 import org.greenrobot.eventbus.Subscribe
 
 class PastMatchesPresenter(view: PastMatchesView, model: PastMatchesModel, bus: Bus) :

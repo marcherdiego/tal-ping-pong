@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.mvp.model
+package com.tal.android.pingpong.ui.mvp.model.matcheslist
 
 import com.nerdscorner.mvplib.events.model.BaseEventsModel
 import com.tal.android.pingpong.domain.Match
@@ -22,7 +22,11 @@ class PastMatchesModel(private val sharedPreferences: SharedPreferencesUtils) : 
             .getMyMatches(userId = userId, startDate = null, endDate = Date().time)
             .enqueueResponseNotNull(
                 success = {
-                    bus.post(MatchesFetchedSuccessfullyEvent(it))
+                    bus.post(
+                        MatchesFetchedSuccessfullyEvent(
+                            it
+                        )
+                    )
                 },
                 fail = {
                     bus.post(MatchesFetchFailedEvent())
