@@ -36,4 +36,6 @@
     <string name="confirm_logout">Are you sure you want to log out?</string>
     <string name="logout">Logout</string>
     <string name="decline">Decline</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="unconfirmed">Unconfirmed</string>
 </resources>

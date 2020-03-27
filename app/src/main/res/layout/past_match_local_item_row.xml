@@ -69,6 +69,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/confirmed_label"
+            style="@style/ui_textview_small_regular_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirmed"
+            app:layout_constraintEnd_toEndOf="@+id/confirmed_icon"
+            app:layout_constraintStart_toStartOf="@+id/confirmed_icon"
+            app:layout_constraintTop_toBottomOf="@+id/confirmed_icon" />
+
+        <TextView
             android:id="@+id/visitor_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

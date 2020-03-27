@@ -41,10 +41,12 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
         with(holder) {
             val match = matches[position]
-            bindBasicMatchData(match.match ?: return)
+            val matchRecord = match.match ?: return
+            
+            bindBasicMatchData(matchRecord)
 
-            val localPlayerScore = match.match?.localScore ?: 0
-            val visitorPlayerScore = match.match?.visitorScore ?: 0
+            val localPlayerScore = matchRecord.localScore
+            val visitorPlayerScore = matchRecord.visitorScore
             localScore?.text = localPlayerScore.toString()
             visitorScore?.text = visitorPlayerScore.toString()
 
@@ -56,10 +58,18 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
                 visitorScore?.setTypeface(visitorScore.typeface, Typeface.BOLD)
             }
 
+            confirmedLabel?.setText(
+                if (matchRecord.confirmed == true) {
+                    R.string.confirmed
+                } else {
+                    R.string.unconfirmed
+                }
+            )
+
             itemView.setBackgroundColor(
                 ContextCompat.getColor(
                     itemView.context,
-                    if (match.match?.myVictory(myEmail) == true) {
+                    if (matchRecord.myVictory(myEmail)) {
                         R.color.victory_background_color
                     } else {
                         R.color.defeat_background_color

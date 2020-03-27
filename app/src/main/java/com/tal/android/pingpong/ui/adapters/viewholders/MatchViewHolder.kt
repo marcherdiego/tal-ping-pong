@@ -24,6 +24,7 @@ class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     // Past matches fields
     val localScore: TextView? = itemView.findViewById(R.id.local_score)
     val visitorScore: TextView? = itemView.findViewById(R.id.visitor_score)
+    val confirmedLabel: TextView? = itemView.findViewById(R.id.confirmed_label)
 
     fun bindBasicMatchData(match: MatchRecord) {
         val rival = if (itemViewType == VIEW_TYPE_LOCAL) {
