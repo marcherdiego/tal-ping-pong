@@ -13,7 +13,7 @@ class UnconfirmedMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseM
             return
         }
         matchesService
-            .getMyMatches(userId = userId, startDate = Date().time, endDate = null, confirmed = false)
+            .getMyMatches(userId = userId, startDate = Date().time, endDate = null, confirmed = false, fetchMatchHistory = true)
             .enqueueResponseNotNull(
                 success = {
                     bus.post(MatchesFetchedSuccessfullyEvent(it))

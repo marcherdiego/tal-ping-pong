@@ -59,8 +59,8 @@
 
         <ImageView
             android:id="@+id/confirmed_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:padding="2dp"
             android:src="@drawable/ic_verified"
             app:layout_constraintBottom_toBottomOf="parent"

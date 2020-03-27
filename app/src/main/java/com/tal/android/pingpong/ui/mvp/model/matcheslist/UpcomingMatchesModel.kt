@@ -13,7 +13,7 @@ class UpcomingMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatc
             return
         }
         matchesService
-            .getMyMatches(userId = userId, startDate = Date().time, endDate = null, confirmed = true)
+            .getMyMatches(userId = userId, startDate = Date().time, endDate = null, confirmed = true, fetchMatchHistory = true)
             .enqueueResponseNotNull(
                 success = {
                     bus.post(MatchesFetchedSuccessfullyEvent(it))

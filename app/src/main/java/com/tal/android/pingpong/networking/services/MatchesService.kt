@@ -25,6 +25,7 @@ interface MatchesService {
         @Query("userId") userId: Int,
         @Query("startDate") startDate: Long? = null,
         @Query("endDate") endDate: Long? = null,
-        @Query("confirmed") confirmed: Boolean = true
+        @Query("confirmed") confirmed: Boolean = true,
+        @Query("fetchMatchHistory") fetchMatchHistory: Boolean = false
     ): Call<List<Match>>
 }

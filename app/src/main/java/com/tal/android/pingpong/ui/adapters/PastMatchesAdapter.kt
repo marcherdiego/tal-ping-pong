@@ -57,13 +57,13 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
                 visitorScore?.setTypeface(visitorScore.typeface, Typeface.BOLD)
             }
 
-            confirmedLabel?.setText(
-                if (matchRecord.confirmed == true) {
-                    R.string.confirmed
-                } else {
-                    R.string.unconfirmed
-                }
-            )
+            if (matchRecord.confirmed == true) {
+                confirmedLabel?.setText(R.string.confirmed)
+                confirmedIcon?.setImageResource(R.drawable.ic_verified)
+            } else {
+                confirmedLabel?.setText(R.string.not_played)
+                confirmedIcon?.setImageResource(R.drawable.ic_close)
+            }
 
             itemView.setBackgroundColor(
                 ContextCompat.getColor(

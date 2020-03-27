@@ -14,9 +14,11 @@ import com.tal.android.pingpong.ui.mvp.view.matcheslist.BaseMatchesListView
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class UnconfirmedMatchesFragment : BaseFragment<UnconfirmedMatchesPresenter>() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.unconfirmed_matches_fragment, container, false)
-    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = inflater.inflate(R.layout.matches_list_fragment, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
