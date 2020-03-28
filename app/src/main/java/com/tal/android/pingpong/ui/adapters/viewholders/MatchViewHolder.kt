@@ -1,5 +1,6 @@
 package com.tal.android.pingpong.ui.adapters.viewholders
 
+import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -7,11 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
+import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.GlideUtils
 
 class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     // Common fields
+    private val mainContainer: LinearLayout = itemView.findViewById(R.id.main_container)
     private val localImage: ImageView = itemView.findViewById(R.id.local_image)
     private val userName: TextView = itemView.findViewById(R.id.user_name)
     private val matchDate: TextView = itemView.findViewById(R.id.match_date)
@@ -27,11 +30,15 @@ class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val confirmedLabel: TextView? = itemView.findViewById(R.id.confirmed_label)
 
     fun bindBasicMatchData(match: MatchRecord) {
-        val rival = if (itemViewType == VIEW_TYPE_LOCAL) {
-            match.visitor
+        val rival: User?
+        if (itemViewType == VIEW_TYPE_LOCAL) {
+            mainContainer.gravity = Gravity.END
+            rival = match.visitor
         } else {
-            match.local
+            mainContainer.gravity = Gravity.START
+            rival = match.local
         }
+
         GlideUtils.loadImage(match.local?.userImage, localImage, R.drawable.ic_incognito, true)
         userName.text = rival?.userName
         matchDate.text = DateUtils.formatDate(match.matchDate)

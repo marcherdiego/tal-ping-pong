@@ -14,15 +14,7 @@ class UpcomingMatchesAdapter(private val matches: List<Match>, private val myEma
         return MatchViewHolder(
             LayoutInflater
                 .from(parent.context)
-                .inflate(
-                    if (viewType == MatchViewHolder.VIEW_TYPE_LOCAL) {
-                        R.layout.upcoming_match_local_item_row
-                    } else {
-                        R.layout.upcoming_match_visitor_item_row
-                    },
-                    parent,
-                    false
-                )
+                .inflate(R.layout.upcoming_match_item_row, parent, false)
         )
     }
 

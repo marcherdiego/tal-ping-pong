@@ -15,15 +15,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
         return MatchViewHolder(
             LayoutInflater
                 .from(parent.context)
-                .inflate(
-                    if (viewType == MatchViewHolder.VIEW_TYPE_LOCAL) {
-                        R.layout.past_match_local_item_row
-                    } else {
-                        R.layout.past_match_visitor_item_row
-                    },
-                    parent,
-                    false
-                )
+                .inflate(R.layout.past_match_item_row, parent, false)
         )
     }
 
@@ -68,10 +60,14 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
             itemView.setBackgroundColor(
                 ContextCompat.getColor(
                     itemView.context,
-                    if (matchRecord.myVictory(myEmail)) {
-                        R.color.victory_background_color
+                    if (matchRecord.confirmed == true) {
+                        if (matchRecord.myVictory(myEmail)) {
+                            R.color.victory_background_color
+                        } else {
+                            R.color.defeat_background_color
+                        }
                     } else {
-                        R.color.defeat_background_color
+                        R.color.match_not_played
                     }
                 )
             )
