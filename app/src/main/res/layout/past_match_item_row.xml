@@ -30,6 +30,8 @@
         android:id="@+id/main_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         app:layout_constraintEnd_toStartOf="@+id/visitor_image"
         app:layout_constraintStart_toEndOf="@+id/local_image"
         app:layout_constraintTop_toTopOf="@+id/local_image">
@@ -65,6 +67,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="15" />
 
+        <TextView
+            android:id="@+id/old_local_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/local_score"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="15" />
+
         <ImageView
             android:id="@+id/confirmed_icon"
             android:layout_width="25dp"
@@ -72,8 +85,8 @@
             android:padding="2dp"
             android:src="@drawable/ic_verified"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/visitor_score"
-            app:layout_constraintStart_toEndOf="@+id/local_score"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -81,10 +94,23 @@
             style="@style/ui_textview_small_regular_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Confirmed"
             app:layout_constraintEnd_toEndOf="@+id/confirmed_icon"
             app:layout_constraintStart_toStartOf="@+id/confirmed_icon"
             app:layout_constraintTop_toBottomOf="@+id/confirmed_icon" />
+
+        <TextView
+            android:id="@+id/old_visitor_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_score"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="15" />
 
         <TextView
             android:id="@+id/visitor_score"

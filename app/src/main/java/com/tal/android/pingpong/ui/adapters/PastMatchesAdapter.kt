@@ -2,14 +2,18 @@ package com.tal.android.pingpong.ui.adapters
 
 import android.graphics.Typeface
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.Match
+import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.ui.adapters.viewholders.MatchViewHolder
 
-class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: String?) : RecyclerView.Adapter<MatchViewHolder>() {
+class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: String?, private val bus: Bus) :
+    RecyclerView.Adapter<MatchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
         return MatchViewHolder(
@@ -38,8 +42,6 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
 
             val localPlayerScore = matchRecord.localScore
             val visitorPlayerScore = matchRecord.visitorScore
-            localScore?.text = localPlayerScore.toString()
-            visitorScore?.text = visitorPlayerScore.toString()
 
             if (localPlayerScore > visitorPlayerScore) {
                 localScore?.setTypeface(localScore.typeface, Typeface.BOLD)
@@ -49,28 +51,70 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
                 visitorScore?.setTypeface(visitorScore.typeface, Typeface.BOLD)
             }
 
-            if (matchRecord.confirmed == true) {
-                confirmedLabel?.setText(R.string.confirmed)
-                confirmedIcon?.setImageResource(R.drawable.ic_verified)
+            if (matchRecord.hasRequestedChanges == true) {
+                // User has requested changes
+                confirmedLabel?.setText(R.string.changes_requested)
+                confirmedIcon?.setImageResource(R.drawable.ic_warning)
+
+                val requestedLocalScore = matchRecord.requestedLocalScore
+                if (requestedLocalScore == localPlayerScore) {
+                    // Local score unchanged
+                    oldLocalScore?.visibility = View.GONE
+                    localScore?.text = localPlayerScore.toString()
+                } else {
+                    oldLocalScore?.visibility = View.VISIBLE
+                    oldLocalScore?.text = localPlayerScore.toString()
+                    localScore?.text = matchRecord.requestedLocalScore.toString()
+                }
+
+                val requestedVisitorScore = matchRecord.requestedVisitorScore
+                if (requestedVisitorScore == visitorPlayerScore) {
+                    // Visitor score unchanged
+                    oldVisitorScore?.visibility = View.GONE
+                    visitorScore?.text = visitorPlayerScore.toString()
+                } else {
+                    oldVisitorScore?.visibility = View.VISIBLE
+                    oldVisitorScore?.text = visitorPlayerScore.toString()
+                    visitorScore?.text = matchRecord.requestedVisitorScore.toString()
+                }
             } else {
-                confirmedLabel?.setText(R.string.not_played)
-                confirmedIcon?.setImageResource(R.drawable.ic_close)
+                // No changes requested
+                oldLocalScore?.visibility = View.GONE
+                oldVisitorScore?.visibility = View.GONE
+                localScore?.text = localPlayerScore.toString()
+                visitorScore?.text = visitorPlayerScore.toString()
+                if (matchRecord.confirmed == true) {
+                    confirmedLabel?.setText(R.string.confirmed)
+                    confirmedIcon?.setImageResource(R.drawable.ic_verified)
+                } else {
+                    confirmedLabel?.setText(R.string.not_played)
+                    confirmedIcon?.setImageResource(R.drawable.ic_close)
+                }
             }
 
             itemView.setBackgroundColor(
                 ContextCompat.getColor(
                     itemView.context,
-                    if (matchRecord.confirmed == true) {
-                        if (matchRecord.myVictory(myEmail)) {
-                            R.color.victory_background_color
-                        } else {
-                            R.color.defeat_background_color
-                        }
+                    if (matchRecord.hasRequestedChanges == true) {
+                        R.color.changes_requested_background_color
                     } else {
-                        R.color.match_not_played
+                        if (matchRecord.confirmed == true) {
+                            if (matchRecord.myVictory(myEmail)) {
+                                R.color.victory_background_color
+                            } else {
+                                R.color.defeat_background_color
+                            }
+                        } else {
+                            R.color.match_not_played
+                        }
                     }
                 )
             )
+            itemView.setOnClickListener {
+                bus.post(MatchClickedEvent(matchRecord))
+            }
         }
     }
+
+    class MatchClickedEvent(val match: MatchRecord)
 }

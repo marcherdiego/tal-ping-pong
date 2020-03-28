@@ -1,5 +1,6 @@
 package com.tal.android.pingpong.ui.adapters.viewholders
 
+import android.graphics.Paint
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
@@ -26,8 +27,19 @@ class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     // Past matches fields
     val confirmedIcon: ImageView? = itemView.findViewById(R.id.confirmed_icon)
     val localScore: TextView? = itemView.findViewById(R.id.local_score)
+    val oldLocalScore: TextView? = itemView.findViewById(R.id.old_local_score)
     val visitorScore: TextView? = itemView.findViewById(R.id.visitor_score)
+    val oldVisitorScore: TextView? = itemView.findViewById(R.id.old_visitor_score)
     val confirmedLabel: TextView? = itemView.findViewById(R.id.confirmed_label)
+
+    init {
+        oldLocalScore?.let {
+            it.paintFlags = it.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        }
+        oldVisitorScore?.let {
+            it.paintFlags = it.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        }
+    }
 
     fun bindBasicMatchData(match: MatchRecord) {
         val rival: User?

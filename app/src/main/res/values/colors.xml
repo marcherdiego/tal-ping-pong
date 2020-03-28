@@ -6,9 +6,12 @@
     <color name="red">#B71C1C</color>
     <color name="green">#1B5E20</color>
 
+    <color name="changes_requested_background_color">#FFF8E1</color>
     <color name="victory_background_color">#E8F5E9</color>
     <color name="defeat_background_color">#FFEBEE</color>
     <color name="match_not_played">#EFEFEF</color>
+
+    <color name="edit_background_color">#FFF8E1</color>
 
     <!-- Chances colors -->
     <color name="chances_0_5">#B71C1C</color>

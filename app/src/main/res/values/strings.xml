@@ -40,4 +40,9 @@
     <string name="unconfirmed">Unconfirmed</string>
     <string name="unconfirmed_matches">Unconfirmed</string>
     <string name="not_played">Not played</string>
+    <string name="edit_match_details">Edit match details</string>
+    <string name="edit">Edit</string>
+    <string name="edit_request_sent">Edit request sent!</string>
+    <string name="edit_request_send_failed">Something went wrong while sending the edit request, please try again.</string>
+    <string name="changes_requested">Changes requested</string>
 </resources>

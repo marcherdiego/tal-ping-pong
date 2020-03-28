@@ -22,6 +22,7 @@ class MatchesListView(fragment: Fragment) : BaseFragmentView(fragment) {
 
     fun setTabsAdapter(adapter: MatchesTabsAdapter) {
         viewPager?.adapter = adapter
+        viewPager?.offscreenPageLimit = adapter.count
         tabLayout?.setupWithViewPager(viewPager)
     }
 
