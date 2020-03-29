@@ -1,7 +1,9 @@
 package com.tal.android.pingpong.extensions
 
 import android.util.Log
+import com.nerdscorner.mvplib.events.model.BaseEventsModel
 import com.tal.android.pingpong.exceptions.NetworkException
+import com.tal.android.pingpong.ui.mvp.model.BaseModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,11 +79,15 @@ fun <T> Call<T>.enqueueResponseNotNull(
     )
 }
 
-fun <T> Call<T>.fireAndForget() {
-    enqueue(object : Callback<T> {
-        override fun onFailure(call: Call<T>, t: Throwable) {}
-        override fun onResponse(call: Call<T>, response: Response<T>) {}
-    })
+fun <T> Call<T>.fireAndForget(): Call<T> {
+    return enqueue(
+        success = {},
+        fail = {}
+    )
+}
+
+fun <T> Call<T>.attachTo(model: BaseModel) {
+    model.retrofitCalls.add(this)
 }
 
 fun Response<*>.isFromCache() = raw().networkResponse == null

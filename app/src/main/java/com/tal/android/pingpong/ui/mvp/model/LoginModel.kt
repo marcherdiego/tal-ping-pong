@@ -3,16 +3,14 @@ package com.tal.android.pingpong.ui.mvp.model
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.nerdscorner.mvplib.events.model.BaseEventsModel
 import com.tal.android.pingpong.domain.User
+import com.tal.android.pingpong.extensions.attachTo
 import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.UsersService
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
-class LoginModel(val googleSignInClient: GoogleSignInClient, private val sharedPreferences: SharedPreferencesUtils) : BaseEventsModel() {
+class LoginModel(val googleSignInClient: GoogleSignInClient, private val sharedPreferences: SharedPreferencesUtils) : BaseModel() {
 
     private val userService = ServiceGenerator.createService(UsersService::class.java)
 
@@ -35,6 +33,7 @@ class LoginModel(val googleSignInClient: GoogleSignInClient, private val sharedP
                     bus.post(UserLogInFailedEvent(it.message))
                 }
             )
+            .attachTo(this)
     }
 
     class UserLoggedInSuccessfullyEvent

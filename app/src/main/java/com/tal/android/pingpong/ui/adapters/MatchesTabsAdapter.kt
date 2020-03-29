@@ -12,4 +12,10 @@ class MatchesTabsAdapter(fm: FragmentManager, private val fragments: List<Fragme
     override fun getItem(position: Int) = fragments[position]
 
     override fun getCount() = fragments.size
+
+    fun detach() {
+        fragments.forEach {
+            it.onDetach()
+        }
+    }
 }

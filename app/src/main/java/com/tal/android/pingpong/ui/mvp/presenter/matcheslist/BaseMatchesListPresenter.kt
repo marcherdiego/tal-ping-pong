@@ -12,6 +12,7 @@ abstract class BaseMatchesListPresenter<V : BaseMatchesListView, M : BaseMatches
     @Subscribe
     fun onMatchesFetchFailed(event: BaseMatchesListModel.MatchesFetchFailedEvent) {
         view.setRefreshing(false)
+        view.showNetworkErrorMessage()
     }
 
     @Subscribe
@@ -21,6 +22,7 @@ abstract class BaseMatchesListPresenter<V : BaseMatchesListView, M : BaseMatches
 
     override fun onResume() {
         super.onResume()
+        view.setRefreshing(true)
         model.fetchUserMatches()
     }
 }

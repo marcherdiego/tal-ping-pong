@@ -25,7 +25,7 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchClicked(event: PastMatchesAdapter.MatchClickedEvent) {
         view.activity?.let {
-            challengeEditDialog = ChallengeEditDialog(event.match, model.getBus())
+            challengeEditDialog = ChallengeEditDialog(event.match, model.getBus(), model.isMyMatchEdit(event.match))
             challengeEditDialog?.show(it)
         }
     }

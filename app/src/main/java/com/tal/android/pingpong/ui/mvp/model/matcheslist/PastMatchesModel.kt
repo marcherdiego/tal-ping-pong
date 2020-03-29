@@ -1,6 +1,7 @@
 package com.tal.android.pingpong.ui.mvp.model.matcheslist
 
 import com.tal.android.pingpong.domain.MatchRecord
+import com.tal.android.pingpong.extensions.attachTo
 import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import java.util.*
@@ -23,6 +24,7 @@ class PastMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatchesL
                     bus.post(MatchesFetchFailedEvent())
                 }
             )
+            .attachTo(this)
     }
 
     fun editMatch(match: MatchRecord) {
@@ -41,7 +43,10 @@ class PastMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatchesL
                     bus.post(MatchEditFailedEvent())
                 }
             )
+            .attachTo(this)
     }
+
+    fun isMyMatchEdit(match: MatchRecord) = match.changeRequestUserId == getUserId()
 
     class MatchEditedSuccessfullyEvent
     class MatchEditFailedEvent

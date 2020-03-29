@@ -1,18 +1,17 @@
 package com.tal.android.pingpong.ui.mvp.model
 
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
-import com.nerdscorner.mvplib.events.model.BaseEventsModel
-import com.tal.android.pingpong.domain.Match
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
+import com.tal.android.pingpong.extensions.attachTo
 import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
 import com.tal.android.pingpong.networking.services.UsersService
 import java.util.*
 
-class RankingModel(private val sharedPreferencesUtils: SharedPreferencesUtils) : BaseEventsModel() {
+class RankingModel(private val sharedPreferencesUtils: SharedPreferencesUtils) : BaseModel() {
     private val userService = ServiceGenerator.createService(UsersService::class.java)
     private val matchesService = ServiceGenerator.createService(MatchesService::class.java)
 
@@ -27,6 +26,7 @@ class RankingModel(private val sharedPreferencesUtils: SharedPreferencesUtils) :
                     bus.post(UsersFetchFailedEvent())
                 }
             )
+            .attachTo(this)
     }
 
     @Throws(InvalidMatchTimeException::class)
@@ -52,6 +52,7 @@ class RankingModel(private val sharedPreferencesUtils: SharedPreferencesUtils) :
                     bus.post(ChallengeSubmitFailedEvent())
                 }
             )
+            .attachTo(this)
     }
 
     class UsersFetchedSuccessfullyEvent(val usersList: List<User>)

@@ -1,7 +1,9 @@
 package com.tal.android.pingpong.ui.dialogs
 
 import android.content.Context
+import android.graphics.Paint
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -30,10 +32,12 @@ class ChallengeEditDialog(private val match: MatchRecord, private val bus: Bus, 
         val localUserImage = challengeDialogView.findViewById<ImageView>(R.id.local_image)
         val local = challengeDialogView.findViewById<TextView>(R.id.local)
         val localScore = challengeDialogView.findViewById<EditText>(R.id.local_score)
+        val oldLocalScore = challengeDialogView.findViewById<TextView>(R.id.old_local_score)
         val matchDate = challengeDialogView.findViewById<TextView>(R.id.match_date)
         val visitorUserImage = challengeDialogView.findViewById<ImageView>(R.id.visitor_image)
         val visitor = challengeDialogView.findViewById<TextView>(R.id.visitor)
         val visitorScore = challengeDialogView.findViewById<EditText>(R.id.visitor_score)
+        val oldVisitorScore = challengeDialogView.findViewById<TextView>(R.id.old_visitor_score)
 
         val localUser = match.local ?: return
         val visitorUser = match.visitor ?: return
@@ -44,6 +48,17 @@ class ChallengeEditDialog(private val match: MatchRecord, private val bus: Bus, 
         visitorScore.setText(match.visitorScore.toString())
         GlideUtils.loadImage(localUser.userImage, localUserImage, R.drawable.ic_incognito, true)
         GlideUtils.loadImage(visitorUser.userImage, visitorUserImage, R.drawable.ic_incognito, true)
+
+        if (match.hasRequestedChanges == true) {
+            oldLocalScore.paintFlags = oldLocalScore.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            oldVisitorScore.paintFlags = oldVisitorScore.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
+            oldLocalScore.text = match.requestedLocalScore.toString()
+            oldVisitorScore.text = match.requestedVisitorScore.toString()
+        } else {
+            oldLocalScore.visibility = View.GONE
+            oldVisitorScore.visibility = View.GONE
+        }
 
         matchDate.text = DateUtils.formatDate(match.matchDate)
 

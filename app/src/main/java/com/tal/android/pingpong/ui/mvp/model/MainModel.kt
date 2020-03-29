@@ -1,8 +1,8 @@
 package com.tal.android.pingpong.ui.mvp.model
 
 import androidx.annotation.IntDef
-import com.nerdscorner.mvplib.events.model.BaseEventsModel
 import com.tal.android.pingpong.domain.MatchRecord
+import com.tal.android.pingpong.extensions.attachTo
 import com.tal.android.pingpong.extensions.enqueue
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
@@ -12,7 +12,7 @@ class MainModel(
     @State
     @get:State
     var currentState: Int = UNSET
-) : BaseEventsModel() {
+) : BaseModel() {
 
     private val matchesService = ServiceGenerator.createService(MatchesService::class.java)
 
@@ -27,6 +27,7 @@ class MainModel(
                     bus.post(ChallengeAcceptFailedEvent())
                 }
             )
+            .attachTo(this)
     }
 
     fun declineChallenge() {
@@ -40,6 +41,7 @@ class MainModel(
                     bus.post(ChallengeDeclineFailedEvent())
                 }
             )
+            .attachTo(this)
     }
 
     class ChallengeAcceptedSuccessfullyEvent

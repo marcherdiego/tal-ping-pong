@@ -28,6 +28,9 @@ data class MatchRecord(
     @SerializedName("hasRequestedChanges")
     var hasRequestedChanges: Boolean? = null,
 
+    @SerializedName("changeRequestUserId")
+    var changeRequestUserId: Int = 0,
+
     @SerializedName("requestedLocalScore")
     var requestedLocalScore: Int = 0,
 
