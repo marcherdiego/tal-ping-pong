@@ -15,6 +15,8 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
     private val userService = ServiceGenerator.createService(UsersService::class.java)
     private val matchesService = ServiceGenerator.createService(MatchesService::class.java)
 
+    fun getCurrentUser() = sharedPreferencesUtils.getUser()
+
     fun fetchUsers() {
         userService
             .getUsers()
@@ -41,7 +43,7 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
             throw InvalidMatchTimeException()
         }
         val match = MatchRecord().apply {
-            local = sharedPreferencesUtils.getUser()
+            local = getCurrentUser()
             visitor = user
             matchDate = selectedDateTime.time.toString()
         }

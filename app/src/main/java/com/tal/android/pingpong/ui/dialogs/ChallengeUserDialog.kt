@@ -9,12 +9,13 @@ import android.widget.TextView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
+import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.GlideUtils
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import java.util.*
 
-class ChallengeUserDialog(private val user: User) {
+class ChallengeUserDialog(private val myUser: User, private val rivalUser: User) {
 
     private lateinit var challengeDialogCallback: ChallengeDialogCallback
 
@@ -24,14 +25,16 @@ class ChallengeUserDialog(private val user: User) {
             .from(context)
             .inflate(R.layout.challenges_user_dialog, null)
         val userImage = challengeDialogView.findViewById<ImageView>(R.id.user_image)
+        val difficultyBar: DifficultyBar = challengeDialogView.findViewById(R.id.difficulty_bar)
         val userName = challengeDialogView.findViewById<TextView>(R.id.user_name)
         val userEmail = challengeDialogView.findViewById<TextView>(R.id.user_email)
         val userStats = challengeDialogView.findViewById<TextView>(R.id.user_stats)
 
-        GlideUtils.loadImage(user.userImage, userImage, R.drawable.ic_incognito, true)
-        userName.text = user.userName
-        userEmail.text = user.userEmail
-        userStats.text = context.getString(R.string.user_stats, user.matchesWon, user.matchesLost, user.matchesRatio)
+        difficultyBar.setup(myUser, rivalUser)
+        GlideUtils.loadImage(rivalUser.userImage, userImage, R.drawable.ic_incognito, true)
+        userName.text = rivalUser.userName
+        userEmail.text = rivalUser.userEmail
+        userStats.text = context.getString(R.string.user_stats, rivalUser.matchesWon, rivalUser.matchesLost, rivalUser.matchesRatio)
 
         val myEmail = SharedPreferencesUtils(context).getUser()?.userEmail
 
@@ -40,11 +43,11 @@ class ChallengeUserDialog(private val user: User) {
             .setCancelable(true)
             .setTitle(R.string.user_details)
             .setView(challengeDialogView)
-        if (user.userEmail != myEmail) {
+        if (rivalUser.userEmail != myEmail) {
             challengeDialogBuilder
                 .setPositiveButtonText(R.string.challenge)
                 .setPositiveButtonListener {
-                    openChallengeDateSelectionDialog(context, user)
+                    openChallengeDateSelectionDialog(context, rivalUser)
                 }
         }
         challengeDialogBuilder

@@ -15,6 +15,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.tal.android.pingpong.ui.widgets.DifficultyBar
+        android:id="@+id/difficulty_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_image" />
+
     <TextView
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
@@ -23,7 +32,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/user_image"
         app:layout_constraintStart_toStartOf="@+id/user_image"
-        app:layout_constraintTop_toBottomOf="@+id/user_image"
+        app:layout_constraintTop_toBottomOf="@+id/difficulty_bar"
         tools:text="User name" />
 
     <TextView

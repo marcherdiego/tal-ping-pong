@@ -78,14 +78,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include
+    <com.tal.android.pingpong.ui.widgets.DifficultyBar
         android:id="@+id/difficulty_bar"
-        layout="@layout/difficulty_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@+id/header"
         app:layout_constraintStart_toStartOf="@+id/header"
-        app:layout_constraintTop_toBottomOf="@+id/header" />
+        app:layout_constraintTop_toBottomOf="@+id/header"/>
 
     <TextView
         android:id="@+id/user_name"

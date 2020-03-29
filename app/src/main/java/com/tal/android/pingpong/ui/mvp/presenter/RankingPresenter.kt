@@ -32,7 +32,8 @@ class RankingPresenter(view: RankingView, model: RankingModel) :
     @Subscribe
     fun onUserClicked(event: UsersListAdapter.UserClickedEvent) {
         view.withActivity {
-            ChallengeUserDialog(event.user).show(this, object : ChallengeUserDialog.ChallengeDialogCallback {
+            val currentUser = model.getCurrentUser() ?: return
+            ChallengeUserDialog(currentUser, event.user).show(this, object : ChallengeUserDialog.ChallengeDialogCallback {
                 override fun onChallengeUser(user: User, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int) {
                     model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
                 }
