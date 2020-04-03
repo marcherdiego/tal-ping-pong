@@ -1,7 +1,9 @@
 package com.tal.android.pingpong.ui.dialogs
 
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Paint
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
@@ -9,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.Guideline
+import androidx.core.widget.addTextChangedListener
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
@@ -25,27 +28,30 @@ class ChallengeEditDialog(private val match: MatchRecord, private val bus: Bus, 
 
     private var dialog: AlertDialog? = null
 
+    private lateinit var localScore: EditText
+    private lateinit var visitorScore: EditText
+
     fun show(activity: Context) {
         val challengeDialogView = LayoutInflater
             .from(activity)
             .inflate(R.layout.challenge_edit_dialog, null)
-        val localUserImage = challengeDialogView.findViewById<ImageView>(R.id.local_image)
-        val local = challengeDialogView.findViewById<TextView>(R.id.local)
-        val localScore = challengeDialogView.findViewById<EditText>(R.id.local_score)
-        val oldLocalScore = challengeDialogView.findViewById<TextView>(R.id.old_local_score)
-        val matchDate = challengeDialogView.findViewById<TextView>(R.id.match_date)
-        val visitorUserImage = challengeDialogView.findViewById<ImageView>(R.id.visitor_image)
-        val visitor = challengeDialogView.findViewById<TextView>(R.id.visitor)
-        val visitorScore = challengeDialogView.findViewById<EditText>(R.id.visitor_score)
-        val oldVisitorScore = challengeDialogView.findViewById<TextView>(R.id.old_visitor_score)
+
+        localScore = challengeDialogView.findViewById(R.id.local_score)
+        visitorScore = challengeDialogView.findViewById(R.id.visitor_score)
+
+        val localUserImage: ImageView = challengeDialogView.findViewById(R.id.local_image)
+        val local: TextView = challengeDialogView.findViewById(R.id.local)
+        val oldLocalScore: TextView = challengeDialogView.findViewById(R.id.old_local_score)
+        val matchDate: TextView = challengeDialogView.findViewById(R.id.match_date)
+        val visitorUserImage: ImageView = challengeDialogView.findViewById(R.id.visitor_image)
+        val visitor: TextView = challengeDialogView.findViewById(R.id.visitor)
+        val oldVisitorScore: TextView = challengeDialogView.findViewById(R.id.old_visitor_score)
 
         val localUser = match.local ?: return
         val visitorUser = match.visitor ?: return
 
         local.text = match.local?.userName
-        localScore.setText(match.localScore.toString())
         visitor.text = match.visitor?.userName
-        visitorScore.setText(match.visitorScore.toString())
         GlideUtils.loadImage(localUser.userImage, localUserImage, R.drawable.ic_incognito, true)
         GlideUtils.loadImage(visitorUser.userImage, visitorUserImage, R.drawable.ic_incognito, true)
 
@@ -53,12 +59,32 @@ class ChallengeEditDialog(private val match: MatchRecord, private val bus: Bus, 
             oldLocalScore.paintFlags = oldLocalScore.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             oldVisitorScore.paintFlags = oldVisitorScore.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
-            oldLocalScore.text = match.requestedLocalScore.toString()
-            oldVisitorScore.text = match.requestedVisitorScore.toString()
+            localScore.setText(match.requestedLocalScore.toString())
+            visitorScore.setText(match.requestedVisitorScore.toString())
+
+            oldLocalScore.text = match.localScore.toString()
+            oldVisitorScore.text = match.visitorScore.toString()
         } else {
             oldLocalScore.visibility = View.GONE
             oldVisitorScore.visibility = View.GONE
+
+            localScore.setText(match.localScore.toString())
+            visitorScore.setText(match.visitorScore.toString())
         }
+
+        val scoreTextListener: (text: Editable?) -> Unit = {
+            dialog
+                ?.getButton(DialogInterface.BUTTON_POSITIVE)
+                ?.setText(
+                    if (match.hasScoreRequestChanges(localScore.toInt(), visitorScore.toInt())) {
+                        R.string.edit
+                    } else {
+                        R.string.close
+                    }
+                )
+        }
+        localScore.addTextChangedListener(afterTextChanged = scoreTextListener)
+        visitorScore.addTextChangedListener(afterTextChanged = scoreTextListener)
 
         matchDate.text = DateUtils.formatDate(match.matchDate)
 
@@ -70,20 +96,24 @@ class ChallengeEditDialog(private val match: MatchRecord, private val bus: Bus, 
             .setView(challengeDialogView)
             .setNeutralButtonText(R.string.cancel)
             .setPositiveButtonListener {
-                val matchCopy = match.copy()
-                matchCopy.localScore = localScore.toInt()
-                matchCopy.visitorScore = visitorScore.toInt()
-                bus.post(AcceptMatchEditButtonClickedEvent(matchCopy))
+                if (match.hasScoreRequestChanges(localScore.toInt(), visitorScore.toInt())) {
+                    val matchCopy = match.copy()
+                    matchCopy.localScore = localScore.toInt()
+                    matchCopy.visitorScore = visitorScore.toInt()
+                    bus.post(AcceptMatchEditButtonClickedEvent(matchCopy))
+                } else {
+                    dismiss()
+                }
             }
-        if (isEditor.not()) {
+        if (isEditor) {
+            dialogBuilder.setPositiveButtonText(R.string.close)
+        } else {
             dialogBuilder
                 .setPositiveButtonText(R.string.accept)
                 .setNegativeButtonText(R.string.decline)
                 .setNegativeButtonListener {
                     bus.post(DeclineMatchEditButtonClickedEvent())
                 }
-        } else {
-            dialogBuilder.setPositiveButtonText(R.string.edit)
         }
         dialog = dialogBuilder.build(activity)
         dialog?.show()

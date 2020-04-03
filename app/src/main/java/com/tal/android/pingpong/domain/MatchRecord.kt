@@ -1,6 +1,7 @@
 package com.tal.android.pingpong.domain
 
 import com.google.gson.annotations.SerializedName
+import com.tal.android.pingpong.utils.toInt
 import java.io.Serializable
 
 data class MatchRecord(
@@ -45,4 +46,6 @@ data class MatchRecord(
             visitorScore > localScore
         }
     }
+
+    fun hasScoreRequestChanges(localScore: Int, visitorScore: Int) = localScore != requestedLocalScore || visitorScore != requestedVisitorScore
 }

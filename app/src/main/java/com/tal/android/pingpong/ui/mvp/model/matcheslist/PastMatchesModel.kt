@@ -30,7 +30,7 @@ class PastMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatchesL
     fun editMatch(match: MatchRecord) {
         val userId = getUserId()
         if (userId == null) {
-            bus.post(MatchesFetchFailedEvent())
+            bus.post(MatchEditFailedEvent())
             return
         }
         matchesService
@@ -46,8 +46,30 @@ class PastMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatchesL
             .attachTo(this)
     }
 
+    fun acceptMatchEdit(match: MatchRecord) {
+        val userId = getUserId()
+        if (userId == null) {
+            bus.post(MatchEditAcceptFailedEvent())
+            return
+        }
+        matchesService
+            .acceptMatchEdit(userId, match)
+            .enqueueResponseNotNull(
+                success = {
+                    bus.post(MatchEditAcceptedSuccessfullyEvent())
+                },
+                fail = {
+                    bus.post(MatchEditAcceptFailedEvent())
+                }
+            )
+            .attachTo(this)
+    }
+
     fun isMyMatchEdit(match: MatchRecord) = match.changeRequestUserId == getUserId()
 
     class MatchEditedSuccessfullyEvent
     class MatchEditFailedEvent
+
+    class MatchEditAcceptedSuccessfullyEvent
+    class MatchEditAcceptFailedEvent
 }

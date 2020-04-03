@@ -32,7 +32,11 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
 
     @Subscribe
     fun onAcceptMatchEditButtonClicked(event: ChallengeEditDialog.AcceptMatchEditButtonClickedEvent) {
-        model.editMatch(event.match)
+        if (model.isMyMatchEdit(event.match)) {
+            model.editMatch(event.match)
+        } else {
+            model.acceptMatchEdit(event.match)
+        }
     }
 
     @Subscribe
