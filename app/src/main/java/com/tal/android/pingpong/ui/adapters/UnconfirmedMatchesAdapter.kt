@@ -4,11 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.Match
+import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.ui.adapters.viewholders.MatchViewHolder
 
-open class UpcomingMatchesAdapter(private val matches: List<Match>, private val myEmail: String?) : RecyclerView.Adapter<MatchViewHolder>() {
+class UnconfirmedMatchesAdapter(
+    private val matches: List<Match>,
+    private val myEmail: String?,
+    private val bus: Bus
+) : UpcomingMatchesAdapter(matches, myEmail) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
         return MatchViewHolder(
@@ -31,7 +37,8 @@ open class UpcomingMatchesAdapter(private val matches: List<Match>, private val 
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
         with(holder) {
             val match = matches[position]
-            bindBasicMatchData(match.match ?: return)
+            val matchRecord = match.match ?: return
+            bindBasicMatchData(matchRecord)
 
             matchesHistory?.removeAllViews()
             if (match.matchesHistory.isEmpty()) {
@@ -53,6 +60,12 @@ open class UpcomingMatchesAdapter(private val matches: List<Match>, private val 
                         )
                 }
             }
+
+            itemView.setOnClickListener {
+                bus.post(UpcomingMatchClickedEvent(matchRecord))
+            }
         }
     }
+
+    class UpcomingMatchClickedEvent(val matchRecord: MatchRecord)
 }

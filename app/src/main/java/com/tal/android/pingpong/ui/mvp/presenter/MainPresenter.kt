@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
+import com.tal.android.pingpong.ui.adapters.UnconfirmedMatchesAdapter
 import com.tal.android.pingpong.ui.dialogs.ChallengeProposalDialog
 import com.tal.android.pingpong.ui.fragments.*
 
@@ -93,6 +94,11 @@ class MainPresenter(view: MainView, model: MainModel) :
     /***
      * ACCEPT / DECLINE CHALLENGE EVENTS
      */
+
+    @Subscribe
+    fun onUpcomingMatchClicked(event: UnconfirmedMatchesAdapter.UpcomingMatchClickedEvent) {
+        openMatchChallengeDialog(event.matchRecord)
+    }
 
     private fun updateCurrentFragment(fragment: Fragment) {
         view.withFragmentTransaction {

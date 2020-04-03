@@ -106,7 +106,7 @@ class ChallengeEditDialog(private val match: MatchRecord, private val bus: Bus, 
                     matchCopy.visitorScore = visitorScore.toInt()
                     bus.post(MatchEditButtonClickedEvent(matchCopy))
                 } else {
-                    if (isEditor) {
+                    if (isEditor || match.hasRequestedChanges == false) {
                         dismiss()
                     } else {
                         bus.post(MatchAcceptChangesButtonClickedEvent(match))
