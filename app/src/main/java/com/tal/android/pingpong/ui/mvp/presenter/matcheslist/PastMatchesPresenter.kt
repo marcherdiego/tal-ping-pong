@@ -31,12 +31,13 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     }
 
     @Subscribe
-    fun onAcceptMatchEditButtonClicked(event: ChallengeEditDialog.AcceptMatchEditButtonClickedEvent) {
-        if (model.isMyMatchEdit(event.match)) {
-            model.editMatch(event.match)
-        } else {
-            model.acceptMatchEdit(event.match)
-        }
+    fun onMatchEditButtonClicked(event: ChallengeEditDialog.MatchEditButtonClickedEvent) {
+        model.editMatch(event.match)
+    }
+
+    @Subscribe
+    fun onMatchAcceptChangesButtonClicked(event: ChallengeEditDialog.MatchAcceptChangesButtonClickedEvent) {
+        model.acceptMatchEdit(event.match)
     }
 
     @Subscribe
@@ -48,5 +49,16 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchEditFailed(event: PastMatchesModel.MatchEditFailedEvent) {
         view.showToast(R.string.edit_request_send_failed)
+    }
+
+    @Subscribe
+    fun onMatchEditAcceptedSuccessfully(event: PastMatchesModel.MatchEditAcceptedSuccessfullyEvent) {
+        view.showToast(R.string.edit_accepted)
+        challengeEditDialog?.dismiss()
+    }
+
+    @Subscribe
+    fun onMatchEditAcceptFailed(event: PastMatchesModel.MatchEditAcceptFailedEvent) {
+        view.showToast(R.string.network_error_message)
     }
 }

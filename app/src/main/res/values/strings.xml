@@ -46,4 +46,5 @@
     <string name="edit_request_send_failed">Something went wrong while sending the edit request, please try again.</string>
     <string name="changes_requested">Changes requested</string>
     <string name="network_error_message">Something went wrong\nPlease try again</string>
+    <string name="edit_accepted">Edit accepted!</string>
 </resources>

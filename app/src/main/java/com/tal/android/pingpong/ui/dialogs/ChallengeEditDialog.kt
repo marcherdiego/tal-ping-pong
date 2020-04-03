@@ -79,7 +79,11 @@ class ChallengeEditDialog(private val match: MatchRecord, private val bus: Bus, 
                     if (match.hasScoreRequestChanges(localScore.toInt(), visitorScore.toInt())) {
                         R.string.edit
                     } else {
-                        R.string.close
+                        if (isEditor) {
+                            R.string.close
+                        } else {
+                            R.string.accept
+                        }
                     }
                 )
         }
@@ -100,12 +104,16 @@ class ChallengeEditDialog(private val match: MatchRecord, private val bus: Bus, 
                     val matchCopy = match.copy()
                     matchCopy.localScore = localScore.toInt()
                     matchCopy.visitorScore = visitorScore.toInt()
-                    bus.post(AcceptMatchEditButtonClickedEvent(matchCopy))
+                    bus.post(MatchEditButtonClickedEvent(matchCopy))
                 } else {
-                    dismiss()
+                    if (isEditor) {
+                        dismiss()
+                    } else {
+                        bus.post(MatchAcceptChangesButtonClickedEvent(match))
+                    }
                 }
             }
-        if (isEditor) {
+        if (isEditor || match.hasRequestedChanges == false) {
             dialogBuilder.setPositiveButtonText(R.string.close)
         } else {
             dialogBuilder
@@ -123,6 +131,7 @@ class ChallengeEditDialog(private val match: MatchRecord, private val bus: Bus, 
         dialog?.dismiss()
     }
 
-    class AcceptMatchEditButtonClickedEvent(val match: MatchRecord)
+    class MatchEditButtonClickedEvent(val match: MatchRecord)
+    class MatchAcceptChangesButtonClickedEvent(val match: MatchRecord)
     class DeclineMatchEditButtonClickedEvent
 }

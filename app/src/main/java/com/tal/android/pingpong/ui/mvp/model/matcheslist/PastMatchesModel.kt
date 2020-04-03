@@ -65,7 +65,7 @@ class PastMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatchesL
             .attachTo(this)
     }
 
-    fun isMyMatchEdit(match: MatchRecord) = match.changeRequestUserId == getUserId()
+    fun isMyMatchEdit(match: MatchRecord) = match.changeRequestUserId == getUserId() || match.hasRequestedChanges == false
 
     class MatchEditedSuccessfullyEvent
     class MatchEditFailedEvent
