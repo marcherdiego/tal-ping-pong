@@ -6,6 +6,7 @@ import com.google.android.gms.common.api.ApiException
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.activities.MainActivity
+import com.tal.android.pingpong.ui.activities.SplashActivity
 import com.tal.android.pingpong.ui.mvp.model.LoginModel
 import com.tal.android.pingpong.ui.mvp.view.LoginView
 import org.greenrobot.eventbus.Subscribe
@@ -40,7 +41,7 @@ class LoginPresenter(view: LoginView, model: LoginModel) :
     @Subscribe
     fun onUserLoggedInSuccessfully(event: LoginModel.UserLoggedInSuccessfullyEvent) {
         view.showToast(R.string.login_success)
-        startActivity(MainActivity::class.java, finishCurrent = true)
+        startActivity(SplashActivity::class.java, finishCurrent = true)
     }
 
     @Subscribe

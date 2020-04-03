@@ -20,7 +20,6 @@ class LoginModel(val googleSignInClient: GoogleSignInClient, private val sharedP
             userName = googleUser.displayName
             userEmail = googleUser.email
             userImage = googleUser.photoUrl?.toString()
-            pushToken = FirebaseInstanceId.getInstance().id
         }
         userService
             .login(user)
