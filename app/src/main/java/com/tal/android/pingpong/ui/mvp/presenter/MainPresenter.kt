@@ -72,6 +72,7 @@ class MainPresenter(view: MainView, model: MainModel) :
     @Subscribe
     fun onChallengeAcceptedSuccessfully(event: MainModel.ChallengeAcceptedSuccessfullyEvent) {
         view.showToast(R.string.challenge_accepted)
+        model.notifyUpdateLists()
         challengeProposalDialog?.dismiss()
     }
 
@@ -83,6 +84,7 @@ class MainPresenter(view: MainView, model: MainModel) :
     @Subscribe
     fun onChallengeDeclinedSuccessfully(event: MainModel.ChallengeDeclinedSuccessfullyEvent) {
         view.showToast(R.string.challenge_declined)
+        model.notifyUpdateLists()
         challengeProposalDialog?.dismiss()
     }
 

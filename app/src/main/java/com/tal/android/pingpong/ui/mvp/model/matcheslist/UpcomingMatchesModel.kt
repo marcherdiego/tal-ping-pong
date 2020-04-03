@@ -1,6 +1,5 @@
 package com.tal.android.pingpong.ui.mvp.model.matcheslist
 
-import com.tal.android.pingpong.extensions.attachTo
 import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import java.util.*
@@ -21,8 +20,8 @@ class UpcomingMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatc
                 },
                 fail = {
                     bus.post(MatchesFetchFailedEvent())
-                }
+                },
+                model = this
             )
-            .attachTo(this)
     }
 }

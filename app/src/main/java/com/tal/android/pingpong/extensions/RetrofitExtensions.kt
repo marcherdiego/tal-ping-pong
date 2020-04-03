@@ -16,10 +16,12 @@ private const val TAG = "NETWORK CALL"
 fun <T> Call<T>.enqueue(
     success: (T?) -> Unit = {},
     successCacheCheck: (Boolean, T?) -> Unit = { _, _ -> },
-    fail: (NetworkException) -> Unit = {}
+    fail: (NetworkException) -> Unit = {},
+    model: BaseModel? = null
 ): Call<T> {
     enqueue(object : Callback<T> {
         override fun onResponse(call: Call<T>, response: Response<T>) {
+            model?.removeCall(this@enqueue)
             if (response.isSuccessful) {
                 val body = response.body()
                 success(body)
@@ -56,13 +58,15 @@ fun <T> Call<T>.enqueue(
             )
         }
     })
+    model?.addCall(this)
     return this
 }
 
 fun <T> Call<T>.enqueueResponseNotNull(
     success: (T) -> Unit = {},
     successCacheCheck: (Boolean, T) -> Unit = { _, _ -> },
-    fail: (NetworkException) -> Unit = {}
+    fail: (NetworkException) -> Unit = {},
+    model: BaseModel? = null
 ): Call<T> {
     return enqueue(
         success = { body ->
@@ -75,19 +79,17 @@ fun <T> Call<T>.enqueueResponseNotNull(
                 successCacheCheck(fromCache, it)
             }
         },
-        fail = fail
+        fail = fail,
+        model = model
     )
 }
 
-fun <T> Call<T>.fireAndForget(): Call<T> {
+fun <T> Call<T>.fireAndForget(model: BaseModel? = null): Call<T> {
     return enqueue(
         success = {},
-        fail = {}
+        fail = {},
+        model = model
     )
-}
-
-fun <T> Call<T>.attachTo(model: BaseModel) {
-    model.retrofitCalls.add(this)
 }
 
 fun Response<*>.isFromCache() = raw().networkResponse == null

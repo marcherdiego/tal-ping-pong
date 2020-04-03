@@ -2,7 +2,6 @@ package com.tal.android.pingpong.ui.mvp.model
 
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.tal.android.pingpong.domain.User
-import com.tal.android.pingpong.extensions.attachTo
 import com.tal.android.pingpong.extensions.fireAndForget
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.UsersService
@@ -24,7 +23,6 @@ class UserProfileModel(
         googleSignInClient.signOut()
         usersService
             .logout(user)
-            .fireAndForget()
-            .attachTo(this)
+            .fireAndForget(model = this)
     }
 }

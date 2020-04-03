@@ -2,7 +2,7 @@ package com.tal.android.pingpong.ui.mvp.model
 
 import androidx.annotation.IntDef
 import com.tal.android.pingpong.domain.MatchRecord
-import com.tal.android.pingpong.extensions.attachTo
+import com.tal.android.pingpong.events.MatchesUpdatedEvent
 import com.tal.android.pingpong.extensions.enqueue
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
@@ -25,9 +25,9 @@ class MainModel(
                 },
                 fail = {
                     bus.post(ChallengeAcceptFailedEvent())
-                }
+                },
+                model = this
             )
-            .attachTo(this)
     }
 
     fun declineChallenge() {
@@ -39,9 +39,13 @@ class MainModel(
                 },
                 fail = {
                     bus.post(ChallengeDeclineFailedEvent())
-                }
+                },
+                model = this
             )
-            .attachTo(this)
+    }
+
+    fun notifyUpdateLists() {
+        bus.post(MatchesUpdatedEvent())
     }
 
     class ChallengeAcceptedSuccessfullyEvent

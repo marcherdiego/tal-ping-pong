@@ -5,7 +5,15 @@ import com.nerdscorner.mvplib.events.model.BaseEventsModel
 import retrofit2.Call
 
 open class BaseModel : BaseEventsModel() {
-    val retrofitCalls = mutableListOf<Call<*>>()
+    private val retrofitCalls = mutableListOf<Call<*>>()
+
+    fun addCall(call: Call<*>) {
+        retrofitCalls.add(call)
+    }
+
+    fun removeCall(call: Call<*>) {
+        retrofitCalls.remove(call)
+    }
 
     override fun onPause() {
         while (retrofitCalls.size > 0) {

@@ -3,7 +3,6 @@ package com.tal.android.pingpong.ui.mvp.model
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
-import com.tal.android.pingpong.extensions.attachTo
 import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
@@ -29,9 +28,9 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
                 },
                 fail = {
                     bus.post(UsersFetchFailedEvent())
-                }
+                },
+                model = this
             )
-            .attachTo(this)
     }
 
     @Throws(InvalidMatchTimeException::class)
@@ -55,9 +54,9 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
                 },
                 fail = {
                     bus.post(ChallengeSubmitFailedEvent())
-                }
+                },
+                model = this
             )
-            .attachTo(this)
     }
 
     class UsersFetchedSuccessfullyEvent(val usersList: List<User>)
