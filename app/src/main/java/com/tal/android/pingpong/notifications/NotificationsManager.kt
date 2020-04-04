@@ -20,6 +20,7 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.events.MatchesUpdatedEvent
 import com.tal.android.pingpong.ui.activities.MainActivity
+import org.greenrobot.eventbus.ThreadMode
 
 object NotificationsManager {
     private val gson = Gson()
@@ -57,7 +58,7 @@ object NotificationsManager {
     private fun buildNotificationPendingIntent(context: Context, data: Map<String, String>): PendingIntent? {
         val intent = when (data[KEY_NOTIFICATION_SCREEN]) {
             VALUE_SCREEN_MATCHES -> {
-                Bus.postDefault(MatchesUpdatedEvent())
+                Bus.postDefault(MatchesUpdatedEvent(), ThreadMode.MAIN)
                 Intent(context, MainActivity::class.java)
                     .putExtra(
                         MainActivity.EXTRA_CHALLENGE_MATCH,
