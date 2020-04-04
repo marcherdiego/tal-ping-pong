@@ -1,7 +1,5 @@
 package com.tal.android.pingpong.extensions
 
-import android.util.Log
-import com.nerdscorner.mvplib.events.model.BaseEventsModel
 import com.tal.android.pingpong.exceptions.NetworkException
 import com.tal.android.pingpong.ui.mvp.model.BaseModel
 import retrofit2.Call
@@ -10,8 +8,6 @@ import retrofit2.Response
 
 private const val X_ERROR_CODE = "X-ERROR-CODE"
 private const val X_ERROR_MESSAGE = "X-ERROR-MESSAGE"
-
-private const val TAG = "NETWORK CALL"
 
 fun <T> Call<T>.enqueue(
     success: (T?) -> Unit = {},
@@ -22,29 +18,21 @@ fun <T> Call<T>.enqueue(
     enqueue(object : Callback<T> {
         override fun onResponse(call: Call<T>, response: Response<T>) {
             model?.removeCall(this@enqueue)
-            if (response.isSuccessful) {
-                val body = response.body()
-                success(body)
-                successCacheCheck(response.isFromCache(), body)
-                Log.d(
-                    TAG,
-                    "${call.request().method}: " +
-                            "${call.request().url} -> Response from " +
-                            if (response.isFromCache()) {
-                                "Cache"
-                            } else {
-                                "Network"
-                            }
-                )
-            } else {
-                fail(
-                    NetworkException(response.message())
-                        .setStatusCode(response.code())
-                        .setErrorBody(response.errorBody()?.string())
-                        .setErrorCode(response.headers()[X_ERROR_CODE])
-                        .setErrorMessage(response.headers()[X_ERROR_MESSAGE])
-                        .setResponse(response)
-                )
+            with(response) {
+                if (isSuccessful) {
+                    val body = body()
+                    success(body)
+                    successCacheCheck(isFromCache(), body)
+                } else {
+                    fail(
+                        NetworkException(message())
+                            .setStatusCode(code())
+                            .setErrorBody(errorBody()?.string())
+                            .setErrorCode(headers()[X_ERROR_CODE])
+                            .setErrorMessage(headers()[X_ERROR_MESSAGE])
+                            .setResponse(response)
+                    )
+                }
             }
         }
 
@@ -52,10 +40,7 @@ fun <T> Call<T>.enqueue(
             if (call.isCanceled) {
                 return
             }
-            fail(
-                NetworkException(t.message)
-                    .setThrowable(t)
-            )
+            fail(NetworkException(t.message).setThrowable(t))
         }
     })
     model?.addCall(this)

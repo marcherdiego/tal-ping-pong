@@ -15,10 +15,10 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.domain.Match
 import com.tal.android.pingpong.domain.MatchRecord
-import com.tal.android.pingpong.domain.User
+import com.tal.android.pingpong.events.MatchesUpdatedEvent
 import com.tal.android.pingpong.ui.activities.MainActivity
 
 object NotificationsManager {
@@ -55,10 +55,14 @@ object NotificationsManager {
     }
 
     private fun buildNotificationPendingIntent(context: Context, data: Map<String, String>): PendingIntent? {
-        val intent = when(data[KEY_NOTIFICATION_SCREEN]){
+        val intent = when (data[KEY_NOTIFICATION_SCREEN]) {
             VALUE_SCREEN_MATCHES -> {
+                Bus.postDefault(MatchesUpdatedEvent())
                 Intent(context, MainActivity::class.java)
-                    .putExtra(MainActivity.EXTRA_CHALLENGE_MATCH, gson.fromJson(data[KEY_NOTIFICATION_MATCH], MatchRecord::class.java))
+                    .putExtra(
+                        MainActivity.EXTRA_CHALLENGE_MATCH,
+                        gson.fromJson(data[KEY_NOTIFICATION_MATCH], MatchRecord::class.java)
+                    )
             }
             else -> Intent(context, MainActivity::class.java)
         }
@@ -70,8 +74,6 @@ object NotificationsManager {
 
     @TargetApi(Build.VERSION_CODES.O)
     @RequiresApi(Build.VERSION_CODES.O)
-    // Creates a NotificationChannel, but only on API 26+ because
-    // the NotificationChannel class is new and not in the support library
     fun createNotificationChannel(context: Context, channelDescriptor: ChannelDescriptor) {
         val channel = NotificationChannel(channelDescriptor.channelId, channelDescriptor.channelName, channelDescriptor.channelImportance)
         channel.description = channelDescriptor.channelDescription
