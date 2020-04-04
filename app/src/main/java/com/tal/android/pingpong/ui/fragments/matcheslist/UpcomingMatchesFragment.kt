@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.nerdscorner.mvplib.events.bus.Bus
-import com.nerdscorner.mvplib.events.fragment.BaseFragment
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.UpcomingMatchesModel
 import com.tal.android.pingpong.ui.mvp.presenter.matcheslist.UpcomingMatchesPresenter
 import com.tal.android.pingpong.ui.mvp.view.matcheslist.BaseMatchesListView
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
-class UpcomingMatchesFragment : BaseFragment<UpcomingMatchesPresenter>() {
+class UpcomingMatchesFragment : BaseMatchesList<UpcomingMatchesPresenter>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

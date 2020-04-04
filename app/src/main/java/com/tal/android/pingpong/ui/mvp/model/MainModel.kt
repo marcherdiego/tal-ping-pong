@@ -16,9 +16,9 @@ class MainModel(
 
     private val matchesService = ServiceGenerator.createService(MatchesService::class.java)
 
-    fun acceptChallenge() {
+    fun acceptChallenge(match: MatchRecord) {
         matchesService
-            .acceptChallenge(challengeMatch ?: return)
+            .acceptChallenge(match)
             .enqueue(
                 success = {
                     bus.post(ChallengeAcceptedSuccessfullyEvent())
@@ -30,9 +30,9 @@ class MainModel(
             )
     }
 
-    fun declineChallenge() {
+    fun declineChallenge(match: MatchRecord) {
         matchesService
-            .declineChallenge(challengeMatch ?: return)
+            .declineChallenge(match)
             .enqueue(
                 success = {
                     bus.post(ChallengeDeclinedSuccessfullyEvent())

@@ -61,12 +61,12 @@ class MainPresenter(view: MainView, model: MainModel) :
 
     @Subscribe
     fun onAcceptChallengeButtonClicked(event: ChallengeProposalDialog.AcceptChallengeButtonClickedEvent) {
-        model.acceptChallenge()
+        model.acceptChallenge(event.match)
     }
 
     @Subscribe
     fun onDeclineChallengeButtonClicked(event: ChallengeProposalDialog.DeclineChallengeButtonClickedEvent) {
-        model.declineChallenge()
+        model.declineChallenge(event.match)
     }
 
     @Subscribe

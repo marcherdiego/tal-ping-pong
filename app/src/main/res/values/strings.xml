@@ -38,13 +38,14 @@
     <string name="decline">Decline</string>
     <string name="confirmed">Confirmed</string>
     <string name="unconfirmed">Unconfirmed</string>
-    <string name="unconfirmed_matches">Unconfirmed</string>
+    <string name="unconfirmed_matches">Invitations</string>
     <string name="not_played">Not played</string>
     <string name="edit_match_details">Edit match details</string>
     <string name="edit">Edit</string>
     <string name="edit_request_sent">Edit request sent!</string>
     <string name="edit_request_send_failed">Something went wrong while sending the edit request, please try again.</string>
-    <string name="changes_requested">Changes requested</string>
+    <string name="changes_requested_by_x">Changes requested by %1$s</string>
     <string name="network_error_message">Something went wrong\nPlease try again</string>
     <string name="edit_accepted">Edit accepted!</string>
+    <string name="me">me</string>
 </resources>

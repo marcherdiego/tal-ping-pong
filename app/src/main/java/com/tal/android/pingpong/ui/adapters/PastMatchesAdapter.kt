@@ -1,5 +1,6 @@
 package com.tal.android.pingpong.ui.adapters
 
+import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
 
     override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
         with(holder) {
+            val context = itemView.context
             val match = matches[position]
             val matchRecord = match.match ?: return
 
@@ -53,7 +55,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
 
             if (matchRecord.hasRequestedChanges == true) {
                 // User has requested changes
-                confirmedLabel?.setText(R.string.changes_requested)
+                confirmedLabel?.text = getChangesRequesterName(context, matchRecord)
                 confirmedIcon?.setImageResource(R.drawable.ic_warning)
 
                 val requestedLocalScore = matchRecord.requestedLocalScore
@@ -94,7 +96,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
 
             itemView.setBackgroundColor(
                 ContextCompat.getColor(
-                    itemView.context,
+                    context,
                     if (matchRecord.hasRequestedChanges == true) {
                         R.color.changes_requested_background_color
                     } else {
@@ -114,6 +116,24 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
                 bus.post(MatchClickedEvent(matchRecord))
             }
         }
+    }
+
+    private fun getChangesRequesterName(context: Context, matchRecord: MatchRecord): String? {
+        val local = matchRecord.local ?: return null
+        val visitor = matchRecord.visitor ?: return null
+        val (myUser, rivalUser) = if (local.userEmail == myEmail) {
+            Pair(local, visitor)
+        } else {
+            Pair(visitor, local)
+        }
+        return context.getString(
+            R.string.changes_requested_by_x,
+            if (matchRecord.changeRequestUserId == myUser.userId) {
+                context.getString(R.string.me)
+            } else {
+                rivalUser.firstName()
+            }
+        )
     }
 
     class MatchClickedEvent(val match: MatchRecord)

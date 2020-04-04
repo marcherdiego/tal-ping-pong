@@ -79,10 +79,10 @@ class ChallengeProposalDialog(private val match: MatchRecord, private val bus: B
             .setNegativeButtonText(R.string.decline)
             .setNeutralButtonText(R.string.cancel)
             .setPositiveButtonListener {
-                bus.post(AcceptChallengeButtonClickedEvent())
+                bus.post(AcceptChallengeButtonClickedEvent(match))
             }
             .setNegativeButtonListener {
-                bus.post(DeclineChallengeButtonClickedEvent())
+                bus.post(DeclineChallengeButtonClickedEvent(match))
             }
             .build(activity)
         dialog?.show()
@@ -92,6 +92,6 @@ class ChallengeProposalDialog(private val match: MatchRecord, private val bus: B
         dialog?.dismiss()
     }
 
-    class AcceptChallengeButtonClickedEvent
-    class DeclineChallengeButtonClickedEvent
+    class AcceptChallengeButtonClickedEvent(val match: MatchRecord)
+    class DeclineChallengeButtonClickedEvent(val match: MatchRecord)
 }
