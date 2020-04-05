@@ -56,6 +56,10 @@ class RankingModel(private val sharedPreferencesUtils: SharedPreferencesUtils) :
             )
     }
 
+    fun updateCurrentUser(user: User) {
+        sharedPreferencesUtils.saveUser(user)
+    }
+
     class UsersFetchedSuccessfullyEvent(val usersList: List<User>)
     class UsersFetchFailedEvent
     class ChallengeSubmittedSuccessfullyEvent

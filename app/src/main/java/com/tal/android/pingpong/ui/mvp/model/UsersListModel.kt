@@ -21,10 +21,7 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
             .getUsers()
             .enqueueResponseNotNull(
                 success = {
-                    val filteredUsers = it.filter { user ->
-                        user.userEmail != sharedPreferencesUtils.getUser()?.userEmail
-                    }
-                    bus.post(UsersFetchedSuccessfullyEvent(filteredUsers))
+                    bus.post(UsersFetchedSuccessfullyEvent(it))
                 },
                 fail = {
                     bus.post(UsersFetchFailedEvent())
@@ -57,6 +54,10 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
                 },
                 model = this
             )
+    }
+
+    fun updateCurrentUser(user: User) {
+        sharedPreferencesUtils.saveUser(user)
     }
 
     class UsersFetchedSuccessfullyEvent(val usersList: List<User>)

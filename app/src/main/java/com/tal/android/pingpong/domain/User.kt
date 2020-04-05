@@ -39,14 +39,14 @@ data class User(
 ) : Serializable {
 
     private val matchesRatioValue: Float
-        get() = if (matchesLost == 0) {
+        get() = if (matchesWon + matchesLost == 0) {
             0f
         } else {
             matchesWon.toFloat() / (matchesWon + matchesLost).toFloat()
         }
 
     val matchesRatio: String?
-        get() = if (matchesLost == 0) {
+        get() = if (matchesWon + matchesLost == 0) {
             "---"
         } else {
             val ratio = (100 * matchesWon.toFloat()) / (matchesWon + matchesLost).toFloat()
@@ -59,7 +59,7 @@ data class User(
             return UNKNOWN
         }
         val ratioSum = this.matchesRatioValue + user.matchesRatioValue
-        val ratio = this.matchesRatioValue / ratioSum
+        val ratio = user.matchesRatioValue / ratioSum
 
         // Limit value to CHANCES_LOWER_BOUND% and CHANCES_UPPER_BOUND%
         return max(CHANCES_LOWER_BOUND, min(ratio, CHANCES_UPPER_BOUND))
