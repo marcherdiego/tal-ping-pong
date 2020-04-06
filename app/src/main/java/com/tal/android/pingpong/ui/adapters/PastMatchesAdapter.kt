@@ -13,7 +13,7 @@ import com.tal.android.pingpong.domain.Match
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.ui.adapters.viewholders.MatchViewHolder
 
-class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: String?, private val bus: Bus) :
+class PastMatchesAdapter(private val matches: List<Match>, private val userEmail: String?, private val bus: Bus) :
     RecyclerView.Adapter<MatchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
@@ -27,7 +27,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
     override fun getItemViewType(position: Int): Int {
         val match = matches[position]
         return when (match.match?.local?.userEmail) {
-            myEmail -> MatchViewHolder.VIEW_TYPE_LOCAL
+            userEmail -> MatchViewHolder.VIEW_TYPE_LOCAL
             else -> MatchViewHolder.VIEW_TYPE_VISITOR
         }
     }
@@ -101,7 +101,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
                         R.color.changes_requested_background_color
                     } else {
                         if (matchRecord.confirmed == true) {
-                            if (matchRecord.myVictory(myEmail)) {
+                            if (matchRecord.myVictory(userEmail)) {
                                 R.color.victory_background_color
                             } else {
                                 R.color.defeat_background_color
@@ -121,7 +121,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val myEmail: 
     private fun getChangesRequesterName(context: Context, matchRecord: MatchRecord): String? {
         val local = matchRecord.local ?: return null
         val visitor = matchRecord.visitor ?: return null
-        val (myUser, rivalUser) = if (local.userEmail == myEmail) {
+        val (myUser, rivalUser) = if (local.userEmail == userEmail) {
             Pair(local, visitor)
         } else {
             Pair(visitor, local)

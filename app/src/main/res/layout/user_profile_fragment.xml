@@ -1,78 +1,191 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_layout"
+    <RelativeLayout
+        android:id="@+id/email_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/email_label"
+            style="@style/ui_textview_large_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/email"
+            style="@style/ui_textview_normal_regular_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email_label"
+            tools:text="panadero@theappraisallane.com" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/stats_title"
+        style="@style/ui_textview_title_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Last 30 days stats"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/email_container"
+        app:layout_constraintTop_toBottomOf="@+id/email_container" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/matches_won_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats_title"
+        android:layout_marginTop="4dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="@+id/stats_title"
+        app:layout_constraintTop_toBottomOf="@+id/stats_title">
+
+        <TextView
+            android:id="@+id/matches_won_label"
+            style="@style/ui_textview_large_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Matches won"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/matches_won"
+            style="@style/ui_textview_normal_regular_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/matches_won_label"
+            app:layout_constraintStart_toStartOf="@+id/matches_won_label"
+            app:layout_constraintTop_toBottomOf="@+id/matches_won_label"
+            tools:text="2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/matches_lost_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats_title"
+        android:layout_marginStart="8dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toStartOf="@+id/matches_win_rate_container"
+        app:layout_constraintStart_toEndOf="@+id/matches_won_container"
+        app:layout_constraintTop_toTopOf="@+id/matches_won_container">
+
+        <TextView
+            android:id="@+id/matches_lost_label"
+            style="@style/ui_textview_large_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Matches lost"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/matches_lost"
+            style="@style/ui_textview_normal_regular_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/matches_lost_label"
+            app:layout_constraintStart_toStartOf="@+id/matches_lost_label"
+            app:layout_constraintTop_toBottomOf="@+id/matches_lost_label"
+            tools:text="28" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/matches_win_rate_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats_title"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/matches_lost_container">
+
+        <TextView
+            android:id="@+id/matches_win_rate_label"
+            style="@style/ui_textview_large_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Matches win rate"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/matches_win_rate"
+            style="@style/ui_textview_normal_regular_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/matches_win_rate_label"
+            app:layout_constraintStart_toStartOf="@+id/matches_win_rate_label"
+            app:layout_constraintTop_toBottomOf="@+id/matches_win_rate_label"
+            tools:text="27%" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/last_ten_matches_label"
+        style="@style/ui_textview_large_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Last 10 matches"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/matches_won_container"
+        app:layout_constraintTop_toBottomOf="@+id/matches_lost_container" />
+
+    <include
+        android:id="@+id/empty_list_layout"
+        layout="@layout/empty_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark">
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/last_ten_matches"
+        tools:visibility="visible" />
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:collapsedTitleTextAppearance="@style/collapsingToolbarLayoutTitleColor"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginBottom="24dp"
-            app:expandedTitleMarginEnd="16dp"
-            app:expandedTitleTextAppearance="@style/expandedToolbarLayoutTitleColor"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            tools:title="Diego Marcher">
-
-            <ImageView
-                android:id="@+id/user_image"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.5" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_gravity="bottom"
-                android:background="@drawable/gradient_background" />
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:title="" />
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/last_ten_matches"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:clipToPadding="false"
-        android:padding="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:paddingBottom="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/last_ten_matches_label" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <include
-                android:id="@+id/personal_data"
-                layout="@layout/user_profile_personal_data" />
-        </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/logout_button"
-        style="@style/FabStyle"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/ic_logout"
-        android:tint="#FFFFFF"
-        app:fabSize="auto"
-        app:layout_anchor="@id/app_bar_layout"
-        app:layout_anchorGravity="bottom|right|end" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <ProgressBar
+        android:id="@+id/matches_loader_progress_bar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/last_ten_matches_label" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,6 +47,12 @@ class MainPresenter(view: MainView, model: MainModel) :
             //If re-selecting tab, ignore event
             return
         }
+        view.setToolbarTitle(TOOLBAR_TITLE)
+        if (newState == MainModel.PROFILE) {
+            view.expandToolbar()
+        } else {
+            view.collapseToolbar()
+        }
         updateCurrentFragment(fragment)
     }
 
@@ -118,5 +124,9 @@ class MainPresenter(view: MainView, model: MainModel) :
             view.setSelectedTab(R.id.menu_matches)
             true
         }
+    }
+
+    companion object {
+        private const val TOOLBAR_TITLE = "TAL Ping Pong"
     }
 }

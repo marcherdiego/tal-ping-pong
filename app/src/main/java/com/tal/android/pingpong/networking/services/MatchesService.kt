@@ -34,4 +34,7 @@ interface MatchesService {
         @Query("confirmed") confirmed: Boolean = true,
         @Query("fetchMatchHistory") fetchMatchHistory: Boolean = false
     ): Call<List<Match>>
+
+    @GET("/getLastTenMatches.php")
+    fun getLastTenMatches(@Query("userId") userId: Int): Call<List<Match>>
 }

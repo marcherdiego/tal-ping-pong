@@ -3,6 +3,7 @@ package com.tal.android.pingpong.ui.mvp.presenter
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.activities.LoginActivity
+import com.tal.android.pingpong.ui.adapters.PastMatchesAdapter
 import com.tal.android.pingpong.ui.mvp.model.UserProfileModel
 import com.tal.android.pingpong.ui.mvp.view.UserProfileView
 import com.tal.android.pingpong.utils.DialogFactory
@@ -14,7 +15,9 @@ class UserProfilePresenter(view: UserProfileView, model: UserProfileModel) :
     init {
         view.loadUserBasicInfo(model.user.userImage, model.user.userName, model.user.userEmail)
         view.loadUserMatchesInfo(model.user.matchesWon.toString(), model.user.matchesLost.toString(), model.user.matchesRatio)
-        if (model.user.userId != model.getLoggedUser()?.userId) {
+        if (model.user.userId == model.getLoggedUser()?.userId) {
+            view.showLogoutButton()
+        } else {
             view.hideLogoutButton()
         }
     }
@@ -36,5 +39,23 @@ class UserProfilePresenter(view: UserProfileView, model: UserProfileModel) :
             .setNeutralButtonText(R.string.cancel)
             .build(view.context ?: return)
             .show()
+    }
+
+    @Subscribe
+    fun onLastTenMatchesFetchedSuccessfully(event: UserProfileModel.LastTenMatchesFetchedSuccessfullyEvent) {
+        view.hideMatchesLoaderProgressBar()
+        view.setPastMatchesAdapter(PastMatchesAdapter(event.matches, model.user.userEmail, model.getBus()))
+    }
+
+    @Subscribe
+    fun onLastTenMatchesFetchFailed(event: UserProfileModel.LastTenMatchesFetchFailedEvent) {
+        view.hideMatchesLoaderProgressBar()
+        view.showNetworkErrorMessage()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        view.showMatchesLoaderProgressBar()
+        model.fetchLastTenMatches()
     }
 }
