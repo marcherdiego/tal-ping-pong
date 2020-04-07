@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/local_1_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/local_2_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:padding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/local_1_image" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Locals"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/local_2_image"
+            app:layout_constraintStart_toStartOf="@+id/local_2_image"
+            app:layout_constraintTop_toBottomOf="@+id/local_2_image" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/table_tennis"
+            app:layout_constraintBottom_toBottomOf="@+id/local_2_image"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_1_image"
+            app:layout_constraintStart_toEndOf="@+id/local_1_image"
+            app:layout_constraintTop_toTopOf="@+id/local_1_image" />
+
+        <ImageView
+            android:id="@+id/visitor_1_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/visitor_2_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_1_image" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Visitors"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/visitor_2_image"
+            app:layout_constraintStart_toStartOf="@+id/visitor_2_image"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_2_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.tal.android.pingpong.ui.widgets.DifficultyBar
+        android:id="@+id/difficulty_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/header"
+        app:layout_constraintStart_toStartOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

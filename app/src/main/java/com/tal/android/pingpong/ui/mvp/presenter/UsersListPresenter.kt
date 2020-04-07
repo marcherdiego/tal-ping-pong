@@ -2,9 +2,11 @@ package com.tal.android.pingpong.ui.mvp.presenter
 
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
+import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
-import com.tal.android.pingpong.ui.dialogs.ChallengeUserDialog
+import com.tal.android.pingpong.ui.dialogs.DoublesMatchDialog
+import com.tal.android.pingpong.ui.dialogs.SinglesMatchDialog
 import com.tal.android.pingpong.ui.mvp.model.UsersListModel
 import com.tal.android.pingpong.ui.mvp.view.UsersListView
 import org.greenrobot.eventbus.Subscribe
@@ -34,7 +36,7 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     fun onUserClicked(event: UsersListAdapter.UserClickedEvent) {
         view.withActivity {
             val currentUser = model.getCurrentUser() ?: return
-            ChallengeUserDialog(currentUser, event.user).show(this, object : ChallengeUserDialog.ChallengeDialogCallback {
+            SinglesMatchDialog(currentUser, event.user).show(this, object : SinglesMatchDialog.ChallengeDialogCallback {
                 override fun onChallengeUser(user: User, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int) {
                     model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
                 }
@@ -64,12 +66,24 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     @Subscribe
     fun onNewSinglesMatchButtonClicked(event: UsersListView.NewSinglesMatchButtonClickedEvent) {
         collapseFabOptions()
-        view.showToast(R.string.select_a_rival_from_the_list)
+        view.showSnackbar(R.string.select_a_rival_from_the_list)
     }
 
     @Subscribe
     fun onNewDoublesMatchButtonClicked(event: UsersListView.NewDoublesMatchButtonClickedEvent) {
         collapseFabOptions()
+        view.withActivity {
+            val currentUser = model.getCurrentUser() ?: return
+            DoublesMatchDialog(currentUser).show(this, object : DoublesMatchDialog.ChallengeDialogCallback {
+                override fun onChallengeUser(match: MatchRecord, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int) {
+                    //model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
+                }
+
+                override fun onInvalidTimeSelected() {
+                    view.showToast(R.string.invalid_time_in_the_past)
+                }
+            })
+        }
     }
 
     @Subscribe

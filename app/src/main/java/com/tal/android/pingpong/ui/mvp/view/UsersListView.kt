@@ -2,21 +2,22 @@ package com.tal.android.pingpong.ui.mvp.view
 
 import android.animation.Animator
 import android.view.View
-import android.view.animation.Animation
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
 import com.tal.android.pingpong.ui.widgets.listeners.SimpleAnimatorListener
 
 class UsersListView(fragment: Fragment) : BaseFragmentView(fragment) {
+    private val coordinatorLayout: CoordinatorLayout? = fragment.view?.findViewById(R.id.coordinator_layout)
     private val usersList: RecyclerView? = fragment.view?.findViewById(R.id.users_list)
     private val refreshLayout: SwipeRefreshLayout? = activity?.findViewById(R.id.refresh_layout)
 
@@ -119,6 +120,10 @@ class UsersListView(fragment: Fragment) : BaseFragmentView(fragment) {
                 }
             })
         }
+    }
+
+    fun showSnackbar(text: Int) {
+        Snackbar.make(coordinatorLayout ?: return, text, Snackbar.LENGTH_SHORT).show()
     }
 
     class RefreshUsersListsEvent

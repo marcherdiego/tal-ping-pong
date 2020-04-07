@@ -11,8 +11,14 @@ data class MatchRecord(
     @SerializedName("local")
     var local: User? = null,
 
+    @SerializedName("localCompanion")
+    var localCompanion: User? = null,
+
     @SerializedName("visitor")
     var visitor: User? = null,
+
+    @SerializedName("visitorCompanion")
+    var visitorCompanion: User? = null,
 
     @SerializedName("date")
     var matchDate: String? = null,

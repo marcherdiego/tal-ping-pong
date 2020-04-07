@@ -38,7 +38,7 @@ data class User(
     var pushToken: String? = null
 ) : Serializable {
 
-    private val matchesRatioValue: Float
+    val matchesRatioValue: Float
         get() = if (matchesWon + matchesLost == 0) {
             0f
         } else {
@@ -52,18 +52,6 @@ data class User(
             val ratio = (100 * matchesWon.toFloat()) / (matchesWon + matchesLost).toFloat()
             ratio.asPercentString()
         }
-
-    fun chancesToWin(user: User): Float {
-        if (this.matchesRatioValue * user.matchesRatioValue == 0f) {
-            // If any of the two is zero, then there is not enough data to process
-            return UNKNOWN
-        }
-        val ratioSum = this.matchesRatioValue + user.matchesRatioValue
-        val ratio = user.matchesRatioValue / ratioSum
-
-        // Limit value to CHANCES_LOWER_BOUND% and CHANCES_UPPER_BOUND%
-        return max(CHANCES_LOWER_BOUND, min(ratio, CHANCES_UPPER_BOUND))
-    }
 
     fun firstName() = userName?.substringBefore(SPACE)
 

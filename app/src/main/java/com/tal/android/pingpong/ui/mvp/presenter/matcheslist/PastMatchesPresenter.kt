@@ -3,7 +3,7 @@ package com.tal.android.pingpong.ui.mvp.presenter.matcheslist
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.PastMatchesAdapter
-import com.tal.android.pingpong.ui.dialogs.ChallengeEditDialog
+import com.tal.android.pingpong.ui.dialogs.MatchEditDialog
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.PastMatchesModel
 import com.tal.android.pingpong.ui.mvp.view.matcheslist.BaseMatchesListView
@@ -12,7 +12,7 @@ import org.greenrobot.eventbus.Subscribe
 class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, bus: Bus) :
     BaseMatchesListPresenter<BaseMatchesListView, PastMatchesModel>(view, model, bus) {
 
-    private var challengeEditDialog: ChallengeEditDialog? = null
+    private var matchEditDialog: MatchEditDialog? = null
 
     @Subscribe
     fun onMatchesFetchedSuccessfully(event: BaseMatchesListModel.MatchesFetchedSuccessfullyEvent) {
@@ -23,25 +23,25 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchClicked(event: PastMatchesAdapter.MatchClickedEvent) {
         view.activity?.let {
-            challengeEditDialog = ChallengeEditDialog(event.match, model.getBus(), model.isMyMatchEdit(event.match))
-            challengeEditDialog?.show(it)
+            matchEditDialog = MatchEditDialog(event.match, model.getBus(), model.isMyMatchEdit(event.match))
+            matchEditDialog?.show(it)
         }
     }
 
     @Subscribe
-    fun onMatchEditButtonClicked(event: ChallengeEditDialog.MatchEditButtonClickedEvent) {
+    fun onMatchEditButtonClicked(event: MatchEditDialog.MatchEditButtonClickedEvent) {
         model.editMatch(event.match)
     }
 
     @Subscribe
-    fun onMatchAcceptChangesButtonClicked(event: ChallengeEditDialog.MatchAcceptChangesButtonClickedEvent) {
+    fun onMatchAcceptChangesButtonClicked(event: MatchEditDialog.MatchAcceptChangesButtonClickedEvent) {
         model.acceptMatchEdit(event.match)
     }
 
     @Subscribe
     fun onMatchEditedSuccessfully(event: PastMatchesModel.MatchEditedSuccessfullyEvent) {
         view.showToast(R.string.edit_request_sent)
-        challengeEditDialog?.dismiss()
+        matchEditDialog?.dismiss()
     }
 
     @Subscribe
@@ -52,7 +52,7 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchEditAcceptedSuccessfully(event: PastMatchesModel.MatchEditAcceptedSuccessfullyEvent) {
         view.showToast(R.string.edit_accepted)
-        challengeEditDialog?.dismiss()
+        matchEditDialog?.dismiss()
     }
 
     @Subscribe

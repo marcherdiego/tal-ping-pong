@@ -5,29 +5,25 @@ import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.ui.adapters.UnconfirmedMatchesAdapter
-import com.tal.android.pingpong.ui.dialogs.SinglesChallengeProposalDialog
+import com.tal.android.pingpong.ui.dialogs.DoublesMatchProposalDialog
+import com.tal.android.pingpong.ui.dialogs.SinglesMatchProposalDialog
 import com.tal.android.pingpong.ui.fragments.*
 
 import com.tal.android.pingpong.ui.mvp.model.MainModel
 import com.tal.android.pingpong.ui.mvp.view.MainView
+import com.tal.android.pingpong.ui.mvp.view.UsersListView
 import org.greenrobot.eventbus.Subscribe
 
 class MainPresenter(view: MainView, model: MainModel) :
     BaseActivityPresenter<MainView, MainModel>(view, model) {
 
-    private var challengeProposalDialog: SinglesChallengeProposalDialog? = null
+    private var singlesMatchProposalDialog: SinglesMatchProposalDialog? = null
+    private var doublesMatchProposalDialog: DoublesMatchProposalDialog? = null
 
     init {
         onNavigationItemSelected(MainView.NavigationItemSelectedEvent(R.id.menu_matches))
         model.challengeMatch?.let { match ->
-            openMatchChallengeDialog(match)
-        }
-    }
-
-    private fun openMatchChallengeDialog(match: MatchRecord) {
-        view.activity?.let {
-            challengeProposalDialog = SinglesChallengeProposalDialog(match, model.getBus())
-            challengeProposalDialog?.show(it)
+            openSinglesMatchDialog(match)
         }
     }
 
@@ -60,12 +56,12 @@ class MainPresenter(view: MainView, model: MainModel) :
      */
 
     @Subscribe
-    fun onAcceptChallengeButtonClicked(event: SinglesChallengeProposalDialog.AcceptChallengeButtonClickedEvent) {
+    fun onAcceptChallengeButtonClicked(event: SinglesMatchProposalDialog.AcceptChallengeButtonClickedEvent) {
         model.acceptChallenge(event.match)
     }
 
     @Subscribe
-    fun onDeclineChallengeButtonClicked(event: SinglesChallengeProposalDialog.DeclineChallengeButtonClickedEvent) {
+    fun onDeclineChallengeButtonClicked(event: SinglesMatchProposalDialog.DeclineChallengeButtonClickedEvent) {
         model.declineChallenge(event.match)
     }
 
@@ -73,7 +69,7 @@ class MainPresenter(view: MainView, model: MainModel) :
     fun onChallengeAcceptedSuccessfully(event: MainModel.ChallengeAcceptedSuccessfullyEvent) {
         view.showToast(R.string.challenge_accepted)
         model.notifyUpdateLists()
-        challengeProposalDialog?.dismiss()
+        singlesMatchProposalDialog?.dismiss()
     }
 
     @Subscribe
@@ -85,7 +81,7 @@ class MainPresenter(view: MainView, model: MainModel) :
     fun onChallengeDeclinedSuccessfully(event: MainModel.ChallengeDeclinedSuccessfullyEvent) {
         view.showToast(R.string.challenge_declined)
         model.notifyUpdateLists()
-        challengeProposalDialog?.dismiss()
+        singlesMatchProposalDialog?.dismiss()
     }
 
     @Subscribe
@@ -99,7 +95,12 @@ class MainPresenter(view: MainView, model: MainModel) :
 
     @Subscribe
     fun onUpcomingMatchClicked(event: UnconfirmedMatchesAdapter.UpcomingMatchClickedEvent) {
-        openMatchChallengeDialog(event.matchRecord)
+        openSinglesMatchDialog(event.matchRecord)
+    }
+
+    @Subscribe
+    fun onNewDoublesMatchButtonClicked(event: UsersListView.NewDoublesMatchButtonClickedEvent) {
+        //TODO handle incoming doubles challenge
     }
 
     private fun updateCurrentFragment(fragment: Fragment) {
@@ -108,6 +109,20 @@ class MainPresenter(view: MainView, model: MainModel) :
                 replace(R.id.frame_container, fragment)
             }
             commitNow()
+        }
+    }
+
+    private fun openSinglesMatchDialog(match: MatchRecord) {
+        view.activity?.let {
+            singlesMatchProposalDialog = SinglesMatchProposalDialog(match, model.getBus())
+            singlesMatchProposalDialog?.show(it)
+        }
+    }
+
+    private fun openDoublesMatchDialog(match: MatchRecord) {
+        view.activity?.let {
+            doublesMatchProposalDialog = DoublesMatchProposalDialog(match, model.getBus())
+            doublesMatchProposalDialog?.show(it)
         }
     }
 

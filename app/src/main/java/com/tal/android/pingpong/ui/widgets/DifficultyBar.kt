@@ -9,6 +9,8 @@ import androidx.constraintlayout.widget.Guideline
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.utils.asPercentString
+import kotlin.math.max
+import kotlin.math.min
 
 class DifficultyBar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -26,8 +28,8 @@ class DifficultyBar @JvmOverloads constructor(
         difficultyLevelGuideline = findViewById(R.id.guideline)
     }
 
-    fun setup(localUser: User, visitorUser: User) {
-        val winChances = visitorUser.chancesToWin(localUser)
+    fun setup(local: User, visitor: User? = null, localCompanion: User? = null, visitorCompanion: User? = null) {
+        val winChances = chancesToWin(local, visitor, localCompanion, visitorCompanion)
         if (winChances == User.UNKNOWN) {
             difficultyLevelGuideline.setGuidelinePercent(User.CHANCES_HALF)
             winChancesLabel.text = context.getString(R.string.unknown)
@@ -35,5 +37,32 @@ class DifficultyBar @JvmOverloads constructor(
             difficultyLevelGuideline.setGuidelinePercent(winChances)
             winChancesLabel.text = (100 * winChances).asPercentString(digits = 0)
         }
+    }
+
+    private fun chancesToWin(local: User, visitor: User? = null, localCompanion: User? = null, visitorCompanion: User? = null): Float {
+        val visitor = visitor ?: return User.UNKNOWN
+        val localRatio = local.matchesRatioValue
+        val visitorRatio = visitor.matchesRatioValue
+        val ratio: Float
+        var ratioSum = localRatio + visitorRatio
+        if (localCompanion == null && visitorCompanion == null) {
+            if (localRatio * visitorRatio == 0f) {
+                // If any of the two is zero, then there is not enough data to process
+                return User.UNKNOWN
+            }
+            ratio = visitor.matchesRatioValue / ratioSum
+        } else {
+            val localCompanionRatio = localCompanion?.matchesRatioValue ?: return User.UNKNOWN
+            val visitorCompanionRatio = visitorCompanion?.matchesRatioValue ?: return User.UNKNOWN
+            if (localCompanionRatio * visitorCompanionRatio == 0f) {
+                // If any of the two is zero, then there is not enough data to process
+                return User.UNKNOWN
+            }
+            ratioSum += localCompanionRatio + visitorCompanionRatio
+            ratio = (visitorRatio + visitorCompanionRatio) / ratioSum
+        }
+
+        // Limit value to CHANCES_LOWER_BOUND% and CHANCES_UPPER_BOUND%
+        return max(User.CHANCES_LOWER_BOUND, min(ratio, User.CHANCES_UPPER_BOUND))
     }
 }

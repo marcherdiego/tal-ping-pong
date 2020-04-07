@@ -13,14 +13,15 @@ import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.GlideUtils
 
-class SinglesChallengeProposalDialog(private val match: MatchRecord, private val bus: Bus) {
+//TODO RELLENAR LA DATA CON EL COMPANION
+class DoublesMatchProposalDialog(private val match: MatchRecord, private val bus: Bus) {
 
     private var dialog: AlertDialog? = null
 
     fun show(activity: Context) {
         val challengeDialogView = LayoutInflater
             .from(activity)
-            .inflate(R.layout.singles_challenge_proposal_dialog, null)
+            .inflate(R.layout.doubles_challenge_proposal_dialog, null)
         val localUserImage: ImageView = challengeDialogView.findViewById(R.id.local_image)
         val localUserName: TextView = challengeDialogView.findViewById(R.id.user_name)
         val localUserEmail: TextView = challengeDialogView.findViewById(R.id.user_email)

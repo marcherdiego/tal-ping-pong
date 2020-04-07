@@ -24,7 +24,7 @@ import java.lang.Exception
 import kotlin.math.max
 import kotlin.math.min
 
-class ChallengeEditDialog(private val match: MatchRecord, private val bus: Bus, private val isEditor: Boolean = true) {
+class MatchEditDialog(private val match: MatchRecord, private val bus: Bus, private val isEditor: Boolean = true) {
 
     private var dialog: AlertDialog? = null
 
