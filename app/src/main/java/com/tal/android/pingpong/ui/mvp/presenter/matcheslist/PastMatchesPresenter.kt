@@ -3,9 +3,7 @@ package com.tal.android.pingpong.ui.mvp.presenter.matcheslist
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.PastMatchesAdapter
-import com.tal.android.pingpong.ui.adapters.viewholders.MatchViewHolder
 import com.tal.android.pingpong.ui.dialogs.ChallengeEditDialog
-import com.tal.android.pingpong.ui.dialogs.ChallengeProposalDialog
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.PastMatchesModel
 import com.tal.android.pingpong.ui.mvp.view.matcheslist.BaseMatchesListView

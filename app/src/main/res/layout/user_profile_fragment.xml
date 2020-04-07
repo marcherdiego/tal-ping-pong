@@ -39,6 +39,7 @@
         android:layout_marginTop="16dp"
         android:text="Last 30 days stats"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/email_container"
         app:layout_constraintTop_toBottomOf="@+id/email_container" />
 
@@ -51,7 +52,7 @@
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintStart_toStartOf="@+id/stats_title"
+        app:layout_constraintStart_toStartOf="@+id/email_container"
         app:layout_constraintTop_toBottomOf="@+id/stats_title">
 
         <TextView
@@ -148,13 +149,14 @@
 
     <TextView
         android:id="@+id/last_ten_matches_label"
-        style="@style/ui_textview_large_black"
+        style="@style/ui_textview_title_black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Last 10 matches"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/matches_won_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matches_lost_container" />
 
     <include

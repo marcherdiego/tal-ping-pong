@@ -3,7 +3,6 @@ package com.tal.android.pingpong.ui.mvp.view
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.appcompat.widget.Toolbar
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
@@ -11,7 +10,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nerdscorner.mvplib.events.activity.BaseActivity
 import com.nerdscorner.mvplib.events.view.BaseActivityView
 import com.tal.android.pingpong.R
-import kotlinx.android.synthetic.main.login_activity.view.*
 
 class MainView(activity: BaseActivity<*>) : BaseActivityView(activity) {
     private val navigation: BottomNavigationView = activity.findViewById(R.id.bottom_navigation)

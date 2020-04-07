@@ -14,6 +14,8 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
     private val userService = ServiceGenerator.createService(UsersService::class.java)
     private val matchesService = ServiceGenerator.createService(MatchesService::class.java)
 
+    var showingFabOptions = false
+
     fun getCurrentUser() = sharedPreferencesUtils.getUser()
 
     fun fetchUsers() {

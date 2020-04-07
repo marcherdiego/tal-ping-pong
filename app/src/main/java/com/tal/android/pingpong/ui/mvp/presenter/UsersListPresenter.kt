@@ -46,6 +46,42 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
         }
     }
 
+    @Subscribe
+    fun onNewMatchButtonClicked(event: UsersListView.NewButtonClickedEvent) {
+        model.showingFabOptions = model.showingFabOptions.not()
+        if (model.showingFabOptions) {
+            view.expandFabOptions()
+        } else {
+            view.collapseFabOptions()
+        }
+    }
+
+    @Subscribe
+    fun onOverlayClicked(event: UsersListView.OverlayClickedEvent) {
+        collapseFabOptions()
+    }
+
+    @Subscribe
+    fun onNewSinglesMatchButtonClicked(event: UsersListView.NewSinglesMatchButtonClickedEvent) {
+        collapseFabOptions()
+        view.showToast(R.string.select_a_rival_from_the_list)
+    }
+
+    @Subscribe
+    fun onNewDoublesMatchButtonClicked(event: UsersListView.NewDoublesMatchButtonClickedEvent) {
+        collapseFabOptions()
+    }
+
+    @Subscribe
+    fun onNewChampionshipButtonClicked(event: UsersListView.NewChampionshipButtonClickedEvent) {
+        collapseFabOptions()
+    }
+
+    private fun collapseFabOptions() {
+        model.showingFabOptions = false
+        view.collapseFabOptions()
+    }
+
     override fun onResume() {
         view.setRefreshing(true)
         model.fetchUsers()

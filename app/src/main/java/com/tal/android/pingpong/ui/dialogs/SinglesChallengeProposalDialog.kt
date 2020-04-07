@@ -5,30 +5,22 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.Guideline
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
-import com.tal.android.pingpong.domain.User
-import com.tal.android.pingpong.extensions.enqueue
-import com.tal.android.pingpong.networking.ServiceGenerator
-import com.tal.android.pingpong.networking.services.MatchesService
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.GlideUtils
-import com.tal.android.pingpong.utils.asPercentString
-import kotlin.math.max
-import kotlin.math.min
 
-class ChallengeProposalDialog(private val match: MatchRecord, private val bus: Bus) {
+class SinglesChallengeProposalDialog(private val match: MatchRecord, private val bus: Bus) {
 
     private var dialog: AlertDialog? = null
 
     fun show(activity: Context) {
         val challengeDialogView = LayoutInflater
             .from(activity)
-            .inflate(R.layout.challenge_proposal_dialog, null)
+            .inflate(R.layout.singles_challenge_proposal_dialog, null)
         val localUserImage: ImageView = challengeDialogView.findViewById(R.id.local_image)
         val localUserName: TextView = challengeDialogView.findViewById(R.id.user_name)
         val localUserEmail: TextView = challengeDialogView.findViewById(R.id.user_email)

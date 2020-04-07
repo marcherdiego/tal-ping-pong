@@ -48,4 +48,8 @@
     <string name="network_error_message">Something went wrong\nPlease try again</string>
     <string name="edit_accepted">Edit accepted!</string>
     <string name="me">me</string>
+    <string name="new_championship">New championship</string>
+    <string name="new_doubles_match">New doubles match</string>
+    <string name="new_singles_match">New singles match</string>
+    <string name="select_a_rival_from_the_list">Select a rival from the list</string>
 </resources>

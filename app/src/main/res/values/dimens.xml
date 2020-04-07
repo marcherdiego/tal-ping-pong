@@ -2,4 +2,8 @@
 <resources>
     <dimen name="difficulty_bar_height">5dp</dimen>
     <dimen name="difficulty_bar_margin">1dp</dimen>
+
+    <dimen name="standard_55">65dp</dimen>
+    <dimen name="standard_105">120dp</dimen>
+    <dimen name="standard_155">175dp</dimen>
 </resources>

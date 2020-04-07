@@ -5,18 +5,17 @@ import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.ui.adapters.UnconfirmedMatchesAdapter
-import com.tal.android.pingpong.ui.dialogs.ChallengeProposalDialog
+import com.tal.android.pingpong.ui.dialogs.SinglesChallengeProposalDialog
 import com.tal.android.pingpong.ui.fragments.*
 
 import com.tal.android.pingpong.ui.mvp.model.MainModel
 import com.tal.android.pingpong.ui.mvp.view.MainView
-import com.tal.android.pingpong.ui.mvp.view.MatchesListView
 import org.greenrobot.eventbus.Subscribe
 
 class MainPresenter(view: MainView, model: MainModel) :
     BaseActivityPresenter<MainView, MainModel>(view, model) {
 
-    private var challengeProposalDialog: ChallengeProposalDialog? = null
+    private var challengeProposalDialog: SinglesChallengeProposalDialog? = null
 
     init {
         onNavigationItemSelected(MainView.NavigationItemSelectedEvent(R.id.menu_matches))
@@ -27,7 +26,7 @@ class MainPresenter(view: MainView, model: MainModel) :
 
     private fun openMatchChallengeDialog(match: MatchRecord) {
         view.activity?.let {
-            challengeProposalDialog = ChallengeProposalDialog(match, model.getBus())
+            challengeProposalDialog = SinglesChallengeProposalDialog(match, model.getBus())
             challengeProposalDialog?.show(it)
         }
     }
@@ -56,22 +55,17 @@ class MainPresenter(view: MainView, model: MainModel) :
         updateCurrentFragment(fragment)
     }
 
-    @Subscribe
-    fun onNewMatchButtonClicked(event: MatchesListView.NewMatchButtonClickedEvent) {
-        view.setSelectedTab(R.id.menu_new_match)
-    }
-
     /***
      * ACCEPT / DECLINE CHALLENGE EVENTS
      */
 
     @Subscribe
-    fun onAcceptChallengeButtonClicked(event: ChallengeProposalDialog.AcceptChallengeButtonClickedEvent) {
+    fun onAcceptChallengeButtonClicked(event: SinglesChallengeProposalDialog.AcceptChallengeButtonClickedEvent) {
         model.acceptChallenge(event.match)
     }
 
     @Subscribe
-    fun onDeclineChallengeButtonClicked(event: ChallengeProposalDialog.DeclineChallengeButtonClickedEvent) {
+    fun onDeclineChallengeButtonClicked(event: SinglesChallengeProposalDialog.DeclineChallengeButtonClickedEvent) {
         model.declineChallenge(event.match)
     }
 
