@@ -16,8 +16,8 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
 
     @Subscribe
     fun onUsersFetchedSuccessfully(event: UsersListModel.UsersFetchedSuccessfullyEvent) {
-        model.updateCurrentUser(event.usersList.first { it.userEmail == model.getCurrentUser()?.userEmail })
-        view.setUsersListAdapter(UsersListAdapter(event.usersList, model.getBus()))
+        model.updateCurrentUser(model.usersList.first { it.userEmail == model.getCurrentUser()?.userEmail })
+        view.setUsersListAdapter(UsersListAdapter(model.usersList, model.getBus()))
         view.setRefreshing(false)
     }
 
@@ -74,7 +74,7 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
         collapseFabOptions()
         view.withActivity {
             val currentUser = model.getCurrentUser() ?: return
-            NewDoublesMatchDialog(currentUser, model.getBus()).show(this)
+            NewDoublesMatchDialog(model.usersList, currentUser, model.getBus()).show(this)
         }
     }
 

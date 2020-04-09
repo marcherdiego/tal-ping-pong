@@ -17,6 +17,8 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
 
     var showingFabOptions = false
 
+    var usersList = emptyList<User>()
+
     fun getCurrentUser() = sharedPreferencesUtils.getUser()
 
     fun fetchUsers() {
@@ -24,7 +26,8 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
             .getUsers()
             .enqueueResponseNotNull(
                 success = {
-                    bus.post(UsersFetchedSuccessfullyEvent(it))
+                    usersList = it
+                    bus.post(UsersFetchedSuccessfullyEvent())
                 },
                 fail = {
                     bus.post(UsersFetchFailedEvent())
@@ -56,6 +59,6 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
         sharedPreferencesUtils.saveUser(user)
     }
 
-    class UsersFetchedSuccessfullyEvent(val usersList: List<User>)
+    class UsersFetchedSuccessfullyEvent
     class UsersFetchFailedEvent
 }

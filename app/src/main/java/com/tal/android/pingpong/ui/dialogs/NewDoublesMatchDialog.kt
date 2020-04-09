@@ -3,8 +3,11 @@ package com.tal.android.pingpong.ui.dialogs
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.widget.ImageView
+import androidx.annotation.IntDef
+import androidx.appcompat.app.AlertDialog
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
@@ -13,18 +16,32 @@ import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.GlideUtils
+import org.greenrobot.eventbus.Subscribe
 import java.util.*
 
-class NewDoublesMatchDialog(private val myUser: User, private val bus: Bus) {
+class NewDoublesMatchDialog(private val users: List<User>, private val myUser: User, private val bus: Bus) {
+
+    private var dialog: AlertDialog? = null
+    private val userSelectorBus = Bus.newInstance
+
+    private lateinit var localImage: ImageView
+    private lateinit var localCompanionImage: ImageView
+    private lateinit var visitorImage: ImageView
+    private lateinit var visitorCompanionImage: ImageView
+
+    private var localCompanion: User? = null
+    private var visitor: User? = null
+    private var visitorCompanion: User? = null
 
     fun show(context: Context) {
+        userSelectorBus.register(this)
         val challengeDialogView = LayoutInflater
             .from(context)
             .inflate(R.layout.doubles_challenge_proposal_dialog, null)
-        val localImage = challengeDialogView.findViewById<ImageView>(R.id.local_1_image)
-        val localCompanionImage = challengeDialogView.findViewById<ImageView>(R.id.local_2_image)
-        val visitorImage = challengeDialogView.findViewById<ImageView>(R.id.visitor_1_image)
-        val visitorCompanionImage = challengeDialogView.findViewById<ImageView>(R.id.visitor_2_image)
+        localImage = challengeDialogView.findViewById(R.id.local_1_image)
+        localCompanionImage = challengeDialogView.findViewById(R.id.local_2_image)
+        visitorImage = challengeDialogView.findViewById(R.id.visitor_1_image)
+        visitorCompanionImage = challengeDialogView.findViewById(R.id.visitor_2_image)
 
         val difficultyBar: DifficultyBar = challengeDialogView.findViewById(R.id.difficulty_bar)
         difficultyBar.setup(local = myUser)
@@ -34,7 +51,17 @@ class NewDoublesMatchDialog(private val myUser: User, private val bus: Bus) {
         GlideUtils.loadImage(imageView = visitorImage, fallbackImage = R.drawable.ic_incognito)
         GlideUtils.loadImage(imageView = visitorCompanionImage, fallbackImage = R.drawable.ic_incognito)
 
-        DialogFactory
+        localCompanionImage.setOnClickListener {
+            UserSelectorDialog(users, userSelectorBus, UserSelectorDialog.LOCAL_COMPANION).show(it.context)
+        }
+        visitorImage.setOnClickListener {
+            UserSelectorDialog(users, userSelectorBus, UserSelectorDialog.VISITOR).show(it.context)
+        }
+        visitorCompanionImage.setOnClickListener {
+            UserSelectorDialog(users, userSelectorBus, UserSelectorDialog.VISITOR_COMPANION).show(it.context)
+        }
+
+        dialog = DialogFactory
             .Builder()
             .setCancelable(true)
             .setAutoDismiss(false)
@@ -45,8 +72,38 @@ class NewDoublesMatchDialog(private val myUser: User, private val bus: Bus) {
                 openDateSelectionDialog(context, MatchRecord())
             }
             .setNegativeButtonText(R.string.close)
+            .setNegativeButtonListener {
+                dialog?.dismiss()
+            }
+            .setOnDismissListener(DialogInterface.OnDismissListener {
+                userSelectorBus.unregister(this)
+            })
             .build(context)
-            .show()
+        dialog?.show()
+    }
+
+    @Subscribe
+    fun onUserSelected(event: UserSelectorDialog.UserSelectedEvent) {
+        val userImageView = when (event.userType) {
+            UserSelectorDialog.LOCAL_COMPANION -> {
+                localCompanion = event.user
+                localCompanionImage
+            }
+            UserSelectorDialog.VISITOR -> {
+                visitor = event.user
+                visitorImage
+            }
+            UserSelectorDialog.VISITOR_COMPANION -> {
+                visitorCompanion = event.user
+                visitorCompanionImage
+            }
+            else -> return
+        }
+        GlideUtils.loadImage(
+            imageView = userImageView,
+            url = event.user.userImage,
+            fallbackImage = R.drawable.ic_incognito
+        )
     }
 
     private fun openDateSelectionDialog(context: Context, match: MatchRecord) {
@@ -96,6 +153,5 @@ class NewDoublesMatchDialog(private val myUser: User, private val bus: Bus) {
     }
 
     class CreateNewDoublesMatchButtonClickedEvent(val match: MatchRecord, val matchDate: Date)
-
     class NewDoublesMatchInvalidTimeSelectedEvent
 }
