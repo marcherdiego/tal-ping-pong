@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
@@ -16,46 +15,53 @@ import com.tal.android.pingpong.utils.GlideUtils
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import java.util.*
 
-class DoublesMatchDialog(private val myUser: User) {
+class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: User) {
+
     private lateinit var challengeDialogCallback: ChallengeDialogCallback
 
     fun show(context: Context, challengeDialogCallback: ChallengeDialogCallback) {
         this.challengeDialogCallback = challengeDialogCallback
         val challengeDialogView = LayoutInflater
             .from(context)
-            .inflate(R.layout.doubles_challenge_proposal_dialog, null)
-        val localImage = challengeDialogView.findViewById<ImageView>(R.id.local_1_image)
-        val localCompanionImage = challengeDialogView.findViewById<ImageView>(R.id.local_2_image)
-        val visitorImage = challengeDialogView.findViewById<ImageView>(R.id.visitor_1_image)
-        val visitorCompanionImage = challengeDialogView.findViewById<ImageView>(R.id.visitor_2_image)
+            .inflate(R.layout.challenges_user_dialog, null)
+        val userImage = challengeDialogView.findViewById<ImageView>(R.id.user_image)
         val difficultyBar: DifficultyBar = challengeDialogView.findViewById(R.id.difficulty_bar)
+        val userName = challengeDialogView.findViewById<TextView>(R.id.user_name)
+        val userEmail = challengeDialogView.findViewById<TextView>(R.id.user_email)
+        val userStats = challengeDialogView.findViewById<TextView>(R.id.user_stats)
 
-        difficultyBar.setup(local = myUser)
-        GlideUtils.loadImage(myUser.userImage, localImage, R.drawable.ic_incognito, true)
-        GlideUtils.loadImage(imageView = localCompanionImage, fallbackImage = R.drawable.ic_incognito)
-        GlideUtils.loadImage(imageView = visitorImage, fallbackImage = R.drawable.ic_incognito)
-        GlideUtils.loadImage(imageView = visitorCompanionImage, fallbackImage = R.drawable.ic_incognito)
+        difficultyBar.setup(myUser, rivalUser)
+        GlideUtils.loadImage(rivalUser.userImage, userImage, R.drawable.ic_incognito, true)
+        userName.text = rivalUser.userName
+        userEmail.text = rivalUser.userEmail
+        userStats.text = context.getString(R.string.user_stats, rivalUser.matchesWon, rivalUser.matchesLost, rivalUser.matchesRatio)
 
-        DialogFactory
+        val myEmail = SharedPreferencesUtils(context).getUser()?.userEmail
+
+        val challengeDialogBuilder = DialogFactory
             .Builder()
             .setCancelable(true)
             .setTitle(R.string.user_details)
             .setView(challengeDialogView)
-            .setPositiveButtonText(R.string.challenge)
-            .setPositiveButtonListener {
-                openChallengeDateSelectionDialog(context, MatchRecord())
-            }
+        if (rivalUser.userEmail != myEmail) {
+            challengeDialogBuilder
+                .setPositiveButtonText(R.string.challenge)
+                .setPositiveButtonListener {
+                    openChallengeDateSelectionDialog(context, rivalUser)
+                }
+        }
+        challengeDialogBuilder
             .setNegativeButtonText(R.string.close)
             .build(context)
             .show()
     }
 
-    private fun openChallengeDateSelectionDialog(context: Context, match: MatchRecord) {
+    private fun openChallengeDateSelectionDialog(context: Context, user: User) {
         val today = Calendar.getInstance()
         val datePickerDialog = DatePickerDialog(
             context,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                openChallengeTimeSelectionDialog(context, match, year, monthOfYear, dayOfMonth)
+                openChallengeTimeSelectionDialog(context, user, year, monthOfYear, dayOfMonth)
             },
             today[Calendar.YEAR],
             today[Calendar.MONTH],
@@ -65,16 +71,16 @@ class DoublesMatchDialog(private val myUser: User) {
         datePickerDialog.show()
     }
 
-    private fun openChallengeTimeSelectionDialog(context: Context, match: MatchRecord, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+    private fun openChallengeTimeSelectionDialog(context: Context, user: User, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         val now = Calendar.getInstance()
         val timePickerDialog = TimePickerDialog(
             context,
             TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                 try {
-                    challengeDialogCallback.onChallengeUser(match, year, monthOfYear, dayOfMonth, hourOfDay, minute)
+                    challengeDialogCallback.onChallengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
                 } catch (e: InvalidMatchTimeException) {
                     challengeDialogCallback.onInvalidTimeSelected()
-                    openChallengeTimeSelectionDialog(context, match, year, monthOfYear, dayOfMonth)
+                    openChallengeTimeSelectionDialog(context, user, year, monthOfYear, dayOfMonth)
                 }
             },
             now[Calendar.HOUR_OF_DAY],
@@ -85,7 +91,7 @@ class DoublesMatchDialog(private val myUser: User) {
     }
 
     interface ChallengeDialogCallback {
-        fun onChallengeUser(match: MatchRecord, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int)
+        fun onChallengeUser(user: User, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int)
         fun onInvalidTimeSelected()
     }
 }

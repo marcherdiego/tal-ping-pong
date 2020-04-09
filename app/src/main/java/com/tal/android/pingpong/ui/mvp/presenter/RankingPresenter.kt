@@ -4,7 +4,7 @@ import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
-import com.tal.android.pingpong.ui.dialogs.SinglesMatchDialog
+import com.tal.android.pingpong.ui.dialogs.NewSinglesMatchDialog
 import com.tal.android.pingpong.ui.mvp.model.RankingModel
 import com.tal.android.pingpong.ui.mvp.view.RankingView
 import org.greenrobot.eventbus.Subscribe
@@ -34,7 +34,7 @@ class RankingPresenter(view: RankingView, model: RankingModel) :
     fun onUserClicked(event: UsersListAdapter.UserClickedEvent) {
         view.withActivity {
             val currentUser = model.getCurrentUser() ?: return
-            SinglesMatchDialog(currentUser, event.user).show(this, object : SinglesMatchDialog.ChallengeDialogCallback {
+            NewSinglesMatchDialog(currentUser, event.user).show(this, object : NewSinglesMatchDialog.ChallengeDialogCallback {
                 override fun onChallengeUser(user: User, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int) {
                     model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
                 }

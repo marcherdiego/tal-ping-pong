@@ -5,8 +5,8 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
-import com.tal.android.pingpong.ui.dialogs.DoublesMatchDialog
-import com.tal.android.pingpong.ui.dialogs.SinglesMatchDialog
+import com.tal.android.pingpong.ui.dialogs.NewDoublesMatchDialog
+import com.tal.android.pingpong.ui.dialogs.NewSinglesMatchDialog
 import com.tal.android.pingpong.ui.mvp.model.UsersListModel
 import com.tal.android.pingpong.ui.mvp.view.UsersListView
 import org.greenrobot.eventbus.Subscribe
@@ -36,7 +36,7 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     fun onUserClicked(event: UsersListAdapter.UserClickedEvent) {
         view.withActivity {
             val currentUser = model.getCurrentUser() ?: return
-            SinglesMatchDialog(currentUser, event.user).show(this, object : SinglesMatchDialog.ChallengeDialogCallback {
+            NewSinglesMatchDialog(currentUser, event.user).show(this, object : NewSinglesMatchDialog.ChallengeDialogCallback {
                 override fun onChallengeUser(user: User, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int) {
                     model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
                 }
@@ -74,7 +74,7 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
         collapseFabOptions()
         view.withActivity {
             val currentUser = model.getCurrentUser() ?: return
-            DoublesMatchDialog(currentUser).show(this, object : DoublesMatchDialog.ChallengeDialogCallback {
+            NewDoublesMatchDialog(currentUser).show(this, object : NewDoublesMatchDialog.ChallengeDialogCallback {
                 override fun onChallengeUser(match: MatchRecord, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int) {
                     //model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
                 }
