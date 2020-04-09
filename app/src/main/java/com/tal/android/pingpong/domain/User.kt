@@ -53,6 +53,8 @@ data class User(
             ratio.asPercentString()
         }
 
+    var selected: Boolean = false
+
     fun firstName() = userName?.substringBefore(SPACE)
 
     companion object {

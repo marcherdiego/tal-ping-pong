@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.widget.ImageView
-import androidx.annotation.IntDef
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
@@ -25,9 +25,18 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
     private val userSelectorBus = Bus.newInstance
 
     private lateinit var localImage: ImageView
+    private lateinit var localName: TextView
+
     private lateinit var localCompanionImage: ImageView
+    private lateinit var localCompanionName: TextView
+
     private lateinit var visitorImage: ImageView
+    private lateinit var visitorName: TextView
+
     private lateinit var visitorCompanionImage: ImageView
+    private lateinit var visitorCompanionName: TextView
+
+    private lateinit var difficultyBar: DifficultyBar
 
     private var localCompanion: User? = null
     private var visitor: User? = null
@@ -39,26 +48,35 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
             .from(context)
             .inflate(R.layout.doubles_challenge_proposal_dialog, null)
         localImage = challengeDialogView.findViewById(R.id.local_1_image)
-        localCompanionImage = challengeDialogView.findViewById(R.id.local_2_image)
-        visitorImage = challengeDialogView.findViewById(R.id.visitor_1_image)
-        visitorCompanionImage = challengeDialogView.findViewById(R.id.visitor_2_image)
+        localName = challengeDialogView.findViewById(R.id.local_1_name)
 
-        val difficultyBar: DifficultyBar = challengeDialogView.findViewById(R.id.difficulty_bar)
+        localCompanionImage = challengeDialogView.findViewById(R.id.local_2_image)
+        localCompanionName = challengeDialogView.findViewById(R.id.local_2_name)
+
+        visitorImage = challengeDialogView.findViewById(R.id.visitor_1_image)
+        visitorName = challengeDialogView.findViewById(R.id.visitor_1_name)
+
+        visitorCompanionImage = challengeDialogView.findViewById(R.id.visitor_2_image)
+        visitorCompanionName = challengeDialogView.findViewById(R.id.visitor_2_name)
+
+        difficultyBar = challengeDialogView.findViewById(R.id.difficulty_bar)
         difficultyBar.setup(local = myUser)
 
         GlideUtils.loadImage(myUser.userImage, localImage, R.drawable.ic_incognito, true)
+        localName.text = myUser.userName
+
         GlideUtils.loadImage(imageView = localCompanionImage, fallbackImage = R.drawable.ic_incognito)
         GlideUtils.loadImage(imageView = visitorImage, fallbackImage = R.drawable.ic_incognito)
         GlideUtils.loadImage(imageView = visitorCompanionImage, fallbackImage = R.drawable.ic_incognito)
 
         localCompanionImage.setOnClickListener {
-            UserSelectorDialog(users, userSelectorBus, UserSelectorDialog.LOCAL_COMPANION).show(it.context)
+            UserSelectorDialog(getEligibleUsers(), userSelectorBus, UserSelectorDialog.LOCAL_COMPANION, localCompanion).show(it.context)
         }
         visitorImage.setOnClickListener {
-            UserSelectorDialog(users, userSelectorBus, UserSelectorDialog.VISITOR).show(it.context)
+            UserSelectorDialog(getEligibleUsers(), userSelectorBus, UserSelectorDialog.VISITOR, visitor).show(it.context)
         }
         visitorCompanionImage.setOnClickListener {
-            UserSelectorDialog(users, userSelectorBus, UserSelectorDialog.VISITOR_COMPANION).show(it.context)
+            UserSelectorDialog(getEligibleUsers(), userSelectorBus, UserSelectorDialog.VISITOR_COMPANION, visitorCompanion).show(it.context)
         }
 
         dialog = DialogFactory
@@ -82,20 +100,35 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
         dialog?.show()
     }
 
+    private fun getEligibleUsers(): MutableList<User> {
+        val eligibleUsers = mutableListOf<User>()
+        eligibleUsers.addAll(
+            users.filterNot {
+                it.userId in arrayOf(
+                    myUser.userId,
+                    localCompanion?.userId,
+                    visitor?.userId,
+                    visitorCompanion?.userId
+                )
+            }
+        )
+        return eligibleUsers
+    }
+
     @Subscribe
     fun onUserSelected(event: UserSelectorDialog.UserSelectedEvent) {
-        val userImageView = when (event.userType) {
+        val (userImageView, userNameTextView) = when (event.userType) {
             UserSelectorDialog.LOCAL_COMPANION -> {
                 localCompanion = event.user
-                localCompanionImage
+                Pair(localCompanionImage, localCompanionName)
             }
             UserSelectorDialog.VISITOR -> {
                 visitor = event.user
-                visitorImage
+                Pair(visitorImage, visitorName)
             }
             UserSelectorDialog.VISITOR_COMPANION -> {
                 visitorCompanion = event.user
-                visitorCompanionImage
+                Pair(visitorCompanionImage, visitorCompanionName)
             }
             else -> return
         }
@@ -103,6 +136,39 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
             imageView = userImageView,
             url = event.user.userImage,
             fallbackImage = R.drawable.ic_incognito
+        )
+        userNameTextView.text = event.user.userName
+        updateDifficultyBar()
+    }
+
+    @Subscribe
+    fun onUserRemoved(event: UserSelectorDialog.UserRemovedEvent) {
+        val (userImageView, userNameTextView) = when (event.userType) {
+            UserSelectorDialog.LOCAL_COMPANION -> {
+                localCompanion = null
+                Pair(localCompanionImage, localCompanionName)
+            }
+            UserSelectorDialog.VISITOR -> {
+                visitor = null
+                Pair(visitorImage, visitorName)
+            }
+            UserSelectorDialog.VISITOR_COMPANION -> {
+                visitorCompanion = null
+                Pair(visitorCompanionImage, visitorCompanionName)
+            }
+            else -> return
+        }
+        GlideUtils.loadImage(imageView = userImageView, fallbackImage = R.drawable.ic_incognito)
+        userNameTextView.text = null
+        updateDifficultyBar()
+    }
+
+    private fun updateDifficultyBar() {
+        difficultyBar.setup(
+            local = myUser,
+            localCompanion = localCompanion,
+            visitor = visitor,
+            visitorCompanion = visitorCompanion
         )
     }
 

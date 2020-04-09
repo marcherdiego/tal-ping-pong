@@ -11,6 +11,9 @@
     <color name="defeat_background_color">#FFEBEE</color>
     <color name="match_not_played">#EFEFEF</color>
 
+    <color name="match_selected">#E3F2FD</color>
+    <color name="match_unselected">#FFFFFF</color>
+
     <color name="edit_background_color">#FFF8E1</color>
 
     <!-- Chances colors -->

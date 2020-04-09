@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
@@ -13,21 +14,87 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/top_separator"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Locals" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/center_horizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <ImageView
+            android:id="@+id/table"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/table_tennis"
+            app:layout_constraintBottom_toBottomOf="@+id/local_2_image"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_1_image"
+            app:layout_constraintStart_toEndOf="@+id/local_1_image"
+            app:layout_constraintTop_toTopOf="@+id/local_1_image" />
+
         <ImageView
             android:id="@+id/local_1_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:padding="8dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="8dp"
+            android:padding="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/top_separator" />
+
+        <TextView
+            android:id="@+id/local_1_name"
+            style="@style/ui_textview_normal_black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/center_horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/center_vertical"
+            app:layout_constraintStart_toEndOf="@+id/local_1_image"
+            app:layout_constraintTop_toTopOf="@+id/table"
+            tools:text="Diego Marcher Bertotto" />
 
         <ImageView
             android:id="@+id/local_2_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:padding="8dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:padding="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/local_1_image" />
+
+        <TextView
+            android:id="@+id/local_2_name"
+            style="@style/ui_textview_normal_black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/table"
+            app:layout_constraintEnd_toStartOf="@+id/center_vertical"
+            app:layout_constraintStart_toEndOf="@+id/local_2_image"
+            app:layout_constraintTop_toTopOf="@+id/center_horizontal"
+            tools:text="Agustín Taruselli" />
 
         <TextView
             android:id="@+id/textView2"
@@ -42,29 +109,50 @@
             app:layout_constraintTop_toBottomOf="@+id/local_2_image" />
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/table_tennis"
-            app:layout_constraintBottom_toBottomOf="@+id/local_2_image"
-            app:layout_constraintEnd_toStartOf="@+id/visitor_1_image"
-            app:layout_constraintStart_toEndOf="@+id/local_1_image"
+            android:id="@+id/visitor_1_image"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/local_1_image" />
 
-        <ImageView
-            android:id="@+id/visitor_1_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:padding="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/visitor_1_name"
+            style="@style/ui_textview_normal_black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/center_horizontal"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_1_image"
+            app:layout_constraintStart_toEndOf="@+id/center_vertical"
+            app:layout_constraintTop_toTopOf="@+id/table"
+            tools:text="Javier González" />
 
         <ImageView
             android:id="@+id/visitor_2_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:padding="8dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:padding="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/visitor_1_image" />
+
+        <TextView
+            android:id="@+id/visitor_2_name"
+            style="@style/ui_textview_normal_black"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/table"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_2_image"
+            app:layout_constraintStart_toEndOf="@+id/center_vertical"
+            app:layout_constraintTop_toTopOf="@+id/center_horizontal"
+            tools:text="Christian Schmeichel" />
 
         <TextView
             android:id="@+id/textView3"

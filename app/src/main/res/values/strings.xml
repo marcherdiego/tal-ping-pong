@@ -25,7 +25,7 @@
     <string name="no_matches_yet">Nothing to show here…</string>
     <string name="accept">Accept</string>
     <string name="low">Low</string>
-    <string name="winning_chances">Winning chances</string>
+    <string name="winning_chances">Your winning chances</string>
     <string name="high">High</string>
     <string name="incoming_challenge">Incoming challenge</string>
     <string name="unknown">Unknown</string>
@@ -54,4 +54,5 @@
     <string name="select_a_rival_from_the_list">Select a rival from the list</string>
     <string name="match_request_sent">Match request sent!</string>
     <string name="match_request_failed">Match request failed, please try again later</string>
+    <string name="remove">Remove</string>
 </resources>

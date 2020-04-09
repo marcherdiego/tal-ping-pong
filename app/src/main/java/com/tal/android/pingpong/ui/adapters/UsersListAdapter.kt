@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
@@ -12,7 +13,9 @@ import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter.ViewHolder
 import com.tal.android.pingpong.utils.GlideUtils
 
-class UsersListAdapter(private val users: List<User>, private val bus: Bus) : RecyclerView.Adapter<ViewHolder>() {
+class UsersListAdapter(
+    private val users: List<User>, private val bus: Bus, private val selectable: Boolean = false, private var selectedUser: User? = null
+) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -32,7 +35,22 @@ class UsersListAdapter(private val users: List<User>, private val bus: Bus) : Re
             userName.text = user.userName
             userEmail.text = user.userEmail
             userRank.text = context.getString(R.string.user_rank, user.userRank)
+
+            if (selectable) {
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        if (user == selectedUser) {
+                            R.color.match_selected
+                        } else {
+                            R.color.match_unselected
+                        }
+                    )
+                )
+            }
             itemView.setOnClickListener {
+                selectedUser = user
+                notifyDataSetChanged()
                 bus.post(UserClickedEvent(user))
             }
         }

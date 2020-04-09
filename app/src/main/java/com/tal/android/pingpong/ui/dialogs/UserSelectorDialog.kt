@@ -13,11 +13,18 @@ import com.tal.android.pingpong.ui.adapters.UsersListAdapter
 import com.tal.android.pingpong.utils.*
 import org.greenrobot.eventbus.Subscribe
 
-class UserSelectorDialog(private val users: List<User>, private val bus: Bus, @UserType private val userType: Int) {
+class UserSelectorDialog(
+    private val users: MutableList<User>, private val bus: Bus, @UserType private val userType: Int, private var selectedUser: User? = null
+) {
+
+    init {
+        selectedUser?.let {
+            users.add(0, it)
+        }
+    }
 
     private var dialog: AlertDialog? = null
     private val usersAdapterBus = Bus.newInstance
-    private var selectedUser: User? = null
 
     fun show(context: Context) {
         usersAdapterBus.register(this)
@@ -26,7 +33,7 @@ class UserSelectorDialog(private val users: List<User>, private val bus: Bus, @U
             .inflate(R.layout.user_selector_dialog, null)
 
         val usersList: RecyclerView = view.findViewById(R.id.users_list)
-        usersList.adapter = UsersListAdapter(users, usersAdapterBus)
+        usersList.adapter = UsersListAdapter(users, usersAdapterBus, true, selectedUser)
 
         dialog = DialogFactory
             .Builder()
@@ -40,6 +47,11 @@ class UserSelectorDialog(private val users: List<User>, private val bus: Bus, @U
                 selectedUser?.let {
                     bus.post(UserSelectedEvent(userType, it))
                 }
+                dismiss()
+            }
+            .setNegativeButtonText(R.string.remove)
+            .setNegativeButtonListener {
+                bus.post(UserRemovedEvent(userType))
                 dismiss()
             }
             .setOnDismissListener(DialogInterface.OnDismissListener {
@@ -59,6 +71,7 @@ class UserSelectorDialog(private val users: List<User>, private val bus: Bus, @U
     }
 
     class UserSelectedEvent(@UserType val userType: Int, val user: User)
+    class UserRemovedEvent(@UserType val userType: Int)
 
     companion object {
         /**
