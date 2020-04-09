@@ -52,4 +52,6 @@
     <string name="new_doubles_match">New doubles match</string>
     <string name="new_singles_match">New singles match</string>
     <string name="select_a_rival_from_the_list">Select a rival from the list</string>
+    <string name="match_request_sent">Match request sent!</string>
+    <string name="match_request_failed">Match request failed, please try again later</string>
 </resources>

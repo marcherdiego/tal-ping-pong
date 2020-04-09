@@ -4,6 +4,8 @@ import androidx.fragment.app.Fragment
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
+import com.tal.android.pingpong.events.ChallengeSubmitFailedEvent
+import com.tal.android.pingpong.events.ChallengeSubmittedSuccessfullyEvent
 import com.tal.android.pingpong.ui.adapters.UnconfirmedMatchesAdapter
 import com.tal.android.pingpong.ui.dialogs.IncomingDoublesMatchDialog
 import com.tal.android.pingpong.ui.dialogs.IncomingSinglesMatchDialog
@@ -11,7 +13,6 @@ import com.tal.android.pingpong.ui.fragments.*
 
 import com.tal.android.pingpong.ui.mvp.model.MainModel
 import com.tal.android.pingpong.ui.mvp.view.MainView
-import com.tal.android.pingpong.ui.mvp.view.UsersListView
 import org.greenrobot.eventbus.Subscribe
 
 class MainPresenter(view: MainView, model: MainModel) :
@@ -99,8 +100,13 @@ class MainPresenter(view: MainView, model: MainModel) :
     }
 
     @Subscribe
-    fun onNewDoublesMatchButtonClicked(event: UsersListView.NewDoublesMatchButtonClickedEvent) {
-        //TODO handle incoming doubles challenge
+    fun onChallengeSubmittedSuccessfully(event: ChallengeSubmittedSuccessfullyEvent) {
+        view.showToast(R.string.match_request_sent)
+    }
+
+    @Subscribe
+    fun onChallengeSubmittedSuccessfully(event: ChallengeSubmitFailedEvent) {
+        view.showToast(R.string.match_request_failed)
     }
 
     private fun updateCurrentFragment(fragment: Fragment) {

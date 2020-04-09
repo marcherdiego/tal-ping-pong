@@ -77,7 +77,8 @@ class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: Use
             context,
             TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                 try {
-                    challengeDialogCallback.onChallengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
+                    val matchDate = getMatchDate(year, monthOfYear, dayOfMonth, hourOfDay, minute)
+                    challengeDialogCallback.onChallengeUser(user, matchDate)
                 } catch (e: InvalidMatchTimeException) {
                     challengeDialogCallback.onInvalidTimeSelected()
                     openChallengeTimeSelectionDialog(context, user, year, monthOfYear, dayOfMonth)
@@ -90,8 +91,19 @@ class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: Use
         timePickerDialog.show()
     }
 
+    @Throws(InvalidMatchTimeException::class)
+    private fun getMatchDate(year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int): Date {
+        val now = Calendar.getInstance()
+        val selectedDateTime = Calendar.getInstance()
+        selectedDateTime.set(year, monthOfYear, dayOfMonth, hourOfDay, minute)
+        if (selectedDateTime.before(now)) {
+            throw InvalidMatchTimeException()
+        }
+        return selectedDateTime.time
+    }
+
     interface ChallengeDialogCallback {
-        fun onChallengeUser(user: User, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int)
+        fun onChallengeUser(user: User, matchDate: Date)
         fun onInvalidTimeSelected()
     }
 }

@@ -3,7 +3,8 @@ package com.tal.android.pingpong.ui.mvp.model
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
-import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
+import com.tal.android.pingpong.events.ChallengeSubmitFailedEvent
+import com.tal.android.pingpong.events.ChallengeSubmittedSuccessfullyEvent
 import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
@@ -30,19 +31,12 @@ class RankingModel(private val sharedPreferencesUtils: SharedPreferencesUtils) :
             )
     }
 
-    @Throws(InvalidMatchTimeException::class)
-    fun challengeUser(user: User, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int) {
-        val now = Calendar.getInstance()
-        val selectedDateTime = Calendar.getInstance()
-        selectedDateTime.set(year, monthOfYear, dayOfMonth, hourOfDay, minute)
-        if (selectedDateTime.before(now)) {
-            throw InvalidMatchTimeException()
-        }
-        val match = MatchRecord().apply {
-            local = getCurrentUser()
-            visitor = user
-            matchDate = selectedDateTime.time.toString()
-        }
+    fun challengeUser(user: User, date: Date) {
+        val match = MatchRecord(
+            local = getCurrentUser(),
+            visitor = user,
+            matchDate = date.toString()
+        )
         matchesService
             .challengeUser(match)
             .enqueueResponseNotNull(
@@ -62,6 +56,4 @@ class RankingModel(private val sharedPreferencesUtils: SharedPreferencesUtils) :
 
     class UsersFetchedSuccessfullyEvent(val usersList: List<User>)
     class UsersFetchFailedEvent
-    class ChallengeSubmittedSuccessfullyEvent
-    class ChallengeSubmitFailedEvent
 }

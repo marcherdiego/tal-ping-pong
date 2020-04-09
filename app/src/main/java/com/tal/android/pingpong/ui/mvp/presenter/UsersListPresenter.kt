@@ -2,7 +2,6 @@ package com.tal.android.pingpong.ui.mvp.presenter
 
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
 import com.tal.android.pingpong.ui.dialogs.NewDoublesMatchDialog
@@ -10,6 +9,7 @@ import com.tal.android.pingpong.ui.dialogs.NewSinglesMatchDialog
 import com.tal.android.pingpong.ui.mvp.model.UsersListModel
 import com.tal.android.pingpong.ui.mvp.view.UsersListView
 import org.greenrobot.eventbus.Subscribe
+import java.util.*
 
 class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     BaseFragmentPresenter<UsersListView, UsersListModel>(view, model) {
@@ -37,8 +37,8 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
         view.withActivity {
             val currentUser = model.getCurrentUser() ?: return
             NewSinglesMatchDialog(currentUser, event.user).show(this, object : NewSinglesMatchDialog.ChallengeDialogCallback {
-                override fun onChallengeUser(user: User, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int) {
-                    model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
+                override fun onChallengeUser(user: User, matchDate: Date) {
+                    model.challengeUser(user, matchDate)
                 }
 
                 override fun onInvalidTimeSelected() {
@@ -74,16 +74,18 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
         collapseFabOptions()
         view.withActivity {
             val currentUser = model.getCurrentUser() ?: return
-            NewDoublesMatchDialog(currentUser).show(this, object : NewDoublesMatchDialog.ChallengeDialogCallback {
-                override fun onChallengeUser(match: MatchRecord, year: Int, monthOfYear: Int, dayOfMonth: Int, hourOfDay: Int, minute: Int) {
-                    //model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
-                }
-
-                override fun onInvalidTimeSelected() {
-                    view.showToast(R.string.invalid_time_in_the_past)
-                }
-            })
+            NewDoublesMatchDialog(currentUser, model.getBus()).show(this)
         }
+    }
+
+    @Subscribe
+    fun onCreateNewDoublesMatchButtonClicked(event: NewDoublesMatchDialog.CreateNewDoublesMatchButtonClickedEvent) {
+        //model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
+    }
+
+    @Subscribe
+    fun onNewDoublesMatchInvalidTimeSelected(event: NewDoublesMatchDialog.NewDoublesMatchInvalidTimeSelectedEvent) {
+        view.showToast(R.string.invalid_time_in_the_past)
     }
 
     @Subscribe
