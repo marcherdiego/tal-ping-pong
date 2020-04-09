@@ -5,8 +5,8 @@ import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.ui.adapters.UnconfirmedMatchesAdapter
-import com.tal.android.pingpong.ui.dialogs.DoublesMatchProposalDialog
-import com.tal.android.pingpong.ui.dialogs.SinglesMatchProposalDialog
+import com.tal.android.pingpong.ui.dialogs.IncomingDoublesMatchDialog
+import com.tal.android.pingpong.ui.dialogs.IncomingSinglesMatchDialog
 import com.tal.android.pingpong.ui.fragments.*
 
 import com.tal.android.pingpong.ui.mvp.model.MainModel
@@ -17,8 +17,8 @@ import org.greenrobot.eventbus.Subscribe
 class MainPresenter(view: MainView, model: MainModel) :
     BaseActivityPresenter<MainView, MainModel>(view, model) {
 
-    private var singlesMatchProposalDialog: SinglesMatchProposalDialog? = null
-    private var doublesMatchProposalDialog: DoublesMatchProposalDialog? = null
+    private var incomingSinglesMatchDialog: IncomingSinglesMatchDialog? = null
+    private var incomingDoublesMatchDialog: IncomingDoublesMatchDialog? = null
 
     init {
         onNavigationItemSelected(MainView.NavigationItemSelectedEvent(R.id.menu_matches))
@@ -56,12 +56,12 @@ class MainPresenter(view: MainView, model: MainModel) :
      */
 
     @Subscribe
-    fun onAcceptChallengeButtonClicked(event: SinglesMatchProposalDialog.AcceptChallengeButtonClickedEvent) {
+    fun onAcceptChallengeButtonClicked(event: IncomingSinglesMatchDialog.AcceptChallengeButtonClickedEvent) {
         model.acceptChallenge(event.match)
     }
 
     @Subscribe
-    fun onDeclineChallengeButtonClicked(event: SinglesMatchProposalDialog.DeclineChallengeButtonClickedEvent) {
+    fun onDeclineChallengeButtonClicked(event: IncomingSinglesMatchDialog.DeclineChallengeButtonClickedEvent) {
         model.declineChallenge(event.match)
     }
 
@@ -69,7 +69,7 @@ class MainPresenter(view: MainView, model: MainModel) :
     fun onChallengeAcceptedSuccessfully(event: MainModel.ChallengeAcceptedSuccessfullyEvent) {
         view.showToast(R.string.challenge_accepted)
         model.notifyUpdateLists()
-        singlesMatchProposalDialog?.dismiss()
+        incomingSinglesMatchDialog?.dismiss()
     }
 
     @Subscribe
@@ -81,7 +81,7 @@ class MainPresenter(view: MainView, model: MainModel) :
     fun onChallengeDeclinedSuccessfully(event: MainModel.ChallengeDeclinedSuccessfullyEvent) {
         view.showToast(R.string.challenge_declined)
         model.notifyUpdateLists()
-        singlesMatchProposalDialog?.dismiss()
+        incomingSinglesMatchDialog?.dismiss()
     }
 
     @Subscribe
@@ -114,15 +114,15 @@ class MainPresenter(view: MainView, model: MainModel) :
 
     private fun openSinglesMatchDialog(match: MatchRecord) {
         view.activity?.let {
-            singlesMatchProposalDialog = SinglesMatchProposalDialog(match, model.getBus())
-            singlesMatchProposalDialog?.show(it)
+            incomingSinglesMatchDialog = IncomingSinglesMatchDialog(match, model.getBus())
+            incomingSinglesMatchDialog?.show(it)
         }
     }
 
     private fun openDoublesMatchDialog(match: MatchRecord) {
         view.activity?.let {
-            doublesMatchProposalDialog = DoublesMatchProposalDialog(match, model.getBus())
-            doublesMatchProposalDialog?.show(it)
+            incomingDoublesMatchDialog = IncomingDoublesMatchDialog(match, model.getBus())
+            incomingDoublesMatchDialog?.show(it)
         }
     }
 

@@ -14,7 +14,7 @@ import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.GlideUtils
 
 //TODO RELLENAR LA DATA CON EL COMPANION
-class DoublesMatchProposalDialog(private val match: MatchRecord, private val bus: Bus) {
+class IncomingDoublesMatchDialog(private val match: MatchRecord, private val bus: Bus) {
 
     private var dialog: AlertDialog? = null
 

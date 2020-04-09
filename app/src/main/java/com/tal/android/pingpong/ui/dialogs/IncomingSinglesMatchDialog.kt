@@ -13,7 +13,7 @@ import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.GlideUtils
 
-class SinglesMatchProposalDialog(private val match: MatchRecord, private val bus: Bus) {
+class IncomingSinglesMatchDialog(private val match: MatchRecord, private val bus: Bus) {
 
     private var dialog: AlertDialog? = null
 
