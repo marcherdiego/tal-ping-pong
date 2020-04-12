@@ -17,9 +17,9 @@ class IncomingSinglesMatchDialog(private val match: MatchRecord, private val bus
 
     private var dialog: AlertDialog? = null
 
-    fun show(activity: Context) {
+    fun show(context: Context) {
         val challengeDialogView = LayoutInflater
-            .from(activity)
+            .from(context)
             .inflate(R.layout.singles_challenge_proposal_dialog, null)
         val localUserImage: ImageView = challengeDialogView.findViewById(R.id.local_image)
         val localUserName: TextView = challengeDialogView.findViewById(R.id.user_name)
@@ -41,21 +41,21 @@ class IncomingSinglesMatchDialog(private val match: MatchRecord, private val bus
 
         difficultyBar.setup(localUser, visitorUser)
 
-        localUserName.text = activity.getString(R.string.x_stats, localUser.userName)
+        localUserName.text = context.getString(R.string.x_stats, localUser.userName)
         localUserEmail.text = localUser.userEmail
         matchDate.text = DateUtils.formatDate(match.matchDate)
 
-        localUserMatchesWon.text = activity.getString(
+        localUserMatchesWon.text = context.getString(
             R.string.x_matches_won,
             localUser.firstName(),
             localUser.matchesWon
         )
-        localUserMatchesLost.text = activity.getString(
+        localUserMatchesLost.text = context.getString(
             R.string.x_matches_lost,
             localUser.firstName(),
             localUser.matchesLost
         )
-        localUserWinRate.text = activity.getString(
+        localUserWinRate.text = context.getString(
             R.string.x_matches_win_rate,
             localUser.firstName(),
             localUser.matchesRatio
@@ -74,9 +74,9 @@ class IncomingSinglesMatchDialog(private val match: MatchRecord, private val bus
                 bus.post(AcceptChallengeButtonClickedEvent(match))
             }
             .setNegativeButtonListener {
-                bus.post(DeclineChallengeButtonClickedEvent(match))
+                DeclineMatchDialog(match, bus).show(context)
             }
-            .build(activity)
+            .build(context)
         dialog?.show()
     }
 
@@ -85,5 +85,4 @@ class IncomingSinglesMatchDialog(private val match: MatchRecord, private val bus
     }
 
     class AcceptChallengeButtonClickedEvent(val match: MatchRecord)
-    class DeclineChallengeButtonClickedEvent(val match: MatchRecord)
 }

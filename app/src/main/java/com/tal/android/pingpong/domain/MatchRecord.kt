@@ -39,10 +39,10 @@ data class MatchRecord(
     var changeRequestUserId: Int = 0,
 
     @SerializedName("requestedLocalScore")
-    var requestedLocalScore: Int = 0,
+    var requestedLocalScore: Int = UNSET,
 
     @SerializedName("requestedVisitorScore")
-    var requestedVisitorScore: Int = 0
+    var requestedVisitorScore: Int = UNSET
 ) : Serializable {
 
     fun myVictory(myEmail: String?): Boolean {
@@ -53,5 +53,15 @@ data class MatchRecord(
         }
     }
 
-    fun hasScoreRequestChanges(localScore: Int, visitorScore: Int) = localScore != requestedLocalScore || visitorScore != requestedVisitorScore
+    fun hasTempRequestChanges(localScore: Int, visitorScore: Int): Boolean{
+        return if (requestedLocalScore == UNSET && requestedVisitorScore == UNSET) {
+            localScore != this.localScore || visitorScore != this.visitorScore
+        } else {
+            localScore != requestedLocalScore || visitorScore != requestedVisitorScore
+        }
+    }
+
+    companion object {
+        const val UNSET = -1
+    }
 }

@@ -10,21 +10,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.Guideline
 import androidx.core.widget.addTextChangedListener
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
-import com.tal.android.pingpong.domain.User
-import com.tal.android.pingpong.extensions.enqueue
-import com.tal.android.pingpong.networking.ServiceGenerator
-import com.tal.android.pingpong.networking.services.MatchesService
 import com.tal.android.pingpong.utils.*
-import java.lang.Exception
-import kotlin.math.max
-import kotlin.math.min
 
-class MatchEditDialog(private val match: MatchRecord, private val bus: Bus, private val isEditor: Boolean = true) {
+class MatchEditDialog(private val match: MatchRecord, private val bus: Bus, private val isMyMatchEdit: Boolean = true) {
 
     private var dialog: AlertDialog? = null
 
@@ -32,20 +24,20 @@ class MatchEditDialog(private val match: MatchRecord, private val bus: Bus, priv
     private lateinit var visitorScore: EditText
 
     fun show(activity: Context) {
-        val challengeDialogView = LayoutInflater
+        val matchEditDialogView = LayoutInflater
             .from(activity)
             .inflate(R.layout.challenge_edit_dialog, null)
 
-        localScore = challengeDialogView.findViewById(R.id.local_score)
-        visitorScore = challengeDialogView.findViewById(R.id.visitor_score)
+        localScore = matchEditDialogView.findViewById(R.id.local_score)
+        visitorScore = matchEditDialogView.findViewById(R.id.visitor_score)
 
-        val localUserImage: ImageView = challengeDialogView.findViewById(R.id.local_image)
-        val local: TextView = challengeDialogView.findViewById(R.id.local)
-        val oldLocalScore: TextView = challengeDialogView.findViewById(R.id.old_local_score)
-        val matchDate: TextView = challengeDialogView.findViewById(R.id.match_date)
-        val visitorUserImage: ImageView = challengeDialogView.findViewById(R.id.visitor_image)
-        val visitor: TextView = challengeDialogView.findViewById(R.id.visitor)
-        val oldVisitorScore: TextView = challengeDialogView.findViewById(R.id.old_visitor_score)
+        val localUserImage: ImageView = matchEditDialogView.findViewById(R.id.local_image)
+        val local: TextView = matchEditDialogView.findViewById(R.id.local)
+        val oldLocalScore: TextView = matchEditDialogView.findViewById(R.id.old_local_score)
+        val matchDate: TextView = matchEditDialogView.findViewById(R.id.match_date)
+        val visitorUserImage: ImageView = matchEditDialogView.findViewById(R.id.visitor_image)
+        val visitor: TextView = matchEditDialogView.findViewById(R.id.visitor)
+        val oldVisitorScore: TextView = matchEditDialogView.findViewById(R.id.old_visitor_score)
 
         val localUser = match.local ?: return
         val visitorUser = match.visitor ?: return
@@ -76,10 +68,10 @@ class MatchEditDialog(private val match: MatchRecord, private val bus: Bus, priv
             dialog
                 ?.getButton(DialogInterface.BUTTON_POSITIVE)
                 ?.setText(
-                    if (match.hasScoreRequestChanges(localScore.toInt(), visitorScore.toInt())) {
+                    if (match.hasTempRequestChanges(localScore.toInt(), visitorScore.toInt())) {
                         R.string.edit
                     } else {
-                        if (isEditor) {
+                        if (isMyMatchEdit) {
                             R.string.close
                         } else {
                             R.string.accept
@@ -97,30 +89,30 @@ class MatchEditDialog(private val match: MatchRecord, private val bus: Bus, priv
             .setCancelable(true)
             .setAutoDismiss(false)
             .setTitle(R.string.edit_match_details)
-            .setView(challengeDialogView)
+            .setView(matchEditDialogView)
             .setNeutralButtonText(R.string.cancel)
             .setPositiveButtonListener {
-                if (match.hasScoreRequestChanges(localScore.toInt(), visitorScore.toInt())) {
+                if (match.hasTempRequestChanges(localScore.toInt(), visitorScore.toInt())) {
                     val matchCopy = match.copy()
                     matchCopy.localScore = localScore.toInt()
                     matchCopy.visitorScore = visitorScore.toInt()
                     bus.post(MatchEditButtonClickedEvent(matchCopy))
                 } else {
-                    if (isEditor || match.hasRequestedChanges == false) {
+                    if (isMyMatchEdit) {
                         dismiss()
                     } else {
                         bus.post(MatchAcceptChangesButtonClickedEvent(match))
                     }
                 }
             }
-        if (isEditor || match.hasRequestedChanges == false) {
+        if (isMyMatchEdit || match.hasRequestedChanges == false) {
             dialogBuilder.setPositiveButtonText(R.string.close)
         } else {
             dialogBuilder
                 .setPositiveButtonText(R.string.accept)
                 .setNegativeButtonText(R.string.decline)
                 .setNegativeButtonListener {
-                    bus.post(DeclineMatchEditButtonClickedEvent())
+                    bus.post(DeclineMatchEditButtonClickedEvent(match))
                 }
         }
         dialog = dialogBuilder.build(activity)
@@ -133,5 +125,5 @@ class MatchEditDialog(private val match: MatchRecord, private val bus: Bus, priv
 
     class MatchEditButtonClickedEvent(val match: MatchRecord)
     class MatchAcceptChangesButtonClickedEvent(val match: MatchRecord)
-    class DeclineMatchEditButtonClickedEvent
+    class DeclineMatchEditButtonClickedEvent(val match: MatchRecord)
 }

@@ -8,6 +8,7 @@ import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.mvp.model.MainModel
 import com.tal.android.pingpong.ui.mvp.presenter.MainPresenter
 import com.tal.android.pingpong.ui.mvp.view.MainView
+import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class MainActivity : BaseActivity<MainPresenter>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +18,10 @@ class MainActivity : BaseActivity<MainPresenter>() {
         val challengeMatch = intent.getSerializableExtra(EXTRA_CHALLENGE_MATCH) as? MatchRecord
         presenter = MainPresenter(
             MainView(this),
-            MainModel(challengeMatch = challengeMatch)
+            MainModel(
+                sharedPreferences = SharedPreferencesUtils(this),
+                challengeMatch = challengeMatch
+            )
         )
     }
 

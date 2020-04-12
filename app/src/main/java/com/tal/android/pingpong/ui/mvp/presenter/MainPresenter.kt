@@ -7,6 +7,7 @@ import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.events.ChallengeSubmitFailedEvent
 import com.tal.android.pingpong.events.ChallengeSubmittedSuccessfullyEvent
 import com.tal.android.pingpong.ui.adapters.UnconfirmedMatchesAdapter
+import com.tal.android.pingpong.ui.dialogs.DeclineMatchDialog
 import com.tal.android.pingpong.ui.dialogs.IncomingDoublesMatchDialog
 import com.tal.android.pingpong.ui.dialogs.IncomingSinglesMatchDialog
 import com.tal.android.pingpong.ui.fragments.*
@@ -62,8 +63,8 @@ class MainPresenter(view: MainView, model: MainModel) :
     }
 
     @Subscribe
-    fun onDeclineChallengeButtonClicked(event: IncomingSinglesMatchDialog.DeclineChallengeButtonClickedEvent) {
-        model.declineChallenge(event.match)
+    fun onDeclineChallengeButtonClicked(event: DeclineMatchDialog.ConfirmDeclineMatchButtonClickedEvent) {
+        model.declineChallenge(event.match, event.declineReason)
     }
 
     @Subscribe

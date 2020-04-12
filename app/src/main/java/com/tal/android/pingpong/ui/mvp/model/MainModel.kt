@@ -6,8 +6,11 @@ import com.tal.android.pingpong.events.MatchesUpdatedEvent
 import com.tal.android.pingpong.extensions.enqueue
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
+import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
+import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class MainModel(
+    private val sharedPreferences: SharedPreferencesUtils,
     var challengeMatch: MatchRecord? = null,
     @State
     @get:State
@@ -15,6 +18,8 @@ class MainModel(
 ) : BaseModel() {
 
     private val matchesService = ServiceGenerator.createService(MatchesService::class.java)
+
+    fun getUserId() = sharedPreferences.getUser()?.userId
 
     fun acceptChallenge(match: MatchRecord) {
         matchesService
@@ -30,9 +35,14 @@ class MainModel(
             )
     }
 
-    fun declineChallenge(match: MatchRecord) {
+    fun declineChallenge(match: MatchRecord, declineReason: String) {
+        val userId = getUserId()
+        if (userId == null) {
+            bus.post(ChallengeDeclineFailedEvent())
+            return
+        }
         matchesService
-            .declineChallenge(match)
+            .declineChallenge(userId, match, declineReason)
             .enqueue(
                 success = {
                     bus.post(ChallengeDeclinedSuccessfullyEvent())

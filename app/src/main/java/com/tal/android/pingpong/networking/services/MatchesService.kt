@@ -18,13 +18,16 @@ interface MatchesService {
     fun acceptChallenge(@Body match: MatchRecord): Call<Unit>
 
     @POST("/declineChallenge.php")
-    fun declineChallenge(@Body match: MatchRecord): Call<Unit>
+    fun declineChallenge(@Query("userId") userId: Int, @Body match: MatchRecord, @Query("declineReason") declineReason: String): Call<Unit>
 
     @POST("/editMatch.php")
     fun editMatch(@Query("userId") userId: Int, @Body match: MatchRecord): Call<Unit>
 
     @POST("/acceptMatchEdit.php")
     fun acceptMatchEdit(@Query("userId") userId: Int, @Body match: MatchRecord): Call<Unit>
+
+    @POST("/declineMatchEdit.php")
+    fun declineMatchEdit(@Query("userId") userId: Int, @Body match: MatchRecord): Call<Unit>
 
     @GET("/getMatches.php")
     fun getMyMatches(

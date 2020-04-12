@@ -43,6 +43,7 @@
     <string name="edit_match_details">Edit match details</string>
     <string name="edit">Edit</string>
     <string name="edit_request_sent">Edit request sent!</string>
+    <string name="edit_decline_failed">Something went wrong while declining the edit request, please try again.</string>
     <string name="edit_request_send_failed">Something went wrong while sending the edit request, please try again.</string>
     <string name="changes_requested_by_x">Changes requested by %1$s</string>
     <string name="network_error_message">Something went wrong\nPlease try again</string>
@@ -55,4 +56,7 @@
     <string name="match_request_sent">Match request sent!</string>
     <string name="match_request_failed">Match request failed, please try again later</string>
     <string name="remove">Remove</string>
+    <string name="decline_reasons">Decline reasons</string>
+    <string name="confirm">Confirm</string>
+    <string name="edit_declined">Edit declined!</string>
 </resources>
