@@ -16,4 +16,9 @@ class MatchesListView(fragment: Fragment) : BaseFragmentView(fragment) {
         viewPager?.adapter = adapter
         tabLayout?.setupWithViewPager(viewPager)
     }
+
+    fun setSelectedTab(selectedTab: Int) {
+        tabLayout?.setScrollPosition(selectedTab, 0f, true)
+        viewPager?.currentItem = selectedTab
+    }
 }

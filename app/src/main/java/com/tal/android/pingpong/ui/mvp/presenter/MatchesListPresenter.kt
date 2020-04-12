@@ -27,7 +27,18 @@ class MatchesListPresenter(view: MatchesListView, model: MatchesListModel) :
                     it.getString(R.string.past_matches)
                 )
                 view.setTabsAdapter(MatchesTabsAdapter(this, fragments, titles))
+                when (model.selectedTab) {
+                    MatchesListModel.Companion.TabsState.UPCOMING -> view.setSelectedTab(UPCOMING_TAB_INDEX)
+                    MatchesListModel.Companion.TabsState.INVITATIONS -> view.setSelectedTab(INVITATIONS_TAB_INDEX)
+                    MatchesListModel.Companion.TabsState.PAST -> view.setSelectedTab(PAST_TAB_INDEX)
+                }
             }
         }
+    }
+
+    companion object {
+        private const val UPCOMING_TAB_INDEX = 0
+        private const val INVITATIONS_TAB_INDEX = 1
+        private const val PAST_TAB_INDEX = 2
     }
 }

@@ -20,6 +20,7 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.events.MatchesUpdatedEvent
 import com.tal.android.pingpong.ui.activities.MainActivity
+import com.tal.android.pingpong.ui.mvp.model.MainModel
 import org.greenrobot.eventbus.ThreadMode
 
 object NotificationsManager {
@@ -29,8 +30,10 @@ object NotificationsManager {
     private const val KEY_NOTIFICATION_TITLE = "title"
     private const val KEY_NOTIFICATION_BODY = "body"
     private const val KEY_NOTIFICATION_DATA = "data"
-    private const val KEY_NOTIFICATION_TYPE = "notification_type"
+    private const val KEY_NOTIFICATION_ID = "notification_id"
+    private const val KEY_NOTIFICATION_ACTION_TYPE = "action_type"
     private const val KEY_NOTIFICATION_SCREEN = "screen"
+    private const val KEY_NOTIFICATION_TAB = "tab"
     private const val KEY_NOTIFICATION_MATCH = "match"
 
     private const val VALUE_SCREEN_MATCHES = "matches"
@@ -52,18 +55,21 @@ object NotificationsManager {
             .setPriority(NotificationCompat.PRIORITY_MAX)
         NotificationManagerCompat
             .from(context)
-            .notify(notificationData[KEY_NOTIFICATION_TYPE].hashCode(), builder.build())
+            .notify(notificationData[KEY_NOTIFICATION_ID].hashCode(), builder.build())
     }
 
     private fun buildNotificationPendingIntent(context: Context, data: Map<String, String>): PendingIntent? {
         val intent = when (data[KEY_NOTIFICATION_SCREEN]) {
             VALUE_SCREEN_MATCHES -> {
+                val match = gson.fromJson(data[KEY_NOTIFICATION_MATCH], MatchRecord::class.java)
+                val tab = data[KEY_NOTIFICATION_TAB]
+                val actionType = data[KEY_NOTIFICATION_ACTION_TYPE]
                 Bus.postDefault(MatchesUpdatedEvent(), ThreadMode.MAIN)
                 Intent(context, MainActivity::class.java)
-                    .putExtra(
-                        MainActivity.EXTRA_CHALLENGE_MATCH,
-                        gson.fromJson(data[KEY_NOTIFICATION_MATCH], MatchRecord::class.java)
-                    )
+                    .putExtra(MainActivity.EXTRA_MATCH, match)
+                    .putExtra(MainActivity.EXTRA_SCREEN, MainModel.MATCHES)
+                    .putExtra(MainActivity.EXTRA_TAB, tab)
+                    .putExtra(MainActivity.ACTION_TYPE, actionType)
             }
             else -> Intent(context, MainActivity::class.java)
         }

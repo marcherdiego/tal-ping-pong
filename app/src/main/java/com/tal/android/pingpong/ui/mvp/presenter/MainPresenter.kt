@@ -1,11 +1,13 @@
 package com.tal.android.pingpong.ui.mvp.presenter
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.events.ChallengeSubmitFailedEvent
 import com.tal.android.pingpong.events.ChallengeSubmittedSuccessfullyEvent
+import com.tal.android.pingpong.notifications.Constants
 import com.tal.android.pingpong.ui.adapters.UnconfirmedMatchesAdapter
 import com.tal.android.pingpong.ui.dialogs.DeclineMatchDialog
 import com.tal.android.pingpong.ui.dialogs.IncomingDoublesMatchDialog
@@ -15,17 +17,28 @@ import com.tal.android.pingpong.ui.fragments.*
 import com.tal.android.pingpong.ui.mvp.model.MainModel
 import com.tal.android.pingpong.ui.mvp.view.MainView
 import org.greenrobot.eventbus.Subscribe
+import java.lang.IllegalArgumentException
 
-class MainPresenter(view: MainView, model: MainModel) :
-    BaseActivityPresenter<MainView, MainModel>(view, model) {
+class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<MainView, MainModel>(view, model) {
 
     private var incomingSinglesMatchDialog: IncomingSinglesMatchDialog? = null
     private var incomingDoublesMatchDialog: IncomingDoublesMatchDialog? = null
 
     init {
-        onNavigationItemSelected(MainView.NavigationItemSelectedEvent(R.id.menu_matches))
-        model.challengeMatch?.let { match ->
-            openSinglesMatchDialog(match)
+        val itemId = when (model.initialScreenState) {
+            MainModel.UNSET, MainModel.MATCHES -> R.id.menu_matches
+            MainModel.FIND_RIVAL -> R.id.menu_new_match
+            MainModel.RANKING -> R.id.menu_ranking
+            MainModel.PROFILE -> R.id.menu_profile
+            else -> throw IllegalArgumentException()
+        }
+        onNavigationItemSelected(MainView.NavigationItemSelectedEvent(itemId, true))
+        when (model.actionType) {
+            Constants.INCOMING_SINGLES_CHALLENGE -> {
+                model.match?.let { match ->
+                    openIncomingSinglesMatchDialog(match)
+                }
+            }
         }
     }
 
@@ -33,7 +46,18 @@ class MainPresenter(view: MainView, model: MainModel) :
     fun onNavigationItemSelected(event: MainView.NavigationItemSelectedEvent) {
         val currentState = model.currentState
         val (newState, fragment) = when (event.itemId) {
-            R.id.menu_matches -> Pair(MainModel.MATCHES, MatchesListFragment())
+            R.id.menu_matches -> {
+                val matchesFragment = MatchesListFragment().apply {
+                    if (event.manualEvent) {
+                        arguments = Bundle().apply {
+                            putSerializable(MatchesListFragment.EXTRA_MATCH, model.match)
+                            putString(MatchesListFragment.EXTRA_TAB, model.matchesTabsState)
+                            putString(MatchesListFragment.ACTION_TYPE, model.actionType)
+                        }
+                    }
+                }
+                Pair(MainModel.MATCHES, matchesFragment)
+            }
             R.id.menu_new_match -> Pair(MainModel.FIND_RIVAL, UsersListFragment())
             R.id.menu_ranking -> Pair(MainModel.RANKING, RankingFragment())
             R.id.menu_profile -> Pair(MainModel.PROFILE, UserProfileFragment())
@@ -97,7 +121,7 @@ class MainPresenter(view: MainView, model: MainModel) :
 
     @Subscribe
     fun onUpcomingMatchClicked(event: UnconfirmedMatchesAdapter.UpcomingMatchClickedEvent) {
-        openSinglesMatchDialog(event.matchRecord)
+        openIncomingSinglesMatchDialog(event.matchRecord)
     }
 
     @Subscribe
@@ -119,7 +143,7 @@ class MainPresenter(view: MainView, model: MainModel) :
         }
     }
 
-    private fun openSinglesMatchDialog(match: MatchRecord) {
+    private fun openIncomingSinglesMatchDialog(match: MatchRecord) {
         view.activity?.let {
             incomingSinglesMatchDialog = IncomingSinglesMatchDialog(match, model.getBus())
             incomingSinglesMatchDialog?.show(it)

@@ -52,5 +52,5 @@ class MainView(activity: BaseActivity<*>) : BaseActivityView(activity) {
         toolbar.setBackgroundColor(ContextCompat.getColor(activity ?: return, R.color.colorPrimary))
     }
 
-    class NavigationItemSelectedEvent(val itemId: Int)
+    class NavigationItemSelectedEvent(val itemId: Int, val manualEvent: Boolean = false)
 }

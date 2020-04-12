@@ -1,23 +1,34 @@
 package com.tal.android.pingpong.ui.mvp.model
 
 import androidx.annotation.IntDef
+import androidx.annotation.StringDef
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.events.MatchesUpdatedEvent
 import com.tal.android.pingpong.extensions.enqueue
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
-import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
+import com.tal.android.pingpong.notifications.Constants
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class MainModel(
     private val sharedPreferences: SharedPreferencesUtils,
-    var challengeMatch: MatchRecord? = null,
-    @State
-    @get:State
-    var currentState: Int = UNSET
+    var match: MatchRecord? = null,
+    @ScreenState
+    @get:ScreenState
+    var initialScreenState: Int = UNSET,
+    @MatchesListModel.Companion.TabsState
+    @get:MatchesListModel.Companion.TabsState
+    var matchesTabsState: String = MatchesListModel.Companion.TabsState.UPCOMING,
+    @ActionType
+    @get:ActionType
+    var actionType: String = Constants.NONE
 ) : BaseModel() {
 
     private val matchesService = ServiceGenerator.createService(MatchesService::class.java)
+
+    @ScreenState
+    @get:ScreenState
+    var currentState: Int = UNSET
 
     fun getUserId() = sharedPreferences.getUser()?.userId
 
@@ -69,12 +80,22 @@ class MainModel(
          */
         @Retention(AnnotationRetention.SOURCE)
         @IntDef(UNSET, MATCHES, FIND_RIVAL, RANKING, PROFILE)
-        annotation class State
+        annotation class ScreenState
 
         const val UNSET = -1
         const val MATCHES = 0
         const val FIND_RIVAL = 1
         const val RANKING = 2
         const val PROFILE = 3
+
+        /**
+         * Possible screen source
+         */
+        @Retention(AnnotationRetention.SOURCE)
+        @StringDef(
+            Constants.NONE, Constants.INCOMING_SINGLES_CHALLENGE, Constants.CHALLENGE_INVITE_ACCEPTED, Constants.CHALLENGE_INVITE_DECLINED,
+            Constants.CHALLENGE_EDIT_REQUEST, Constants.CHALLENGE_EDIT_ACCEPTED, Constants.CHALLENGE_EDIT_DECLINED
+        )
+        annotation class ActionType
     }
 }
