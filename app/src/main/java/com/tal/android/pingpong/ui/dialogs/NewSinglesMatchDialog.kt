@@ -30,7 +30,7 @@ class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: Use
         val userEmail = challengeDialogView.findViewById<TextView>(R.id.user_email)
         val userStats = challengeDialogView.findViewById<TextView>(R.id.user_stats)
 
-        difficultyBar.setup(myUser, rivalUser)
+        difficultyBar.setup(myUser.matchesRatioValue, rivalUser.matchesRatioValue)
         GlideUtils.loadImage(rivalUser.userImage, userImage, R.drawable.ic_incognito, true)
         userName.text = rivalUser.userName
         userEmail.text = rivalUser.userEmail

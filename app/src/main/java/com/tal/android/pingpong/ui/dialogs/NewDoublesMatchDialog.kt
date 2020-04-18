@@ -60,7 +60,7 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
         visitorCompanionName = challengeDialogView.findViewById(R.id.visitor_2_name)
 
         difficultyBar = challengeDialogView.findViewById(R.id.difficulty_bar)
-        difficultyBar.setup(local = myUser)
+        difficultyBar.setup(localRatio = myUser.matchesRatioValue)
 
         GlideUtils.loadImage(myUser.userImage, localImage, R.drawable.ic_incognito, true)
         localName.text = myUser.userName
@@ -165,10 +165,10 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
 
     private fun updateDifficultyBar() {
         difficultyBar.setup(
-            local = myUser,
-            localCompanion = localCompanion,
-            visitor = visitor,
-            visitorCompanion = visitorCompanion
+            localRatio = myUser.matchesRatioValue,
+            localCompanionRatio = localCompanion?.matchesRatioValue,
+            visitorRatio = visitor?.matchesRatioValue,
+            visitorCompanionRatio = visitorCompanion?.matchesRatioValue
         )
     }
 

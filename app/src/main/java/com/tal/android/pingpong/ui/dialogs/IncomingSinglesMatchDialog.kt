@@ -39,7 +39,7 @@ class IncomingSinglesMatchDialog(private val match: MatchRecord, private val bus
         GlideUtils.loadImage(localUser.userImage, localUserImage, R.drawable.ic_incognito, true)
         GlideUtils.loadImage(visitorUser.userImage, visitorUserImage, R.drawable.ic_incognito, true)
 
-        difficultyBar.setup(localUser, visitorUser)
+        difficultyBar.setup(localUser.matchesRatioValue, visitorUser.matchesRatioValue)
 
         localUserName.text = context.getString(R.string.x_stats, localUser.userName)
         localUserEmail.text = localUser.userEmail

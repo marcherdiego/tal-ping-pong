@@ -14,6 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.EmptyAdapter
+import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.GlideUtils
 
 class UserProfileView(fragment: Fragment) : BaseFragmentView(fragment) {
@@ -27,6 +28,8 @@ class UserProfileView(fragment: Fragment) : BaseFragmentView(fragment) {
     private val matchesWon: TextView? = fragment.view?.findViewById(R.id.matches_won)
     private val matchesLost: TextView? = fragment.view?.findViewById(R.id.matches_lost)
     private val matchWinRate: TextView? = fragment.view?.findViewById(R.id.matches_win_rate)
+
+    private val successRateBar: DifficultyBar? = fragment.view?.findViewById(R.id.success_rate_bar)
 
     private val emptyListLayout: View? = fragment.view?.findViewById(R.id.empty_list_layout)
     private val emptyListEmoji: ImageView? = emptyListLayout?.findViewById(R.id.emoji)
@@ -56,6 +59,11 @@ class UserProfileView(fragment: Fragment) : BaseFragmentView(fragment) {
         collapsingToolbar?.title = name
         toolbar?.title = name
         this.email?.text = email
+    }
+
+    fun setupSuccessRateBar(matchesRatioValue: Float, successBarTitle: String?) {
+        successRateBar?.setupForMe(matchesRatioValue)
+        successRateBar?.setTitle(successBarTitle)
     }
 
     fun loadUserMatchesInfo(matchesWon: String?, matchesLost: String?, matchWinRate: String?) {

@@ -147,6 +147,17 @@
             tools:text="27%" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.tal.android.pingpong.ui.widgets.DifficultyBar
+        android:id="@+id/success_rate_bar"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/matches_lost_container" />
+
     <TextView
         android:id="@+id/last_ten_matches_label"
         style="@style/ui_textview_title_black"
@@ -157,7 +168,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/matches_lost_container" />
+        app:layout_constraintTop_toBottomOf="@+id/success_rate_bar" />
 
     <include
         android:id="@+id/empty_list_layout"

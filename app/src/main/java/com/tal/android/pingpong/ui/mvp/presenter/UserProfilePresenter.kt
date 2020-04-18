@@ -14,7 +14,12 @@ class UserProfilePresenter(view: UserProfileView, model: UserProfileModel) :
 
     init {
         view.loadUserBasicInfo(model.user.userImage, model.user.userName, model.user.userEmail)
-        view.loadUserMatchesInfo(model.user.matchesWon.toString(), model.user.matchesLost.toString(), model.user.matchesRatio)
+        view.setupSuccessRateBar(model.user.matchesRatioValue, view.context?.getString(R.string.success_rate))
+        view.loadUserMatchesInfo(
+            model.user.matchesWon.toString(),
+            model.user.matchesLost.toString(),
+            model.user.matchesRatio
+        )
         if (model.user.userId == model.getLoggedUser()?.userId) {
             view.showLogoutButton()
         } else {
