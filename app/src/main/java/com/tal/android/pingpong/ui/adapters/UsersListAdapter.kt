@@ -36,6 +36,19 @@ class UsersListAdapter(
             userEmail.text = user.userEmail
             userRank.text = context.getString(R.string.user_rank, user.userRank)
 
+            if (user.champion == true) {
+                userChampionTrophy.setImageResource(R.drawable.ic_first_place_trophy)
+            } else {
+                userChampionTrophy.setImageDrawable(null)
+            }
+
+            when (user.userRank) {
+                RANK_FIRST_PLACE -> userTrophy.setImageResource(R.drawable.ic_gold_medal)
+                RANK_SECOND_PLACE -> userTrophy.setImageResource(R.drawable.ic_silver_medal)
+                RANK_THIRD_PLACE -> userTrophy.setImageResource(R.drawable.ic_bronze_medal)
+                else -> userTrophy.setImageDrawable(null)
+            }
+
             if (selectable) {
                 itemView.setBackgroundColor(
                     ContextCompat.getColor(
@@ -61,7 +74,15 @@ class UsersListAdapter(
         val userName: TextView = itemView.findViewById(R.id.user_name)
         val userEmail: TextView = itemView.findViewById(R.id.user_email)
         val userRank: TextView = itemView.findViewById(R.id.user_rank)
+        val userTrophy: ImageView = itemView.findViewById(R.id.user_trophy)
+        val userChampionTrophy: ImageView = itemView.findViewById(R.id.user_champion_trophy)
     }
 
     class UserClickedEvent(val user: User)
+
+    companion object {
+        private const val RANK_FIRST_PLACE = 1
+        private const val RANK_SECOND_PLACE = 2
+        private const val RANK_THIRD_PLACE = 3
+    }
 }

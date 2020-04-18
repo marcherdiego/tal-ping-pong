@@ -35,7 +35,10 @@ data class User(
     var active: Boolean? = null,
 
     @SerializedName("pushToken")
-    var pushToken: String? = null
+    var pushToken: String? = null,
+
+    @SerializedName("champion")
+    var champion: Boolean? = null
 ) : Serializable {
 
     val matchesRatioValue: Float

@@ -139,39 +139,4 @@
             tools:text="@string/matches_win_rate" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/user_achievements"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_stats">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="4dp"
-            android:src="@drawable/ic_gold_medal" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="4dp"
-            android:src="@drawable/ic_silver_medal" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="4dp"
-            android:src="@drawable/ic_first_place_trophy" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="4dp"
-            android:src="@drawable/ic_bronze_medal" />
-    </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
