@@ -37,7 +37,7 @@ class DifficultyBar @JvmOverloads constructor(
             winChancesLabel.text = context.getString(R.string.unknown)
         } else {
             difficultyLevelGuideline.setGuidelinePercent(winChances)
-            winChancesLabel.text = (100 * winChances).asPercentString(digits = 0)
+            winChancesLabel.text = (100 * winChances).asPercentString()
         }
     }
 
@@ -47,7 +47,7 @@ class DifficultyBar @JvmOverloads constructor(
             winChancesLabel.text = context.getString(R.string.unknown)
         } else {
             difficultyLevelGuideline.setGuidelinePercent(successRate)
-            winChancesLabel.text = (100 * successRate).asPercentString(digits = 0)
+            winChancesLabel.text = (100 * successRate).asPercentString()
         }
     }
 

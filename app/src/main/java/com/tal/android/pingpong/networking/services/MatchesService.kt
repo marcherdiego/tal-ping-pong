@@ -2,6 +2,7 @@ package com.tal.android.pingpong.networking.services
 
 import com.tal.android.pingpong.domain.Match
 import com.tal.android.pingpong.domain.MatchRecord
+import com.tal.android.pingpong.domain.User
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -38,6 +39,6 @@ interface MatchesService {
         @Query("fetchMatchHistory") fetchMatchHistory: Boolean = false
     ): Call<List<Match>>
 
-    @GET("/getLastTenMatches.php")
+    @GET("/getLastMatches.php")
     fun getLastTenMatches(@Query("userId") userId: Int): Call<List<Match>>
 }

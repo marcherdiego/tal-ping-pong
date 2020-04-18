@@ -127,6 +127,7 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
     @Subscribe
     fun onChallengeSubmittedSuccessfully(event: ChallengeSubmittedSuccessfullyEvent) {
         view.showToast(R.string.match_request_sent)
+        model.notifyUpdateLists()
     }
 
     @Subscribe

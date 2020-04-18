@@ -14,12 +14,6 @@ class UserProfilePresenter(view: UserProfileView, model: UserProfileModel) :
 
     init {
         view.loadUserBasicInfo(model.user.userImage, model.user.userName, model.user.userEmail)
-        view.setupSuccessRateBar(model.user.matchesRatioValue, view.context?.getString(R.string.success_rate))
-        view.loadUserMatchesInfo(
-            model.user.matchesWon.toString(),
-            model.user.matchesLost.toString(),
-            model.user.matchesRatio
-        )
         if (model.user.userId == model.getLoggedUser()?.userId) {
             view.showLogoutButton()
         } else {
@@ -50,6 +44,8 @@ class UserProfilePresenter(view: UserProfileView, model: UserProfileModel) :
     fun onLastTenMatchesFetchedSuccessfully(event: UserProfileModel.LastTenMatchesFetchedSuccessfullyEvent) {
         view.hideMatchesLoaderProgressBar()
         view.setPastMatchesAdapter(PastMatchesAdapter(event.matches, model.user.userEmail, model.getBus()))
+        view.loadUserMatchesInfo(model.user.matchesWon.toString(), model.user.matchesLost.toString(), model.user.matchesRatio)
+        view.setupSuccessRateBar(model.user.matchesRatioValue, view.context?.getString(R.string.success_rate))
     }
 
     @Subscribe
@@ -61,6 +57,6 @@ class UserProfilePresenter(view: UserProfileView, model: UserProfileModel) :
     override fun onResume() {
         super.onResume()
         view.showMatchesLoaderProgressBar()
-        model.fetchLastTenMatches()
+        model.fetchLastMatches()
     }
 }

@@ -46,6 +46,7 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchEditDeclinedSuccessfully(event: PastMatchesModel.MatchEditDeclinedSuccessfullyEvent) {
         view.showToast(R.string.edit_declined)
+        model.notifyUpdateLists()
         matchEditDialog?.dismiss()
     }
 
@@ -57,6 +58,7 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchEditedSuccessfully(event: PastMatchesModel.MatchEditedSuccessfullyEvent) {
         view.showToast(R.string.edit_request_sent)
+        model.notifyUpdateLists()
         matchEditDialog?.dismiss()
     }
 
@@ -68,6 +70,7 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchEditAcceptedSuccessfully(event: PastMatchesModel.MatchEditAcceptedSuccessfullyEvent) {
         view.showToast(R.string.edit_accepted)
+        model.notifyUpdateLists()
         matchEditDialog?.dismiss()
     }
 

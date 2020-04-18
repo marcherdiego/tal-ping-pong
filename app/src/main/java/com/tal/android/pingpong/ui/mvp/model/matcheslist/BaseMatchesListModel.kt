@@ -1,6 +1,8 @@
 package com.tal.android.pingpong.ui.mvp.model.matcheslist
 
+import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.domain.Match
+import com.tal.android.pingpong.events.MatchesUpdatedEvent
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
 import com.tal.android.pingpong.ui.mvp.model.BaseModel
@@ -15,6 +17,10 @@ abstract class BaseMatchesListModel(private val sharedPreferences: SharedPrefere
     fun getUserEmail() = sharedPreferences.getUser()?.userEmail
 
     abstract fun fetchUserMatches()
+
+    fun notifyUpdateLists() {
+        Bus.postDefault(MatchesUpdatedEvent())
+    }
 
     class MatchesFetchedSuccessfullyEvent(val matches: List<Match>)
     class MatchesFetchFailedEvent
