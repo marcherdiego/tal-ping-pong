@@ -11,7 +11,7 @@ import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter.ViewHolder
-import com.tal.android.pingpong.utils.GlideUtils
+import com.tal.android.pingpong.utils.load
 
 class UsersListAdapter(
     private val users: List<User>, private val bus: Bus, private val selectable: Boolean = false, private var selectedUser: User? = null
@@ -31,7 +31,7 @@ class UsersListAdapter(
         val user = users[position]
         val context = holder.itemView.context
         with(holder) {
-            GlideUtils.loadImage(user.userImage, userImage, R.drawable.ic_incognito, true)
+            userImage.load(user.userImage, R.drawable.ic_incognito, true)
             userName.text = user.userName
             userEmail.text = user.userEmail
             userRank.text = context.getString(R.string.user_rank, user.userRank)

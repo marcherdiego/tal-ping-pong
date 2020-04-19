@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.utils.DateUtils
-import com.tal.android.pingpong.utils.GlideUtils
+import com.tal.android.pingpong.utils.load
 
 class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     // Common fields
@@ -65,10 +65,10 @@ class MatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
         constraintSet.applyTo(mainContainer)
 
-        GlideUtils.loadImage(match.local?.userImage, localImage, R.drawable.ic_incognito, true)
+        localImage.load(match.local?.userImage, R.drawable.ic_incognito, true)
         userName.text = rival?.userName
         matchDate.text = DateUtils.formatDate(match.matchDate)
-        GlideUtils.loadImage(match.visitor?.userImage, visitorImage, R.drawable.ic_incognito, true)
+        visitorImage.load(match.visitor?.userImage, R.drawable.ic_incognito, true)
     }
 
     companion object {

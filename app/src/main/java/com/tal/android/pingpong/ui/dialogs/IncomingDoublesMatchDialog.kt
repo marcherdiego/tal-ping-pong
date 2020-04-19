@@ -11,7 +11,7 @@ import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.DialogFactory
-import com.tal.android.pingpong.utils.GlideUtils
+import com.tal.android.pingpong.utils.load
 
 //TODO RELLENAR LA DATA CON EL COMPANION
 class IncomingDoublesMatchDialog(private val match: MatchRecord, private val bus: Bus) {
@@ -37,8 +37,8 @@ class IncomingDoublesMatchDialog(private val match: MatchRecord, private val bus
         val localUser = match.local ?: return
         val visitorUser = match.visitor ?: return
 
-        GlideUtils.loadImage(localUser.userImage, localUserImage, R.drawable.ic_incognito, true)
-        GlideUtils.loadImage(visitorUser.userImage, visitorUserImage, R.drawable.ic_incognito, true)
+        localUserImage.load(localUser.userImage, R.drawable.ic_incognito, true)
+        visitorUserImage.load(visitorUser.userImage, R.drawable.ic_incognito, true)
 
         difficultyBar.setup(localUser.matchesRatioValue, visitorUser.matchesRatioValue)
 

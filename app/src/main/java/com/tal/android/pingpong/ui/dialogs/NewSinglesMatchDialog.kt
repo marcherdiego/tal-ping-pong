@@ -11,8 +11,8 @@ import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.DialogFactory
-import com.tal.android.pingpong.utils.GlideUtils
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
+import com.tal.android.pingpong.utils.load
 import java.util.*
 
 class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: User) {
@@ -31,7 +31,7 @@ class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: Use
         val userStats = challengeDialogView.findViewById<TextView>(R.id.user_stats)
 
         difficultyBar.setup(myUser.matchesRatioValue, rivalUser.matchesRatioValue)
-        GlideUtils.loadImage(rivalUser.userImage, userImage, R.drawable.ic_incognito, true)
+        userImage.load(rivalUser.userImage, R.drawable.ic_incognito, true)
         userName.text = rivalUser.userName
         userEmail.text = rivalUser.userEmail
         userStats.text = context.getString(R.string.user_stats, rivalUser.matchesWon, rivalUser.matchesLost, rivalUser.matchesRatio)

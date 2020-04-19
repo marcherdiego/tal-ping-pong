@@ -15,7 +15,7 @@ import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.DialogFactory
-import com.tal.android.pingpong.utils.GlideUtils
+import com.tal.android.pingpong.utils.load
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
 
@@ -62,12 +62,12 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
         difficultyBar = challengeDialogView.findViewById(R.id.difficulty_bar)
         difficultyBar.setup(localRatio = myUser.matchesRatioValue)
 
-        GlideUtils.loadImage(myUser.userImage, localImage, R.drawable.ic_incognito, true)
+        localImage.load(myUser.userImage, R.drawable.ic_incognito, true)
         localName.text = myUser.userName
 
-        GlideUtils.loadImage(imageView = localCompanionImage, fallbackImage = R.drawable.ic_incognito)
-        GlideUtils.loadImage(imageView = visitorImage, fallbackImage = R.drawable.ic_incognito)
-        GlideUtils.loadImage(imageView = visitorCompanionImage, fallbackImage = R.drawable.ic_incognito)
+        localCompanionImage.load(fallbackImage = R.drawable.ic_incognito)
+        visitorImage.load(fallbackImage = R.drawable.ic_incognito)
+        visitorCompanionImage.load(fallbackImage = R.drawable.ic_incognito)
 
         localCompanionImage.setOnClickListener {
             UserSelectorDialog(getEligibleUsers(), userSelectorBus, UserSelectorDialog.LOCAL_COMPANION, localCompanion).show(it.context)
@@ -132,11 +132,7 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
             }
             else -> return
         }
-        GlideUtils.loadImage(
-            imageView = userImageView,
-            url = event.user.userImage,
-            fallbackImage = R.drawable.ic_incognito
-        )
+        userImageView.load(url = event.user.userImage, fallbackImage = R.drawable.ic_incognito)
         userNameTextView.text = event.user.userName
         updateDifficultyBar()
     }
@@ -158,7 +154,7 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
             }
             else -> return
         }
-        GlideUtils.loadImage(imageView = userImageView, fallbackImage = R.drawable.ic_incognito)
+        userImageView.load(fallbackImage = R.drawable.ic_incognito)
         userNameTextView.text = null
         updateDifficultyBar()
     }

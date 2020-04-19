@@ -29,7 +29,6 @@
                 android:id="@+id/user_image"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:scaleType="centerCrop"
                 android:visibility="gone"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.5"

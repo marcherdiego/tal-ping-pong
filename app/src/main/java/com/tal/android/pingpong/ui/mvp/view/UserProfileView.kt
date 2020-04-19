@@ -15,7 +15,7 @@ import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.EmptyAdapter
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
-import com.tal.android.pingpong.utils.GlideUtils
+import com.tal.android.pingpong.utils.load
 
 class UserProfileView(fragment: Fragment) : BaseFragmentView(fragment) {
     private val logoutButton: FloatingActionButton? = fragment.activity?.findViewById(R.id.logout_button)
@@ -55,7 +55,7 @@ class UserProfileView(fragment: Fragment) : BaseFragmentView(fragment) {
     }
 
     fun loadUserBasicInfo(imageUrl: String?, name: String?, email: String?) {
-        GlideUtils.loadImage(imageUrl, userImage, R.drawable.ic_incognito)
+        userImage.load(imageUrl, R.drawable.ic_incognito)
         collapsingToolbar?.title = name
         toolbar?.title = name
         this.email?.text = email

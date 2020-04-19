@@ -44,8 +44,8 @@ class MatchEditDialog(private val match: MatchRecord, private val bus: Bus, priv
 
         local.text = match.local?.userName
         visitor.text = match.visitor?.userName
-        GlideUtils.loadImage(localUser.userImage, localUserImage, R.drawable.ic_incognito, true)
-        GlideUtils.loadImage(visitorUser.userImage, visitorUserImage, R.drawable.ic_incognito, true)
+        localUserImage.load(localUser.userImage, R.drawable.ic_incognito, true)
+        visitorUserImage.load(visitorUser.userImage, R.drawable.ic_incognito, true)
 
         if (match.hasRequestedChanges == true) {
             oldLocalScore.paintFlags = oldLocalScore.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
