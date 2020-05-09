@@ -6,7 +6,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
+import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
@@ -15,12 +18,11 @@ import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import com.tal.android.pingpong.utils.load
 import java.util.*
 
-class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: User) {
+class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: User, private val bus: Bus) {
 
-    private lateinit var challengeDialogCallback: ChallengeDialogCallback
+    private var dialog: AlertDialog? = null
 
-    fun show(context: Context, challengeDialogCallback: ChallengeDialogCallback) {
-        this.challengeDialogCallback = challengeDialogCallback
+    fun show(context: Context) {
         val challengeDialogView = LayoutInflater
             .from(context)
             .inflate(R.layout.challenges_user_dialog, null)
@@ -47,21 +49,21 @@ class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: Use
             challengeDialogBuilder
                 .setPositiveButtonText(R.string.challenge)
                 .setPositiveButtonListener {
-                    openChallengeDateSelectionDialog(context, rivalUser)
+                    openChallengeDateSelectionDialog(context, MatchRecord(local = myUser, visitor = rivalUser))
                 }
         }
-        challengeDialogBuilder
+        dialog = challengeDialogBuilder
             .setNegativeButtonText(R.string.close)
             .build(context)
-            .show()
+        dialog?.show()
     }
 
-    private fun openChallengeDateSelectionDialog(context: Context, user: User) {
+    private fun openChallengeDateSelectionDialog(context: Context, match: MatchRecord) {
         val today = Calendar.getInstance()
         val datePickerDialog = DatePickerDialog(
             context,
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                openChallengeTimeSelectionDialog(context, user, year, monthOfYear, dayOfMonth)
+                openChallengeTimeSelectionDialog(context, match, year, monthOfYear, dayOfMonth)
             },
             today[Calendar.YEAR],
             today[Calendar.MONTH],
@@ -71,17 +73,19 @@ class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: Use
         datePickerDialog.show()
     }
 
-    private fun openChallengeTimeSelectionDialog(context: Context, user: User, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+    private fun openChallengeTimeSelectionDialog(context: Context, match: MatchRecord, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         val now = Calendar.getInstance()
         val timePickerDialog = TimePickerDialog(
             context,
             TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                 try {
                     val matchDate = getMatchDate(year, monthOfYear, dayOfMonth, hourOfDay, minute)
-                    challengeDialogCallback.onChallengeUser(user, matchDate)
+                    match.matchDate = matchDate.toString()
+                    dialog?.dismiss()
+                    bus.post(NewDoublesMatchDialog.CreateNewDoublesMatchButtonClickedEvent(match))
                 } catch (e: InvalidMatchTimeException) {
-                    challengeDialogCallback.onInvalidTimeSelected()
-                    openChallengeTimeSelectionDialog(context, user, year, monthOfYear, dayOfMonth)
+                    bus.post(NewDoublesMatchDialog.NewDoublesMatchInvalidTimeSelectedEvent())
+                    openChallengeTimeSelectionDialog(context, match, year, monthOfYear, dayOfMonth)
                 }
             },
             now[Calendar.HOUR_OF_DAY],
@@ -102,8 +106,6 @@ class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: Use
         return selectedDateTime.time
     }
 
-    interface ChallengeDialogCallback {
-        fun onChallengeUser(user: User, matchDate: Date)
-        fun onInvalidTimeSelected()
-    }
+    class CreateNewSinglesMatchButtonClickedEvent(val match: MatchRecord)
+    class NewSinglesMatchInvalidTimeSelectedEvent
 }

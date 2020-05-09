@@ -83,7 +83,7 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
 
     @Subscribe
     fun onAcceptChallengeButtonClicked(event: IncomingSinglesMatchDialog.AcceptChallengeButtonClickedEvent) {
-        model.acceptChallenge(event.match)
+        model.acceptSinglesChallenge(event.match)
     }
 
     @Subscribe

@@ -9,7 +9,6 @@ import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
 import com.tal.android.pingpong.networking.services.UsersService
-import java.util.*
 
 class RankingModel(private val sharedPreferencesUtils: SharedPreferencesUtils) : BaseModel() {
     private val userService = ServiceGenerator.createService(UsersService::class.java)
@@ -31,14 +30,9 @@ class RankingModel(private val sharedPreferencesUtils: SharedPreferencesUtils) :
             )
     }
 
-    fun challengeUser(user: User, date: Date) {
-        val match = MatchRecord(
-            local = getCurrentUser(),
-            visitor = user,
-            matchDate = date.toString()
-        )
+    fun challengeUser(match: MatchRecord) {
         matchesService
-            .challengeUser(match)
+            .challengeUserSinglesMatch(match)
             .enqueueResponseNotNull(
                 success = {
                     bus.post(ChallengeSubmittedSuccessfullyEvent())

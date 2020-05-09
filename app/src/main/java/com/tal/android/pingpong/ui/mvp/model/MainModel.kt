@@ -32,9 +32,9 @@ class MainModel(
 
     fun getUserId() = sharedPreferences.getUser()?.userId
 
-    fun acceptChallenge(match: MatchRecord) {
+    fun acceptSinglesChallenge(match: MatchRecord) {
         matchesService
-            .acceptChallenge(match)
+            .acceptSinglesChallenge(match)
             .enqueue(
                 success = {
                     bus.post(ChallengeAcceptedSuccessfullyEvent())

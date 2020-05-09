@@ -61,4 +61,5 @@
     <string name="edit_declined">Edit declined!</string>
     <string name="me_capital">Me</string>
     <string name="success_rate">Success rate</string>
+    <string name="some_participants_are_missing">Some participants are missing</string>
 </resources>

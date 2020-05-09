@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.nerdscorner.mvp:events:6.3.0'
+    implementation 'com.nerdscorner.mvp:events:6.4.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
@@ -45,10 +45,9 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.recyclerview:recyclerview:1.1.0")
-    implementation("androidx.exifinterface:exifinterface:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("com.google.android.material:material:1.1.0")
-    implementation 'com.google.android.gms:play-services-auth:17.0.0'
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'jp.wasabeef:glide-transformations:4.1.0'
@@ -61,5 +60,5 @@ dependencies {
 
     implementation('com.squareup.okhttp3:logging-interceptor:4.4.0')
     implementation('com.squareup.okhttp3:okhttp:4.4.0')
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.7'
 }

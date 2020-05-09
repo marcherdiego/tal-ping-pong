@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
@@ -16,6 +17,7 @@ import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.load
+import com.tal.android.pingpong.utils.multiLet
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
 
@@ -87,7 +89,7 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
             .setView(challengeDialogView)
             .setPositiveButtonText(R.string.challenge)
             .setPositiveButtonListener {
-                openDateSelectionDialog(context, MatchRecord())
+                validateMatchMembersList()
             }
             .setNegativeButtonText(R.string.close)
             .setNegativeButtonListener {
@@ -98,6 +100,24 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
             })
             .build(context)
         dialog?.show()
+    }
+
+    private fun validateMatchMembersList() {
+        dialog?.context?.let { context ->
+            multiLet(localCompanion, visitor, visitorCompanion) { localCompanion, visitor, visitorCompanion ->
+                openDateSelectionDialog(
+                    context,
+                    MatchRecord(
+                        local = myUser,
+                        localCompanion = localCompanion,
+                        visitor = visitor,
+                        visitorCompanion = visitorCompanion
+                    )
+                )
+            } ?: run {
+                Toast.makeText(context, R.string.some_participants_are_missing, Toast.LENGTH_SHORT)
+            }
+        }
     }
 
     private fun getEligibleUsers(): MutableList<User> {
@@ -190,7 +210,9 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
             TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                 try {
                     val matchDate = getMatchDate(year, monthOfYear, dayOfMonth, hourOfDay, minute)
-                    bus.post(CreateNewDoublesMatchButtonClickedEvent(match, matchDate))
+                    match.matchDate = matchDate.toString()
+                    dialog?.dismiss()
+                    bus.post(CreateNewDoublesMatchButtonClickedEvent(match))
                 } catch (e: InvalidMatchTimeException) {
                     bus.post(NewDoublesMatchInvalidTimeSelectedEvent())
                     openTimeSelectionDialog(context, match, year, monthOfYear, dayOfMonth)
@@ -214,6 +236,6 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
         return selectedDateTime.time
     }
 
-    class CreateNewDoublesMatchButtonClickedEvent(val match: MatchRecord, val matchDate: Date)
+    class CreateNewDoublesMatchButtonClickedEvent(val match: MatchRecord)
     class NewDoublesMatchInvalidTimeSelectedEvent
 }

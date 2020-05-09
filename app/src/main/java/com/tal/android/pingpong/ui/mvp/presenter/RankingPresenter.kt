@@ -2,13 +2,11 @@ package com.tal.android.pingpong.ui.mvp.presenter
 
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
 import com.tal.android.pingpong.ui.dialogs.NewSinglesMatchDialog
 import com.tal.android.pingpong.ui.mvp.model.RankingModel
 import com.tal.android.pingpong.ui.mvp.view.RankingView
 import org.greenrobot.eventbus.Subscribe
-import java.util.*
 
 class RankingPresenter(view: RankingView, model: RankingModel) :
     BaseFragmentPresenter<RankingView, RankingModel>(view, model) {
@@ -35,16 +33,18 @@ class RankingPresenter(view: RankingView, model: RankingModel) :
     fun onUserClicked(event: UsersListAdapter.UserClickedEvent) {
         view.withActivity {
             val currentUser = model.getCurrentUser() ?: return
-            NewSinglesMatchDialog(currentUser, event.user).show(this, object : NewSinglesMatchDialog.ChallengeDialogCallback {
-                override fun onChallengeUser(user: User, matchDate: Date) {
-                    model.challengeUser(user, matchDate)
-                }
-
-                override fun onInvalidTimeSelected() {
-                    view.showToast(R.string.invalid_time_in_the_past)
-                }
-            })
+            NewSinglesMatchDialog(currentUser, event.user, model.getBus()).show(this)
         }
+    }
+
+    @Subscribe
+    fun onCreateNewSinglesMatchButtonClicked(event: NewSinglesMatchDialog.CreateNewSinglesMatchButtonClickedEvent) {
+        model.challengeUser(event.match)
+    }
+
+    @Subscribe
+    fun onNewSinglesMatchInvalidTimeSelected(event: NewSinglesMatchDialog.NewSinglesMatchInvalidTimeSelectedEvent) {
+        view.showToast(R.string.invalid_time_in_the_past)
     }
 
     override fun onResume() {

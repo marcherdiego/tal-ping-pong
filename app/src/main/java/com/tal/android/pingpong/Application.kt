@@ -16,8 +16,7 @@ class Application : Application() {
         super.onCreate()
 
         val sharedPreferences = SharedPreferencesUtils(this)
-        ServiceGenerator.baseUrl = "http://192.168.0.102/"
-//        ServiceGenerator.baseUrl = "http://192.168.43.72/"
+        ServiceGenerator.baseUrl = "http://192.168.0.100/"
         ServiceGenerator.httpClient = OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -46,7 +45,7 @@ class Application : Application() {
 
     companion object {
         private const val ACCEPT_HEADER = "Accept"
-        private const val APPLICATION_JSON_HEADER = "application/json, application/vnd.tal-retail.v2"
+        private const val APPLICATION_JSON_HEADER = "application/json"
         private const val AUTHORIZATION = "Authorization"
     }
 }

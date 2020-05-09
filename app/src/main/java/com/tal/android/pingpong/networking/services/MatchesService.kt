@@ -12,11 +12,17 @@ import java.util.*
 
 interface MatchesService {
 
-    @POST("/challengeUser.php")
-    fun challengeUser(@Body match: MatchRecord): Call<Unit>
+    @POST("/challengeUserSinglesMatch.php")
+    fun challengeUserSinglesMatch(@Body match: MatchRecord): Call<Unit>
 
-    @POST("/acceptChallenge.php")
-    fun acceptChallenge(@Body match: MatchRecord): Call<Unit>
+    @POST("/challengeUsersDoublesMatch.php")
+    fun challengeUsersDoublesMatch(@Body match: MatchRecord): Call<Unit>
+
+    @POST("/acceptSinglesChallenge.php")
+    fun acceptSinglesChallenge(@Body match: MatchRecord): Call<Unit>
+
+    @POST("/acceptDoublesChallenge.php")
+    fun acceptDoublesChallenge(@Query("userId") userId: Int, @Body match: MatchRecord): Call<Unit>
 
     @POST("/declineChallenge.php")
     fun declineChallenge(@Query("userId") userId: Int, @Body match: MatchRecord, @Query("declineReason") declineReason: String): Call<Unit>

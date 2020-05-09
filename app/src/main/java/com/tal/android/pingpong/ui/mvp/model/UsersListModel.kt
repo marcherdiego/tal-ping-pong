@@ -36,14 +36,23 @@ class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils)
             )
     }
 
-    fun challengeUser(user: User, date: Date) {
-        val match = MatchRecord(
-            local = getCurrentUser(),
-            visitor = user,
-            matchDate = date.toString()
-        )
+    fun challengeUserSinglesMatch(match: MatchRecord) {
         matchesService
-            .challengeUser(match)
+            .challengeUserSinglesMatch(match)
+            .enqueueResponseNotNull(
+                success = {
+                    bus.post(ChallengeSubmittedSuccessfullyEvent())
+                },
+                fail = {
+                    bus.post(ChallengeSubmitFailedEvent())
+                },
+                model = this
+            )
+    }
+
+    fun challengeUsersDoublesMatch(match: MatchRecord) {
+        matchesService
+            .challengeUsersDoublesMatch(match)
             .enqueueResponseNotNull(
                 success = {
                     bus.post(ChallengeSubmittedSuccessfullyEvent())

@@ -36,16 +36,18 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     fun onUserClicked(event: UsersListAdapter.UserClickedEvent) {
         view.withActivity {
             val currentUser = model.getCurrentUser() ?: return
-            NewSinglesMatchDialog(currentUser, event.user).show(this, object : NewSinglesMatchDialog.ChallengeDialogCallback {
-                override fun onChallengeUser(user: User, matchDate: Date) {
-                    model.challengeUser(user, matchDate)
-                }
-
-                override fun onInvalidTimeSelected() {
-                    view.showToast(R.string.invalid_time_in_the_past)
-                }
-            })
+            NewSinglesMatchDialog(currentUser, event.user, model.getBus()).show(this)
         }
+    }
+
+    @Subscribe
+    fun onCreateNewSinglesMatchButtonClicked(event: NewSinglesMatchDialog.CreateNewSinglesMatchButtonClickedEvent) {
+        model.challengeUserSinglesMatch(event.match)
+    }
+
+    @Subscribe
+    fun onNewSinglesMatchInvalidTimeSelected(event: NewSinglesMatchDialog.NewSinglesMatchInvalidTimeSelectedEvent) {
+        view.showToast(R.string.invalid_time_in_the_past)
     }
 
     @Subscribe
@@ -80,7 +82,7 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
 
     @Subscribe
     fun onCreateNewDoublesMatchButtonClicked(event: NewDoublesMatchDialog.CreateNewDoublesMatchButtonClickedEvent) {
-        //model.challengeUser(user, year, monthOfYear, dayOfMonth, hourOfDay, minute)
+        model.challengeUsersDoublesMatch(event.match)
     }
 
     @Subscribe
