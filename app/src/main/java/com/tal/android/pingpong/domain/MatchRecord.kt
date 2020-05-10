@@ -1,7 +1,6 @@
 package com.tal.android.pingpong.domain
 
 import com.google.gson.annotations.SerializedName
-import com.tal.android.pingpong.utils.toInt
 import java.io.Serializable
 
 data class MatchRecord(
@@ -53,13 +52,15 @@ data class MatchRecord(
         }
     }
 
-    fun hasTempRequestChanges(localScore: Int, visitorScore: Int): Boolean{
+    fun hasTempRequestChanges(localScore: Int, visitorScore: Int): Boolean {
         return if (requestedLocalScore == UNSET && requestedVisitorScore == UNSET) {
             localScore != this.localScore || visitorScore != this.visitorScore
         } else {
             localScore != requestedLocalScore || visitorScore != requestedVisitorScore
         }
     }
+
+    fun isSinglesMatch() = localCompanion == null && visitorCompanion == null
 
     companion object {
         const val UNSET = -1

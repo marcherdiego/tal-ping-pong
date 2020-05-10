@@ -11,36 +11,48 @@ import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.Match
 import com.tal.android.pingpong.domain.MatchRecord
-import com.tal.android.pingpong.ui.adapters.viewholders.MatchViewHolder
+import com.tal.android.pingpong.ui.adapters.viewholders.BaseMatchViewHolder
+import com.tal.android.pingpong.ui.adapters.viewholders.DoublesMatchViewHolder
+import com.tal.android.pingpong.ui.adapters.viewholders.SinglesMatchViewHolder
+import java.lang.IllegalArgumentException
 
 class PastMatchesAdapter(private val matches: List<Match>, private val userEmail: String?, private val bus: Bus) :
-    RecyclerView.Adapter<MatchViewHolder>() {
+    RecyclerView.Adapter<BaseMatchViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
-        return MatchViewHolder(
-            LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.past_match_item_row, parent, false)
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseMatchViewHolder {
+        return when (viewType) {
+            UpcomingMatchesAdapter.VIEW_TYPE_SINGLES -> SinglesMatchViewHolder(
+                LayoutInflater
+                    .from(parent.context)
+                    .inflate(R.layout.past_singles_match_item_row, parent, false)
+            )
+            UpcomingMatchesAdapter.VIEW_TYPE_DOUBLES -> DoublesMatchViewHolder(
+                LayoutInflater
+                    .from(parent.context)
+                    .inflate(R.layout.past_doubles_match_item_row, parent, false)
+            )
+            else -> throw IllegalArgumentException("Invalid view type $viewType")
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
-        val match = matches[position]
-        return when (match.match?.local?.userEmail) {
-            userEmail -> MatchViewHolder.VIEW_TYPE_LOCAL
-            else -> MatchViewHolder.VIEW_TYPE_VISITOR
+        val match = matches[position].match
+        return if (match?.isSinglesMatch() == true) {
+            UpcomingMatchesAdapter.VIEW_TYPE_SINGLES
+        } else {
+            UpcomingMatchesAdapter.VIEW_TYPE_DOUBLES
         }
     }
 
     override fun getItemCount() = matches.size
 
-    override fun onBindViewHolder(holder: MatchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BaseMatchViewHolder, position: Int) {
         with(holder) {
             val context = itemView.context
             val match = matches[position]
             val matchRecord = match.match ?: return
 
-            bindBasicMatchData(matchRecord)
+            bindBasicMatchData(matchRecord, userEmail)
 
             val localPlayerScore = matchRecord.localScore
             val visitorPlayerScore = matchRecord.visitorScore

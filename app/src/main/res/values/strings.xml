@@ -62,4 +62,7 @@
     <string name="me_capital">Me</string>
     <string name="success_rate">Success rate</string>
     <string name="some_participants_are_missing">Some participants are missing</string>
+    <string name="local">Local</string>
+    <string name="visitors">Visitors</string>
+    <string name="visitor">Visitor</string>
 </resources>

@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="@+id/local_image">
 
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/visitor_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
