@@ -16,7 +16,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign in with your google account to start sharing your Ping Pong progress and challenge others!"
+            android:text="@string/login_message"
             android:textAlignment="center"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"

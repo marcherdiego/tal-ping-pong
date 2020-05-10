@@ -9,7 +9,6 @@ import com.tal.android.pingpong.R
 import com.nerdscorner.mvplib.events.fragment.BaseFragment
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.notifications.Constants
-import com.tal.android.pingpong.ui.activities.MainActivity
 import com.tal.android.pingpong.ui.mvp.model.MatchesListModel
 import com.tal.android.pingpong.ui.mvp.presenter.MatchesListPresenter
 import com.tal.android.pingpong.ui.mvp.view.MatchesListView

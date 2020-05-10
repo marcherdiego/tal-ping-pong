@@ -4,21 +4,21 @@
     <item
         android:id="@+id/menu_matches"
         android:icon="@drawable/ic_racket"
-        android:title="Matches" />
+        android:title="@string/matches" />
 
     <item
         android:id="@+id/menu_new_match"
         android:icon="@drawable/ic_sword"
-        android:title="Find a Rival" />
+        android:title="@string/find_a_rival" />
 
     <item
         android:id="@+id/menu_ranking"
         android:icon="@drawable/ic_podium"
-        android:title="Ranking" />
+        android:title="@string/ranking" />
 
     <item
         android:id="@+id/menu_profile"
         android:icon="@drawable/ic_user"
-        android:title="Profile" />
+        android:title="@string/profile" />
 
 </menu>

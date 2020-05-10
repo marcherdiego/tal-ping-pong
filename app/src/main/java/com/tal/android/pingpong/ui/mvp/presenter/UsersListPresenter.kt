@@ -2,14 +2,12 @@ package com.tal.android.pingpong.ui.mvp.presenter
 
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
 import com.tal.android.pingpong.ui.dialogs.NewDoublesMatchDialog
 import com.tal.android.pingpong.ui.dialogs.NewSinglesMatchDialog
 import com.tal.android.pingpong.ui.mvp.model.UsersListModel
 import com.tal.android.pingpong.ui.mvp.view.UsersListView
 import org.greenrobot.eventbus.Subscribe
-import java.util.*
 
 class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     BaseFragmentPresenter<UsersListView, UsersListModel>(view, model) {

@@ -8,17 +8,15 @@
 
     <ImageView
         android:id="@+id/local_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:padding="8dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/local_companion_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:padding="8dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         app:layout_constraintBottom_toTopOf="@+id/match_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/local_image" />
@@ -28,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:gravity="center"
-        android:text="@string/local"
+        android:text="@string/locals"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/local_companion_image"
         app:layout_constraintStart_toStartOf="@+id/local_companion_image"
@@ -38,8 +36,8 @@
         android:id="@+id/main_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/local_image"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,8 +68,8 @@
         android:id="@+id/companions_main_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/local_companion_image"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,17 +98,15 @@
 
     <ImageView
         android:id="@+id/visitor_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:padding="8dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/visitor_companion_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:padding="8dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         app:layout_constraintBottom_toTopOf="@+id/match_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/visitor_image" />

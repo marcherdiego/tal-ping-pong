@@ -5,7 +5,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.activities.MainActivity
 import com.tal.android.pingpong.ui.activities.SplashActivity
 import com.tal.android.pingpong.ui.mvp.model.LoginModel
 import com.tal.android.pingpong.ui.mvp.view.LoginView

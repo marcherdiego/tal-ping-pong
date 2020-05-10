@@ -45,7 +45,8 @@ data class MatchRecord(
 ) : Serializable {
 
     fun myVictory(myEmail: String?): Boolean {
-        return if (local?.userEmail == myEmail) {
+        return if (local?.userEmail == myEmail || localCompanion?.userEmail == myEmail) {
+            // I'm in the local team
             localScore > visitorScore
         } else {
             visitorScore > localScore

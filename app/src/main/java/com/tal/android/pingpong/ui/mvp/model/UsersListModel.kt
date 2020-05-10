@@ -9,7 +9,6 @@ import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.MatchesService
 import com.tal.android.pingpong.networking.services.UsersService
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
-import java.util.*
 
 class UsersListModel(private val sharedPreferencesUtils: SharedPreferencesUtils) : BaseModel() {
     private val userService = ServiceGenerator.createService(UsersService::class.java)

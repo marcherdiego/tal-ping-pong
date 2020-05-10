@@ -3,8 +3,6 @@ package com.tal.android.pingpong.domain
 import com.google.gson.annotations.SerializedName
 import com.tal.android.pingpong.utils.asPercentString
 import java.io.Serializable
-import kotlin.math.max
-import kotlin.math.min
 
 data class User(
     @SerializedName("id")
@@ -55,8 +53,6 @@ data class User(
             val ratio = (100 * matchesWon.toFloat()) / (matchesWon + matchesLost).toFloat()
             ratio.asPercentString()
         }
-
-    var selected: Boolean = false
 
     fun firstName() = userName?.substringBefore(SPACE)
 

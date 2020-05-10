@@ -65,4 +65,20 @@
     <string name="local">Local</string>
     <string name="visitors">Visitors</string>
     <string name="visitor">Visitor</string>
+    <string name="locals">Locals</string>
+    <string name="matches">Matches</string>
+    <string name="find_a_rival">Find a Rival</string>
+    <string name="ranking">Ranking</string>
+    <string name="profile">Profile</string>
+    <string name="vs_capital">VS</string>
+    <string name="score_0">0</string>
+    <string name="login_message">Sign in with your google account to start sharing your Ping Pong progress and challenge others!</string>
+    <string name="lose_initial">L</string>
+    <string name="win_initial">W</string>
+    <string name="email">Email</string>
+    <string name="last_30_days_stats">Last 30 days stats</string>
+    <string name="matches_won_unformatted">Matches won</string>
+    <string name="matches_lost_unformatted">Matches lost</string>
+    <string name="matches_win_rate_unformatted">Matches win rate</string>
+    <string name="last_10_matches">Last 10 matches</string>
 </resources>

@@ -30,7 +30,7 @@ class MainModel(
     @get:ScreenState
     var currentState: Int = UNSET
 
-    fun getUserId() = sharedPreferences.getUser()?.userId
+    private fun getUserId() = sharedPreferences.getUser()?.userId
 
     fun acceptSinglesChallenge(match: MatchRecord) {
         matchesService

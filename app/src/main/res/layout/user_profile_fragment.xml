@@ -19,7 +19,7 @@
             style="@style/ui_textview_large_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email"
+            android:text="@string/email"
             android:textStyle="bold" />
 
         <TextView
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Last 30 days stats"
+        android:text="@string/last_30_days_stats"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/email_container"
@@ -60,7 +60,7 @@
             style="@style/ui_textview_large_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Matches won"
+            android:text="@string/matches_won_unformatted"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -95,7 +95,7 @@
             style="@style/ui_textview_large_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Matches lost"
+            android:text="@string/matches_lost_unformatted"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -130,7 +130,7 @@
             style="@style/ui_textview_large_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Matches win rate"
+            android:text="@string/matches_win_rate_unformatted"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -164,7 +164,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Last 10 matches"
+        android:text="@string/last_10_matches"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

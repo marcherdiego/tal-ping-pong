@@ -13,7 +13,7 @@ object ChannelDescriptors {
      * This is the default channel. It is intended to be used for the most common type of notifications
      * It has default importance.
      */
-    val defaultChannel = ChannelDescriptor(
+    private val defaultChannel = ChannelDescriptor(
             channelId = "DefaultChannelId",
             channelName = "Default channel",
             channelDescription = "This channel handles normal notifications"
