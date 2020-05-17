@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.iid.FirebaseInstanceId
+import com.tal.android.pingpong.exceptions.InvalidLoginException
 import com.tal.android.pingpong.extensions.enqueue
 import com.tal.android.pingpong.extensions.fireAndForget
 import com.tal.android.pingpong.networking.ServiceGenerator
@@ -18,24 +19,28 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sharedPreferencesUtils = SharedPreferencesUtils(this)
-        GoogleSignIn.getLastSignedInAccount(this)?.let {
-            val currentUser = sharedPreferencesUtils?.getUser() ?: return
-            goToActivity(MainActivity::class.java)
-            FirebaseInstanceId
-                .getInstance()
-                .instanceId
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        currentUser.pushToken = task.result?.token
-                        userService
-                            .setPushToken(currentUser)
-                            .fireAndForget()
-                        sharedPreferencesUtils?.saveUser(currentUser)
+        try {
+            sharedPreferencesUtils = SharedPreferencesUtils(this)
+            GoogleSignIn.getLastSignedInAccount(this)?.let {
+                val currentUser = sharedPreferencesUtils?.getUser() ?: throw InvalidLoginException()
+                goToActivity(MainActivity::class.java)
+                FirebaseInstanceId
+                    .getInstance()
+                    .instanceId
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            currentUser.pushToken = task.result?.token
+                            userService
+                                .setPushToken(currentUser)
+                                .fireAndForget()
+                            sharedPreferencesUtils?.saveUser(currentUser)
+                        }
                     }
-                }
-            fetchCurrentUser(currentUser.userId ?: return)
-        } ?: run {
+                fetchCurrentUser(currentUser.userId ?: throw InvalidLoginException())
+            } ?: run {
+                throw InvalidLoginException()
+            }
+        } catch (e: InvalidLoginException) {
             goToActivity(LoginActivity::class.java)
         }
     }

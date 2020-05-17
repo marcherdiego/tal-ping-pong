@@ -13,8 +13,15 @@ class RankingPresenter(view: RankingView, model: RankingModel) :
 
     @Subscribe
     fun onUsersFetchedSuccessfully(event: RankingModel.UsersFetchedSuccessfullyEvent) {
-        model.updateCurrentUser(event.usersList.first { it.userEmail == model.getCurrentUser()?.userEmail })
-        view.setUsersListAdapter(UsersListAdapter(event.usersList, model.getBus()))
+        val currentUser = event.usersList.first { it.userEmail == model.getCurrentUser()?.userEmail }
+        model.updateCurrentUser(currentUser)
+        view.setUsersListAdapter(
+            UsersListAdapter(
+                users = event.usersList,
+                bus = model.getBus(),
+                selectedUser = currentUser
+            )
+        )
         view.setRefreshing(false)
     }
 

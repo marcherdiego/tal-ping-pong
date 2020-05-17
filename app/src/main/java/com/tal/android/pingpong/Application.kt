@@ -16,7 +16,7 @@ class Application : Application() {
         super.onCreate()
 
         val sharedPreferences = SharedPreferencesUtils(this)
-        ServiceGenerator.baseUrl = "http://192.168.0.100/"
+        ServiceGenerator.baseUrl = "http://192.168.0.108/"
         ServiceGenerator.httpClient = OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)

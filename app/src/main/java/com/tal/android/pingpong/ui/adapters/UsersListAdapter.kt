@@ -49,20 +49,20 @@ class UsersListAdapter(
                 else -> userTrophy.setImageDrawable(null)
             }
 
-            if (selectable) {
-                itemView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        context,
-                        if (user == selectedUser) {
-                            R.color.match_selected
-                        } else {
-                            R.color.match_unselected
-                        }
-                    )
+            itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                    context,
+                    if (user == selectedUser) {
+                        R.color.match_selected
+                    } else {
+                        R.color.match_unselected
+                    }
                 )
-            }
+            )
             itemView.setOnClickListener {
-                selectedUser = user
+                if (selectable) {
+                    selectedUser = user
+                }
                 notifyDataSetChanged()
                 bus.post(UserClickedEvent(user))
             }

@@ -16,6 +16,7 @@ import com.tal.android.pingpong.ui.fragments.*
 
 import com.tal.android.pingpong.ui.mvp.model.MainModel
 import com.tal.android.pingpong.ui.mvp.view.MainView
+import com.tal.android.pingpong.utils.multiLet
 import org.greenrobot.eventbus.Subscribe
 import java.lang.IllegalArgumentException
 
@@ -33,12 +34,10 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
             else -> throw IllegalArgumentException()
         }
         onNavigationItemSelected(MainView.NavigationItemSelectedEvent(itemId, true))
+        val match = model.match
         when (model.actionType) {
-            Constants.INCOMING_SINGLES_CHALLENGE -> {
-                model.match?.let { match ->
-                    openIncomingSinglesMatchDialog(match)
-                }
-            }
+            Constants.INCOMING_SINGLES_CHALLENGE -> openIncomingSinglesMatchDialog(match)
+            Constants.INCOMING_DOUBLES_CHALLENGE -> openDoublesMatchDialog(match)
         }
     }
 
@@ -77,13 +76,30 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
         updateCurrentFragment(fragment)
     }
 
-    /***
-     * ACCEPT / DECLINE CHALLENGE EVENTS
-     */
+    @Subscribe
+    fun onAcceptSinglesChallengeButtonClicked(event: IncomingSinglesMatchDialog.AcceptChallengeButtonClickedEvent) {
+        model.acceptSinglesChallenge(event.match)
+    }
 
     @Subscribe
-    fun onAcceptChallengeButtonClicked(event: IncomingSinglesMatchDialog.AcceptChallengeButtonClickedEvent) {
-        model.acceptSinglesChallenge(event.match)
+    fun onAcceptDoublesChallengeButtonClicked(event: IncomingDoublesMatchDialog.AcceptChallengeButtonClickedEvent) {
+        model.acceptDoublesChallenge(event.match)
+    }
+
+    @Subscribe
+    fun onChallengeAcceptedSuccessfully(event: MainModel.ChallengeAcceptedSuccessfullyEvent) {
+        view.showToast(R.string.challenge_accepted)
+        model.notifyUpdateLists()
+        incomingSinglesMatchDialog?.dismiss()
+        incomingDoublesMatchDialog?.dismiss()
+    }
+
+    @Subscribe
+    fun onChallengeDeclinedSuccessfully(event: MainModel.ChallengeDeclinedSuccessfullyEvent) {
+        view.showToast(R.string.challenge_declined)
+        model.notifyUpdateLists()
+        incomingSinglesMatchDialog?.dismiss()
+        incomingDoublesMatchDialog?.dismiss()
     }
 
     @Subscribe
@@ -92,22 +108,8 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
     }
 
     @Subscribe
-    fun onChallengeAcceptedSuccessfully(event: MainModel.ChallengeAcceptedSuccessfullyEvent) {
-        view.showToast(R.string.challenge_accepted)
-        model.notifyUpdateLists()
-        incomingSinglesMatchDialog?.dismiss()
-    }
-
-    @Subscribe
     fun onChallengeAcceptFailed(event: MainModel.ChallengeAcceptFailedEvent) {
         view.showToast(R.string.failed_to_accept_challenge)
-    }
-
-    @Subscribe
-    fun onChallengeDeclinedSuccessfully(event: MainModel.ChallengeDeclinedSuccessfullyEvent) {
-        view.showToast(R.string.challenge_declined)
-        model.notifyUpdateLists()
-        incomingSinglesMatchDialog?.dismiss()
     }
 
     @Subscribe
@@ -115,13 +117,14 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
         view.showToast(R.string.failed_to_decline_challenge)
     }
 
-    /***
-     * ACCEPT / DECLINE CHALLENGE EVENTS
-     */
-
     @Subscribe
     fun onUpcomingMatchClicked(event: UnconfirmedMatchesAdapter.UpcomingMatchClickedEvent) {
-        openIncomingSinglesMatchDialog(event.matchRecord)
+        val match = event.matchRecord
+        if (match.isSinglesMatch()) {
+            openIncomingSinglesMatchDialog(match)
+        } else {
+            openDoublesMatchDialog(match)
+        }
     }
 
     @Subscribe
@@ -144,17 +147,17 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
         }
     }
 
-    private fun openIncomingSinglesMatchDialog(match: MatchRecord) {
-        view.activity?.let {
+    private fun openIncomingSinglesMatchDialog(match: MatchRecord?) {
+        multiLet(view.activity, match) { activity, match ->
             incomingSinglesMatchDialog = IncomingSinglesMatchDialog(match, model.getBus())
-            incomingSinglesMatchDialog?.show(it)
+            incomingSinglesMatchDialog?.show(activity)
         }
     }
 
-    private fun openDoublesMatchDialog(match: MatchRecord) {
-        view.activity?.let {
+    private fun openDoublesMatchDialog(match: MatchRecord?) {
+        multiLet(view.activity, match) { activity, match ->
             incomingDoublesMatchDialog = IncomingDoublesMatchDialog(match, model.getBus())
-            incomingDoublesMatchDialog?.show(it)
+            incomingDoublesMatchDialog?.show(activity)
         }
     }
 

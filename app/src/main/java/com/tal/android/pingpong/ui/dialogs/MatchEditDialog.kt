@@ -26,26 +26,43 @@ class MatchEditDialog(private val match: MatchRecord, private val bus: Bus, priv
     fun show(activity: Context) {
         val matchEditDialogView = LayoutInflater
             .from(activity)
-            .inflate(R.layout.challenge_edit_dialog, null)
+            .inflate(
+                if (match.isSinglesMatch()) {
+                    R.layout.singles_match_edit_dialog
+                } else {
+                    R.layout.doubles_match_edit_dialog
+                },
+                null
+            )
 
         localScore = matchEditDialogView.findViewById(R.id.local_score)
         visitorScore = matchEditDialogView.findViewById(R.id.visitor_score)
 
         val localUserImage: ImageView = matchEditDialogView.findViewById(R.id.local_image)
         val local: TextView = matchEditDialogView.findViewById(R.id.local)
-        val oldLocalScore: TextView = matchEditDialogView.findViewById(R.id.old_local_score)
-        val matchDate: TextView = matchEditDialogView.findViewById(R.id.match_date)
+        val localCompanionUserImage: ImageView? = matchEditDialogView.findViewById(R.id.local_companion_image)
+        val localCompanion: TextView? = matchEditDialogView.findViewById(R.id.local_companion)
         val visitorUserImage: ImageView = matchEditDialogView.findViewById(R.id.visitor_image)
         val visitor: TextView = matchEditDialogView.findViewById(R.id.visitor)
+        val visitorCompanionUserImage: ImageView? = matchEditDialogView.findViewById(R.id.visitor_companion_image)
+        val visitorCompanion: TextView? = matchEditDialogView.findViewById(R.id.visitor_companion)
+
+        val oldLocalScore: TextView = matchEditDialogView.findViewById(R.id.old_local_score)
         val oldVisitorScore: TextView = matchEditDialogView.findViewById(R.id.old_visitor_score)
 
-        val localUser = match.local ?: return
-        val visitorUser = match.visitor ?: return
+        val matchDate: TextView = matchEditDialogView.findViewById(R.id.match_date)
 
         local.text = match.local?.userName
         visitor.text = match.visitor?.userName
-        localUserImage.load(localUser.userImage, R.drawable.ic_incognito, true)
-        visitorUserImage.load(visitorUser.userImage, R.drawable.ic_incognito, true)
+        localUserImage.load(match.local?.userImage, R.drawable.ic_incognito, true)
+        visitorUserImage.load(match.visitor?.userImage, R.drawable.ic_incognito, true)
+
+        if (match.isSinglesMatch().not()) {
+            localCompanion?.text = match.localCompanion?.userName
+            visitorCompanion?.text = match.visitorCompanion?.userName
+            localCompanionUserImage.load(match.localCompanion?.userImage, R.drawable.ic_incognito, true)
+            visitorCompanionUserImage.load(match.visitorCompanion?.userImage, R.drawable.ic_incognito, true)
+        }
 
         if (match.hasRequestedChanges == true) {
             oldLocalScore.paintFlags = oldLocalScore.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG

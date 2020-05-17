@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/local_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/local_companion_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/local_image" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/locals"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/local_companion_image"
+            app:layout_constraintStart_toStartOf="@+id/local_companion_image"
+            app:layout_constraintTop_toBottomOf="@+id/local_companion_image" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_table_tennis_cross"
+            app:layout_constraintBottom_toBottomOf="@+id/visitor_companion_image"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_image"
+            app:layout_constraintStart_toEndOf="@+id/local_image"
+            app:layout_constraintTop_toTopOf="@+id/visitor_image" />
+
+        <TextView
+            android:id="@+id/match_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView3"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            tools:text="Wed, 3rd Oct 2020 15:50" />
+
+        <ImageView
+            android:id="@+id/visitor_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/visitor_companion_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_image" />
+
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/visitors"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/visitor_companion_image"
+            app:layout_constraintStart_toStartOf="@+id/visitor_companion_image"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_companion_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.tal.android.pingpong.ui.widgets.DifficultyBar
+        android:id="@+id/difficulty_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/header"
+        app:layout_constraintStart_toStartOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/users_stats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FAFAFA"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingLeft="@dimen/viewpager_page_padding"
+        android:paddingRight="@dimen/viewpager_page_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/difficulty_bar"
+        tools:padding="10dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

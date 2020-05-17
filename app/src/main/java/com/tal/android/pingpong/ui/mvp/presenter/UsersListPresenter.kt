@@ -15,7 +15,13 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     @Subscribe
     fun onUsersFetchedSuccessfully(event: UsersListModel.UsersFetchedSuccessfullyEvent) {
         model.updateCurrentUser(model.usersList.first { it.userEmail == model.getCurrentUser()?.userEmail })
-        view.setUsersListAdapter(UsersListAdapter(model.usersList, model.getBus()))
+        view.setUsersListAdapter(
+            UsersListAdapter(
+                users = model.usersList,
+                bus = model.getBus(),
+                selectedUser = model.getCurrentUser()
+            )
+        )
         view.setRefreshing(false)
     }
 

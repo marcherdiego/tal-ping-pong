@@ -7,14 +7,21 @@
     <string name="challenge">Challenge</string>
     <string name="close">Close</string>
     <string name="cancel">Cancel</string>
-    <string name="x_stats">%1$s\'s stats</string>
     <string name="user_stats">Matches won: %1$d\nMatches lost: %2$d\nMatches win rate: %3$s</string>
     <string name="matches_won">Matches won: %1$d</string>
     <string name="matches_lost">Matches lost: %1$d</string>
     <string name="matches_win_rate">Matches win rate: %1$s</string>
+
+    <string name="x_stats">%1$s\'s stats</string>
     <string name="x_matches_won">%1$s\'s matches won: %2$d</string>
     <string name="x_matches_lost">%1$s\'s matches lost: %2$d</string>
     <string name="x_matches_win_rate">%1$s\'s matches win rate: %2$s</string>
+
+    <string name="your_stats">Your stats</string>
+    <string name="your_matches_won">Your matches won: %1$d</string>
+    <string name="your_matches_lost">Your matches lost: %1$d</string>
+    <string name="your_matches_win_rate">Your matches win rate: %1$s</string>
+
     <string name="win_chances">Win chances: %1$s</string>
     <string name="user_rank">General rank: %1$d</string>
     <string name="invalid_time_in_the_past">Please select a time in the future</string>
@@ -81,4 +88,5 @@
     <string name="matches_lost_unformatted">Matches lost</string>
     <string name="matches_win_rate_unformatted">Matches win rate</string>
     <string name="last_10_matches">Last 10 matches</string>
+    <string name="select_user">Select a user</string>
 </resources>

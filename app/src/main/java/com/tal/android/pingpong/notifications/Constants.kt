@@ -4,6 +4,7 @@ object Constants {
     const val NONE = "none"
 
     const val INCOMING_SINGLES_CHALLENGE = "incoming_singles_challenge"
+    const val INCOMING_DOUBLES_CHALLENGE = "incoming_doubles_challenge"
 
     const val CHALLENGE_INVITE_ACCEPTED = "challenge_invite_accepted"
     const val CHALLENGE_INVITE_DECLINED = "challenge_invite_declined"

@@ -6,4 +6,5 @@
     <dimen name="standard_55">65dp</dimen>
     <dimen name="standard_105">120dp</dimen>
     <dimen name="standard_155">175dp</dimen>
+    <dimen name="viewpager_page_padding">32dp</dimen>
 </resources>

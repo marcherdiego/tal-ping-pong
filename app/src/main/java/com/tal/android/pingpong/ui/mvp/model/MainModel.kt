@@ -46,6 +46,25 @@ class MainModel(
             )
     }
 
+    fun acceptDoublesChallenge(match: MatchRecord) {
+        val userId = getUserId()
+        if (userId == null) {
+            bus.post(ChallengeAcceptFailedEvent())
+            return
+        }
+        matchesService
+            .acceptDoublesChallenge(userId, match)
+            .enqueue(
+                success = {
+                    bus.post(ChallengeAcceptedSuccessfullyEvent())
+                },
+                fail = {
+                    bus.post(ChallengeAcceptFailedEvent())
+                },
+                model = this
+            )
+    }
+
     fun declineChallenge(match: MatchRecord, declineReason: String) {
         val userId = getUserId()
         if (userId == null) {

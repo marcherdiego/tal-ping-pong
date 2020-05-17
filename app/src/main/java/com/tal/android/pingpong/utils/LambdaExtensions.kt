@@ -1,5 +1,10 @@
 package com.tal.android.pingpong.utils
 
+import android.os.Bundle
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
 fun <A, B> Any.multiLet(
     a: A? = null,
     b: B? = null,
@@ -114,4 +119,10 @@ fun <A, B, C, D, E, F, G, H, I> Any.multiLet(
         return null
     }
     return action(a, b, c, d, e, f, g, h, i)
+}
+
+inline fun Any.bundle(block: Bundle.() -> Unit): Bundle {
+    return Bundle().apply {
+        block()
+    }
 }

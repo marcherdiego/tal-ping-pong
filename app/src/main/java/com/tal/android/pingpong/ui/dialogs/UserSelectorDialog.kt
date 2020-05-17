@@ -35,11 +35,11 @@ class UserSelectorDialog(
         val usersList: RecyclerView = view.findViewById(R.id.users_list)
         usersList.adapter = UsersListAdapter(users, usersAdapterBus, true, selectedUser)
 
-        dialog = DialogFactory
+        val dialogBuilder = DialogFactory
             .Builder()
             .setCancelable(true)
             .setAutoDismiss(false)
-            .setTitle(R.string.edit_match_details)
+            .setTitle(R.string.select_user)
             .setView(view)
             .setNeutralButtonText(R.string.cancel)
             .setPositiveButtonText(R.string.accept)
@@ -49,15 +49,18 @@ class UserSelectorDialog(
                 }
                 dismiss()
             }
-            .setNegativeButtonText(R.string.remove)
-            .setNegativeButtonListener {
-                bus.post(UserRemovedEvent(userType))
-                dismiss()
-            }
             .setOnDismissListener(DialogInterface.OnDismissListener {
                 usersAdapterBus.unregister(this)
             })
-            .build(context)
+        if (selectedUser != null) {
+            dialogBuilder
+                .setNegativeButtonText(R.string.remove)
+                .setNegativeButtonListener {
+                    bus.post(UserRemovedEvent(userType))
+                    dismiss()
+                }
+        }
+        dialog = dialogBuilder.build(context)
         dialog?.show()
     }
 

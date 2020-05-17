@@ -54,8 +54,8 @@
 
         <TextView
             android:id="@+id/my_user_name"
-            android:layout_width="18dp"
-            android:layout_height="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/me_capital"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -79,9 +79,10 @@
             android:id="@+id/local_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/old_local_score"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="15" />
 
@@ -89,10 +90,10 @@
             android:id="@+id/old_local_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/local_score"
+            app:layout_constraintEnd_toStartOf="@+id/confirmed_label"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="15" />
 
@@ -122,11 +123,10 @@
             android:id="@+id/old_visitor_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/visitor_score"
+            app:layout_constraintStart_toEndOf="@+id/confirmed_label"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="15" />
 
@@ -134,9 +134,10 @@
             android:id="@+id/visitor_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/old_visitor_score"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="15" />
     </androidx.constraintlayout.widget.ConstraintLayout>

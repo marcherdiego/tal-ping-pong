@@ -1,66 +1,53 @@
 package com.tal.android.pingpong.ui.dialogs
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.widget.ViewPager2
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
+import com.tal.android.pingpong.ui.adapters.UsersStatsAdapter
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.load
 
-//TODO RELLENAR LA DATA CON EL COMPANION
 class IncomingDoublesMatchDialog(private val match: MatchRecord, private val bus: Bus) {
 
     private var dialog: AlertDialog? = null
 
-    fun show(activity: Context) {
+    fun show(fragmentActivity: FragmentActivity) {
         val challengeDialogView = LayoutInflater
-            .from(activity)
-            .inflate(R.layout.doubles_challenge_proposal_dialog, null)
+            .from(fragmentActivity)
+            .inflate(R.layout.doubles_incoming_challenge_dialog, null)
         val localUserImage: ImageView = challengeDialogView.findViewById(R.id.local_image)
-        val localUserName: TextView = challengeDialogView.findViewById(R.id.user_name)
-        val localUserEmail: TextView = challengeDialogView.findViewById(R.id.user_email)
-        val localUserMatchesWon: TextView = challengeDialogView.findViewById(R.id.user_matches_won)
-        val localUserMatchesLost: TextView = challengeDialogView.findViewById(R.id.user_matches_lost)
-        val localUserWinRate: TextView = challengeDialogView.findViewById(R.id.user_matches_win_rate)
+        val localCompanionUserImage: ImageView = challengeDialogView.findViewById(R.id.local_companion_image)
+        val visitorUserImage: ImageView = challengeDialogView.findViewById(R.id.visitor_image)
+        val visitorCompanionUserImage: ImageView = challengeDialogView.findViewById(R.id.visitor_companion_image)
 
         val difficultyBar: DifficultyBar = challengeDialogView.findViewById(R.id.difficulty_bar)
-
         val matchDate: TextView = challengeDialogView.findViewById(R.id.match_date)
-        val visitorUserImage: ImageView = challengeDialogView.findViewById(R.id.visitor_image)
+        val usersStats: ViewPager2 = challengeDialogView.findViewById(R.id.users_stats)
 
         val localUser = match.local ?: return
+        val localCompanionUser = match.localCompanion ?: return
         val visitorUser = match.visitor ?: return
+        val visitorCompanionUser = match.visitorCompanion ?: return
 
         localUserImage.load(localUser.userImage, R.drawable.ic_incognito, true)
+        localCompanionUserImage.load(localCompanionUser.userImage, R.drawable.ic_incognito, true)
         visitorUserImage.load(visitorUser.userImage, R.drawable.ic_incognito, true)
+        visitorCompanionUserImage.load(visitorCompanionUser.userImage, R.drawable.ic_incognito, true)
 
         difficultyBar.setup(localUser.matchesRatioValue, visitorUser.matchesRatioValue)
 
-        localUserName.text = activity.getString(R.string.x_stats, localUser.userName)
-        localUserEmail.text = localUser.userEmail
-        matchDate.text = DateUtils.formatDate(match.matchDate)
+        usersStats.adapter = UsersStatsAdapter(fragmentActivity, localUser, localCompanionUser, visitorUser, visitorCompanionUser)
+        usersStats.offscreenPageLimit = usersStats.adapter?.itemCount ?: 2
 
-        localUserMatchesWon.text = activity.getString(
-            R.string.x_matches_won,
-            localUser.firstName(),
-            localUser.matchesWon
-        )
-        localUserMatchesLost.text = activity.getString(
-            R.string.x_matches_lost,
-            localUser.firstName(),
-            localUser.matchesLost
-        )
-        localUserWinRate.text = activity.getString(
-            R.string.x_matches_win_rate,
-            localUser.firstName(),
-            localUser.matchesRatio
-        )
+        matchDate.text = DateUtils.formatDate(match.matchDate)
 
         dialog = DialogFactory
             .Builder()
@@ -75,9 +62,9 @@ class IncomingDoublesMatchDialog(private val match: MatchRecord, private val bus
                 bus.post(AcceptChallengeButtonClickedEvent(match))
             }
             .setNegativeButtonListener {
-                bus.post(DeclineChallengeButtonClickedEvent(match))
+                DeclineMatchDialog(match, bus).show(fragmentActivity)
             }
-            .build(activity)
+            .build(fragmentActivity)
         dialog?.show()
     }
 

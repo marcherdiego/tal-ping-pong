@@ -85,7 +85,7 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
             .Builder()
             .setCancelable(true)
             .setAutoDismiss(false)
-            .setTitle(R.string.user_details)
+            .setTitle(R.string.new_doubles_match)
             .setView(challengeDialogView)
             .setPositiveButtonText(R.string.challenge)
             .setPositiveButtonListener {
