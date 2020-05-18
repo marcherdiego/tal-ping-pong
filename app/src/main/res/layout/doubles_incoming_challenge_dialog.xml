@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/local_image"
+            android:id="@+id/local_user_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:padding="2dp"
@@ -26,12 +26,30 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/local_user_confirmed"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_verified"
+            app:layout_constraintBottom_toBottomOf="@+id/local_user_image"
+            app:layout_constraintEnd_toEndOf="@+id/local_user_image" />
+
+        <ImageView
             android:id="@+id/local_companion_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:padding="2dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/local_image" />
+            app:layout_constraintTop_toBottomOf="@+id/local_user_image" />
+
+        <ImageView
+            android:id="@+id/local_companion_user_confirmed"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_verified"
+            app:layout_constraintBottom_toBottomOf="@+id/local_companion_image"
+            app:layout_constraintEnd_toEndOf="@+id/local_companion_image" />
 
         <TextView
             android:id="@+id/textView2"
@@ -51,7 +69,7 @@
             android:src="@drawable/ic_table_tennis_cross"
             app:layout_constraintBottom_toBottomOf="@+id/visitor_companion_image"
             app:layout_constraintEnd_toStartOf="@+id/visitor_image"
-            app:layout_constraintStart_toEndOf="@+id/local_image"
+            app:layout_constraintStart_toEndOf="@+id/local_user_image"
             app:layout_constraintTop_toTopOf="@+id/visitor_image" />
 
         <TextView
@@ -73,12 +91,30 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/visitor_user_confirmed"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_verified"
+            app:layout_constraintBottom_toBottomOf="@+id/visitor_image"
+            app:layout_constraintEnd_toEndOf="@+id/visitor_image" />
+
+        <ImageView
             android:id="@+id/visitor_companion_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:padding="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/visitor_image" />
+
+        <ImageView
+            android:id="@+id/visitor_companion_user_confirmed"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/ic_verified"
+            app:layout_constraintBottom_toBottomOf="@+id/visitor_companion_image"
+            app:layout_constraintEnd_toEndOf="@+id/visitor_companion_image" />
 
 
         <TextView
@@ -112,7 +148,6 @@
         android:background="#FAFAFA"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:overScrollMode="never"
         android:paddingLeft="@dimen/viewpager_page_padding"
         android:paddingRight="@dimen/viewpager_page_padding"
         app:layout_constraintEnd_toEndOf="parent"

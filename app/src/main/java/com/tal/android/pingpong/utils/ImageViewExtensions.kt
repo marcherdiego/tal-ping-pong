@@ -6,7 +6,16 @@ import com.bumptech.glide.Glide
 import com.tal.android.pingpong.R
 import jp.wasabeef.glide.transformations.CropCircleWithBorderTransformation
 
-fun ImageView?.load(url: String? = null, @DrawableRes fallbackImage: Int? = null, rounded: Boolean = false) {
+const val ALPHA_30 = 0.3F
+const val DEFAULT_ALPHA = 1F
+
+fun ImageView?.load(
+    url: String? = null,
+    @DrawableRes fallbackImage:
+    Int? = null,
+    rounded: Boolean = false,
+    alpha: Float = DEFAULT_ALPHA
+) {
     if (this == null) {
         return
     }
@@ -25,4 +34,5 @@ fun ImageView?.load(url: String? = null, @DrawableRes fallbackImage: Int? = null
         }
         builder.into(this)
     }
+    this.alpha = alpha
 }

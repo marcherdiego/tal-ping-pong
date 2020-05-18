@@ -45,7 +45,7 @@
     <string name="decline">Decline</string>
     <string name="confirmed">Confirmed</string>
     <string name="unconfirmed">Unconfirmed</string>
-    <string name="unconfirmed_matches">Invitations</string>
+    <string name="unconfirmed_matches">Unconfirmed</string>
     <string name="not_played">Not played</string>
     <string name="edit_match_details">Edit match details</string>
     <string name="edit">Edit</string>

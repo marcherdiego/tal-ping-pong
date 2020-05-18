@@ -21,15 +21,24 @@
             android:padding="16dp">
 
             <TextView
-                android:id="@+id/user_name"
+                android:id="@+id/user_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/local"
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Diego Marcher's stats" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/user_confirmed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirmed"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_type" />
 
             <ImageView
                 android:id="@+id/user_image"
@@ -39,7 +48,18 @@
                 android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_name" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_image"
+                tools:text="Diego Marcher's stats" />
 
             <TextView
                 android:id="@+id/user_email"
@@ -48,7 +68,7 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_image"
+                app:layout_constraintTop_toBottomOf="@+id/user_name"
                 tools:text="user@email.com" />
 
             <LinearLayout

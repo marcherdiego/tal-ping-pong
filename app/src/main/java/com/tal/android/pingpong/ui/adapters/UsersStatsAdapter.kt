@@ -3,11 +3,12 @@ package com.tal.android.pingpong.ui.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.ui.fragments.UserStatsFragment
 import com.tal.android.pingpong.utils.bundle
 
-class UsersStatsAdapter(fragmentActivity: FragmentActivity, vararg users: User) :
+class UsersStatsAdapter(fragmentActivity: FragmentActivity, match: MatchRecord, vararg users: User) :
     FragmentStateAdapter(fragmentActivity) {
 
     private val fragments = mutableListOf<Fragment>()
@@ -17,6 +18,7 @@ class UsersStatsAdapter(fragmentActivity: FragmentActivity, vararg users: User) 
             fragments.add(UserStatsFragment().apply {
                 arguments = bundle {
                     putSerializable(UserStatsFragment.USER, user)
+                    putSerializable(UserStatsFragment.MATCH, match)
                 }
             })
         }

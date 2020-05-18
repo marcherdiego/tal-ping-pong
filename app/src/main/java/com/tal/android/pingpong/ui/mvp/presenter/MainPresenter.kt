@@ -149,14 +149,14 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
 
     private fun openIncomingSinglesMatchDialog(match: MatchRecord?) {
         multiLet(view.activity, match) { activity, match ->
-            incomingSinglesMatchDialog = IncomingSinglesMatchDialog(match, model.getBus())
+            incomingSinglesMatchDialog = IncomingSinglesMatchDialog(match, model.getUserId(), model.getBus())
             incomingSinglesMatchDialog?.show(activity)
         }
     }
 
     private fun openDoublesMatchDialog(match: MatchRecord?) {
         multiLet(view.activity, match) { activity, match ->
-            incomingDoublesMatchDialog = IncomingDoublesMatchDialog(match, model.getBus())
+            incomingDoublesMatchDialog = IncomingDoublesMatchDialog(match, model.getUserId(), model.getBus())
             incomingDoublesMatchDialog?.show(activity)
         }
     }

@@ -7,11 +7,20 @@
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/local_image"
+        android:id="@+id/local_user_image"
         android:layout_width="56dp"
         android:layout_height="56dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/local_user_confirmed"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="4dp"
+        android:src="@drawable/ic_verified"
+        app:layout_constraintBottom_toBottomOf="@+id/local_user_image"
+        app:layout_constraintEnd_toEndOf="@+id/local_user_image" />
 
     <ImageView
         android:id="@+id/local_companion_image"
@@ -19,7 +28,16 @@
         android:layout_height="56dp"
         app:layout_constraintBottom_toTopOf="@+id/match_date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/local_image" />
+        app:layout_constraintTop_toBottomOf="@+id/local_user_image" />
+
+    <ImageView
+        android:id="@+id/local_companion_user_confirmed"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="4dp"
+        android:src="@drawable/ic_verified"
+        app:layout_constraintBottom_toBottomOf="@+id/local_companion_image"
+        app:layout_constraintEnd_toEndOf="@+id/local_companion_image" />
 
     <TextView
         android:layout_width="0dp"
@@ -33,39 +51,37 @@
         app:layout_constraintTop_toBottomOf="@+id/local_companion_image" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/local_image"
+        app:layout_constraintBottom_toBottomOf="@+id/local_user_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/visitor_image"
-        app:layout_constraintStart_toEndOf="@+id/local_image"
-        app:layout_constraintTop_toTopOf="@+id/local_image">
+        app:layout_constraintStart_toEndOf="@+id/local_user_image"
+        app:layout_constraintTop_toTopOf="@+id/local_user_image">
+
+        <TextView
+            android:id="@+id/local_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/me_capital"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/visitor_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="User name" />
-
-        <TextView
-            android:id="@+id/my_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/me_capital"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/companions_main_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -78,22 +94,22 @@
         app:layout_constraintTop_toTopOf="@+id/local_companion_image">
 
         <TextView
-            android:id="@+id/visitor_companion_user_name"
+            android:id="@+id/local_companion_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Visitor companion" />
+            tools:text="Local companion" />
 
         <TextView
-            android:id="@+id/local_companion_user_name"
+            android:id="@+id/visitor_companion_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Local companion" />
+            tools:text="Visitor companion" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
@@ -104,12 +120,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/visitor_user_confirmed"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="4dp"
+        android:src="@drawable/ic_verified"
+        app:layout_constraintBottom_toBottomOf="@+id/visitor_image"
+        app:layout_constraintEnd_toEndOf="@+id/visitor_image" />
+
+    <ImageView
         android:id="@+id/visitor_companion_image"
         android:layout_width="56dp"
         android:layout_height="56dp"
         app:layout_constraintBottom_toTopOf="@+id/match_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/visitor_image" />
+
+    <ImageView
+        android:id="@+id/visitor_companion_user_confirmed"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="4dp"
+        android:src="@drawable/ic_verified"
+        app:layout_constraintBottom_toBottomOf="@+id/visitor_companion_image"
+        app:layout_constraintEnd_toEndOf="@+id/visitor_companion_image" />
 
     <TextView
         android:layout_width="0dp"

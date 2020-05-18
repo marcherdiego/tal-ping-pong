@@ -29,7 +29,7 @@ class MatchesListPresenter(view: MatchesListView, model: MatchesListModel) :
                 view.setTabsAdapter(MatchesTabsAdapter(this, fragments, titles))
                 when (model.selectedTab) {
                     MatchesListModel.Companion.TabsState.UPCOMING -> view.setSelectedTab(UPCOMING_TAB_INDEX)
-                    MatchesListModel.Companion.TabsState.INVITATIONS -> view.setSelectedTab(INVITATIONS_TAB_INDEX)
+                    MatchesListModel.Companion.TabsState.UNCONFIRMED -> view.setSelectedTab(UNCONFIRMED_TAB_INDEX)
                     MatchesListModel.Companion.TabsState.PAST -> view.setSelectedTab(PAST_TAB_INDEX)
                 }
             }
@@ -38,7 +38,7 @@ class MatchesListPresenter(view: MatchesListView, model: MatchesListModel) :
 
     companion object {
         private const val UPCOMING_TAB_INDEX = 0
-        private const val INVITATIONS_TAB_INDEX = 1
+        private const val UNCONFIRMED_TAB_INDEX = 1
         private const val PAST_TAB_INDEX = 2
     }
 }

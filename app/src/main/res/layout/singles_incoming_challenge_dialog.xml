@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/local_image"
+            android:id="@+id/local_user_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:padding="8dp"
@@ -32,9 +32,9 @@
             android:gravity="center"
             android:text="@string/local"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/local_image"
-            app:layout_constraintStart_toStartOf="@+id/local_image"
-            app:layout_constraintTop_toBottomOf="@+id/local_image" />
+            app:layout_constraintEnd_toEndOf="@+id/local_user_image"
+            app:layout_constraintStart_toStartOf="@+id/local_user_image"
+            app:layout_constraintTop_toBottomOf="@+id/local_user_image" />
 
         <ImageView
             android:layout_width="40dp"
@@ -42,8 +42,8 @@
             android:src="@drawable/ic_table_tennis_cross"
             app:layout_constraintBottom_toBottomOf="@+id/visitor_image"
             app:layout_constraintEnd_toStartOf="@+id/visitor_image"
-            app:layout_constraintStart_toEndOf="@+id/local_image"
-            app:layout_constraintTop_toTopOf="@+id/visitor_image" />
+            app:layout_constraintStart_toEndOf="@+id/local_user_image"
+            app:layout_constraintTop_toTopOf="@+id/local_user_image" />
 
         <TextView
             android:id="@+id/match_date"
@@ -84,59 +84,20 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@+id/header"
         app:layout_constraintStart_toStartOf="@+id/header"
-        app:layout_constraintTop_toBottomOf="@+id/header"/>
+        app:layout_constraintTop_toBottomOf="@+id/header" />
 
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/users_stats"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textStyle="bold"
+        android:background="#FAFAFA"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingLeft="@dimen/viewpager_page_padding"
+        android:paddingRight="@dimen/viewpager_page_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficulty_bar"
-        tools:text="Diego Marcher's stats" />
-
-    <TextView
-        android:id="@+id/user_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name"
-        tools:text="user@email.com" />
-
-    <LinearLayout
-        android:id="@+id/user_stats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_email">
-
-        <TextView
-            android:id="@+id/user_matches_won"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            tools:text="@string/matches_won" />
-
-        <TextView
-            android:id="@+id/user_matches_lost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            tools:text="@string/matches_lost" />
-
-        <TextView
-            android:id="@+id/user_matches_win_rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            tools:text="@string/matches_win_rate" />
-    </LinearLayout>
+        tools:padding="10dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

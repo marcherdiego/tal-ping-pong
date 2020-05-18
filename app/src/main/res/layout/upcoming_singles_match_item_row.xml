@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/local_image"
+        android:id="@+id/local_user_image"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:padding="8dp"
@@ -22,48 +22,48 @@
         android:gravity="center"
         android:text="@string/local"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/local_image"
-        app:layout_constraintStart_toStartOf="@+id/local_image"
-        app:layout_constraintTop_toBottomOf="@+id/local_image" />
+        app:layout_constraintEnd_toEndOf="@+id/local_user_image"
+        app:layout_constraintStart_toStartOf="@+id/local_user_image"
+        app:layout_constraintTop_toBottomOf="@+id/local_user_image" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="2dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/local_image"
+        app:layout_constraintBottom_toBottomOf="@+id/local_user_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/visitor_image"
-        app:layout_constraintStart_toEndOf="@+id/local_image"
-        app:layout_constraintTop_toTopOf="@+id/local_image">
+        app:layout_constraintStart_toEndOf="@+id/local_user_image"
+        app:layout_constraintTop_toTopOf="@+id/local_user_image">
 
         <TextView
-            android:id="@+id/visitor_user_name"
+            android:id="@+id/local_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/me_capital"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="User name" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/matches_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@+id/visitor_user_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/visitor_user_name" />
 
         <TextView
-            android:id="@+id/my_user_name"
+            android:id="@+id/visitor_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/me_capital"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="User name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

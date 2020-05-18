@@ -13,11 +13,11 @@ class MatchesListModel(
          * Possible tabs states
          */
         @Retention(AnnotationRetention.SOURCE)
-        @StringDef(TabsState.UPCOMING, TabsState.INVITATIONS, TabsState.PAST)
+        @StringDef(TabsState.UPCOMING, TabsState.UNCONFIRMED, TabsState.PAST)
         annotation class TabsState {
             companion object {
                 const val UPCOMING = "upcoming"
-                const val INVITATIONS = "invitations"
+                const val UNCONFIRMED = "invitations"
                 const val PAST = "past"
             }
         }
