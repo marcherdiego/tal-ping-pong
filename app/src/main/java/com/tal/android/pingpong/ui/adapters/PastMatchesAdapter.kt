@@ -13,7 +13,6 @@ import com.tal.android.pingpong.domain.Match
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.ui.adapters.viewholders.BaseMatchViewHolder
 import com.tal.android.pingpong.ui.adapters.viewholders.DoublesMatchViewHolder
-import com.tal.android.pingpong.ui.adapters.viewholders.SinglesMatchViewHolder
 import java.lang.IllegalArgumentException
 
 class PastMatchesAdapter(private val matches: List<Match>, private val userEmail: String?, private val bus: Bus) :
@@ -21,7 +20,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val userEmail
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseMatchViewHolder {
         return when (viewType) {
-            UpcomingMatchesAdapter.VIEW_TYPE_SINGLES -> SinglesMatchViewHolder(
+            UpcomingMatchesAdapter.VIEW_TYPE_SINGLES -> BaseMatchViewHolder(
                 LayoutInflater
                     .from(parent.context)
                     .inflate(R.layout.past_singles_match_item_row, parent, false)

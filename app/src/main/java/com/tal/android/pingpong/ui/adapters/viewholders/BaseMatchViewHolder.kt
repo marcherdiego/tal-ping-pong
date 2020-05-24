@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
+import com.tal.android.pingpong.utils.ALPHA_30
+import com.tal.android.pingpong.utils.DEFAULT_ALPHA
 import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.load
 
@@ -44,8 +46,14 @@ open class BaseMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
         localUserImage.load(match.local?.userImage, R.drawable.ic_incognito, true)
 
         visitorUserName.text = match.visitor?.userName
-        visitorUserImage.load(match.visitor?.userImage, R.drawable.ic_incognito, true)
+        visitorUserImage.load(match.visitor?.userImage, R.drawable.ic_incognito, true, getUserImageAlpha(match.confirmed))
 
         matchDate.text = DateUtils.formatDate(match.matchDate)
+    }
+
+    fun getUserImageAlpha(confirmed: Boolean?) = if (confirmed == true) {
+        DEFAULT_ALPHA
+    } else {
+        ALPHA_30
     }
 }

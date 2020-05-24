@@ -30,6 +30,7 @@ open class BaseMatchesListView(fragment: Fragment) : BaseFragmentView(fragment) 
     }
 
     fun showNetworkErrorMessage() {
+        challengesList?.adapter = EmptyAdapter()
         emptyListLayout?.visibility = View.VISIBLE
         emptyListEmoji?.setImageResource(R.drawable.ic_confused)
         emptyListMessage?.setText(R.string.network_error_message)

@@ -37,7 +37,7 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
         val match = model.match
         when (model.actionType) {
             Constants.INCOMING_SINGLES_CHALLENGE -> openIncomingSinglesMatchDialog(match)
-            Constants.INCOMING_DOUBLES_CHALLENGE -> openDoublesMatchDialog(match)
+            Constants.INCOMING_DOUBLES_CHALLENGE -> openIncomingDoublesMatchDialog(match)
         }
     }
 
@@ -123,7 +123,7 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
         if (match.isSinglesMatch()) {
             openIncomingSinglesMatchDialog(match)
         } else {
-            openDoublesMatchDialog(match)
+            openIncomingDoublesMatchDialog(match)
         }
     }
 
@@ -154,7 +154,7 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
         }
     }
 
-    private fun openDoublesMatchDialog(match: MatchRecord?) {
+    private fun openIncomingDoublesMatchDialog(match: MatchRecord?) {
         multiLet(view.activity, match) { activity, match ->
             incomingDoublesMatchDialog = IncomingDoublesMatchDialog(match, model.getUserId(), model.getBus())
             incomingDoublesMatchDialog?.show(activity)
