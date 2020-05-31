@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/local_image"
+        android:id="@+id/local_user_image"
         android:layout_width="56dp"
         android:layout_height="56dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
         android:layout_height="56dp"
         app:layout_constraintBottom_toTopOf="@+id/match_date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/local_image" />
+        app:layout_constraintTop_toBottomOf="@+id/local_user_image" />
 
     <TextView
         android:layout_width="0dp"
@@ -39,8 +39,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/visitor_image"
-        app:layout_constraintStart_toEndOf="@+id/local_image"
-        app:layout_constraintTop_toTopOf="@+id/local_image">
+        app:layout_constraintStart_toEndOf="@+id/local_user_image"
+        app:layout_constraintTop_toTopOf="@+id/local_user_image">
 
         <TextView
             android:id="@+id/visitor_user_name"
@@ -52,7 +52,7 @@
             tools:text="User name" />
 
         <TextView
-            android:id="@+id/my_user_name"
+            android:id="@+id/local_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/me_capital"
@@ -71,8 +71,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/local_companion_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/visitor_image"
-        app:layout_constraintStart_toEndOf="@+id/local_image"
-        app:layout_constraintTop_toTopOf="@+id/local_image">
+        app:layout_constraintStart_toEndOf="@+id/local_user_image"
+        app:layout_constraintTop_toTopOf="@+id/local_user_image">
 
         <TextView
             android:id="@+id/local_score"

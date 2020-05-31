@@ -37,7 +37,9 @@ data class User(
 
     @SerializedName("champion")
     var champion: Boolean? = null
-) : Serializable {
+) : Serializable, FilterableObject {
+
+    override fun matches(criteria: String) = userName?.contains(criteria) == true || userEmail?.contains(criteria) == true
 
     val matchesRatioValue: Float
         get() = if (matchesWon + matchesLost == 0) {

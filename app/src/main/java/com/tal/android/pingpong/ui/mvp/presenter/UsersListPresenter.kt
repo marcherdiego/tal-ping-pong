@@ -26,6 +26,11 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     }
 
     @Subscribe
+    fun onSearchCriteriaChanged(event: UsersListView.SearchCriteriaChangedEvent) {
+        view.filterUsers(event.criteria ?: return)
+    }
+
+    @Subscribe
     fun onUsersFetchFailed(event: UsersListModel.UsersFetchFailedEvent) {
         view.showToast(R.string.failed_to_load_users_list)
         view.setRefreshing(false)
@@ -33,6 +38,7 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
 
     @Subscribe
     fun onRefreshLists(event: UsersListView.RefreshUsersListsEvent) {
+        view.clearSearchBox()
         model.fetchUsers()
     }
 

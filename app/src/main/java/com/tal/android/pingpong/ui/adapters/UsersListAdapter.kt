@@ -14,8 +14,11 @@ import com.tal.android.pingpong.ui.adapters.UsersListAdapter.ViewHolder
 import com.tal.android.pingpong.utils.load
 
 class UsersListAdapter(
-    private val users: List<User>, private val bus: Bus, private val selectable: Boolean = false, private var selectedUser: User? = null
-) : RecyclerView.Adapter<ViewHolder>() {
+    users: List<User>, private val bus: Bus, private val selectable: Boolean = false, private var selectedUser: User? = null
+) : RecyclerView.Adapter<ViewHolder>(), Filterable<User> {
+
+    override var originalList = users.toMutableList()
+    override var filteredList = users
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -25,10 +28,10 @@ class UsersListAdapter(
         )
     }
 
-    override fun getItemCount() = users.size
+    override fun getItemCount() = filteredList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val user = users[position]
+        val user = filteredList[position]
         val context = holder.itemView.context
         with(holder) {
             userImage.load(user.userImage, R.drawable.ic_incognito, true)
@@ -67,6 +70,11 @@ class UsersListAdapter(
                 bus.post(UserClickedEvent(user))
             }
         }
+    }
+
+    override fun filter(criteria: String) {
+        super.filter(criteria)
+        notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

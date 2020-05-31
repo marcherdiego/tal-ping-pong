@@ -52,10 +52,10 @@ open class UpcomingMatchesAdapter(private val matches: List<Match>, private val 
                 visitorCompanionUserImage.alpha = getUserImageAlpha(true)
 
                 //Hide confirmed icon, it's redundant
-                localUserConfirmedImage.visibility = getConfirmedVisibility(false)
-                localCompanionUserConfirmedImage.visibility = getConfirmedVisibility(false)
-                visitorUserConfirmedImage.visibility = getConfirmedVisibility(false)
-                visitorCompanionUserConfirmedImage.visibility = getConfirmedVisibility(false)
+                localUserConfirmedImage?.visibility = getConfirmedVisibility(false)
+                localCompanionUserConfirmedImage?.visibility = getConfirmedVisibility(false)
+                visitorUserConfirmedImage?.visibility = getConfirmedVisibility(false)
+                visitorCompanionUserConfirmedImage?.visibility = getConfirmedVisibility(false)
             }
 
             matchesHistory?.let { matchesHistory ->

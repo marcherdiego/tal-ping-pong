@@ -89,4 +89,5 @@
     <string name="matches_win_rate_unformatted">Matches win rate</string>
     <string name="last_10_matches">Last 10 matches</string>
     <string name="select_user">Select a user</string>
+    <string name="filter_users">Filter users…</string>
 </resources>
