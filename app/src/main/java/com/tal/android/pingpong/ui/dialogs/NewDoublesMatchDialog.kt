@@ -115,7 +115,7 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
                     )
                 )
             } ?: run {
-                Toast.makeText(context, R.string.some_participants_are_missing, Toast.LENGTH_SHORT)
+                Toast.makeText(context, R.string.some_participants_are_missing, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -152,7 +152,7 @@ class NewDoublesMatchDialog(private val users: List<User>, private val myUser: U
             }
             else -> return
         }
-        userImageView.load(url = event.user.userImage, fallbackImage = R.drawable.ic_incognito)
+        userImageView.load(url = event.user.userImage, rounded = true, fallbackImage = R.drawable.ic_incognito)
         userNameTextView.text = event.user.userName
         updateDifficultyBar()
     }
