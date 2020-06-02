@@ -40,4 +40,5 @@
     <color name="chances_85_90">#66BB6A</color>
     <color name="chances_90_95">#43A047</color>
     <color name="chances_95_100">#2E7D32</color>
+    <color name="white">#FFFFFF</color>
 </resources>

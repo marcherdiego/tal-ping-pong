@@ -31,6 +31,9 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.tal.android.pingpong.ui.activities.NewChampionshipActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".services.MessagingService"

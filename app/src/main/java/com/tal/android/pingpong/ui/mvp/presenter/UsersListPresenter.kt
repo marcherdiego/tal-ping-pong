@@ -2,6 +2,7 @@ package com.tal.android.pingpong.ui.mvp.presenter
 
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
+import com.tal.android.pingpong.ui.activities.NewChampionshipActivity
 import com.tal.android.pingpong.ui.adapters.UsersListAdapter
 import com.tal.android.pingpong.ui.dialogs.NewDoublesMatchDialog
 import com.tal.android.pingpong.ui.dialogs.NewSinglesMatchDialog
@@ -103,6 +104,7 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     @Subscribe
     fun onNewChampionshipButtonClicked(event: UsersListView.NewChampionshipButtonClickedEvent) {
         collapseFabOptions()
+        startActivity(NewChampionshipActivity::class.java)
     }
 
     private fun collapseFabOptions() {
@@ -111,6 +113,7 @@ class UsersListPresenter(view: UsersListView, model: UsersListModel) :
     }
 
     override fun onResume() {
+        super.onResume()
         view.setRefreshing(true)
         model.fetchUsers()
     }

@@ -58,6 +58,14 @@ data class User(
 
     fun firstName() = userName?.substringBefore(SPACE)
 
+    override fun equals(other: Any?): Boolean {
+        return if (other is User) {
+            other.userEmail == this.userEmail
+        } else {
+            false
+        }
+    }
+
     companion object {
         private const val SPACE = " "
 

@@ -90,4 +90,6 @@
     <string name="last_10_matches">Last 10 matches</string>
     <string name="select_user">Select a user</string>
     <string name="filter_users">Filter users…</string>
+    <string name="select_users">Select users</string>
+    <string name="x_users_selected">%1$d users selected</string>
 </resources>
