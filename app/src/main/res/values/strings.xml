@@ -91,5 +91,15 @@
     <string name="select_user">Select a user</string>
     <string name="filter_users">Filter users…</string>
     <string name="select_users">Select users</string>
-    <string name="x_users_selected">%1$d users selected</string>
+    <string name="championship_name">Championship name</string>
+    <string name="championship_created">Championship created!</string>
+    <string name="championship_creation_failed">Failed to create championship, please try again</string>
+    <string name="invalid_championship_time">Invalid championship date/time</string>
+    <string name="invalid_championship_name">Invalid championship name</string>
+    <string name="invalid_championship_users_list">Invalid championship users list</string>
+
+    <plurals name="x_users_selected">
+        <item quantity="one">%d user selected</item>
+        <item quantity="other">%d users selected</item>
+    </plurals>
 </resources>

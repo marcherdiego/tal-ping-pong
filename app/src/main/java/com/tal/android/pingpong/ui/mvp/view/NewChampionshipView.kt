@@ -1,6 +1,5 @@
 package com.tal.android.pingpong.ui.mvp.view
 
-import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
@@ -23,15 +22,27 @@ class NewChampionshipView(activity: BaseActivity<*>) : BaseActivityView(activity
         activity.supportActionBar?.setHomeAsUpIndicator(R.drawable.back_arrow)
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        activity.findViewById<View>(R.id.edit_title_button).setOnClickListener {
-            bus.post(TitleEditButtonClickedEvent())
-        }
-        activity.findViewById<View>(R.id.edit_date_button).setOnClickListener {
-            bus.post(DateEditButtonClickedEvent())
-        }
+        onClick(R.id.title, TitleEditButtonClickedEvent())
+        onClick(R.id.edit_title_button, TitleEditButtonClickedEvent())
+
+        onClick(R.id.date, DateEditButtonClickedEvent())
+        onClick(R.id.edit_date_button, DateEditButtonClickedEvent())
     }
+
     fun setUsersAdapter(adapter: MultiSelectUsersListAdapter) {
         usersList.adapter = adapter
+    }
+
+    fun updateSelectedUsersCount(selectedUsers: Int) {
+        usersSelected.text = activity?.resources?.getQuantityString(R.plurals.x_users_selected, selectedUsers, selectedUsers)
+    }
+
+    fun setChampionshipName(name: String?) {
+        title.text = name
+    }
+
+    fun setChampionshipDate(championshipDate: String?) {
+        date.text = championshipDate
     }
 
     class TitleEditButtonClickedEvent

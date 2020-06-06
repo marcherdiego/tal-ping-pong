@@ -22,4 +22,11 @@ object DateUtils {
         }
         return null
     }
+
+    fun formatDate(date: Date?): String? {
+        if (date == null) {
+            return null
+        }
+        return DateFormat.format(DATE_FORMAT_US, date).toString()
+    }
 }

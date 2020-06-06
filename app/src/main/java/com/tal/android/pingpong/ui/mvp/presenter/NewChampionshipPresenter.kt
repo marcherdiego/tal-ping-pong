@@ -3,19 +3,29 @@ package com.tal.android.pingpong.ui.mvp.presenter
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.view.Menu
 import android.view.MenuItem
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
+import com.tal.android.pingpong.exceptions.InvalidChampionshipNameException
+import com.tal.android.pingpong.exceptions.InvalidChampionshipTimeException
+import com.tal.android.pingpong.exceptions.InvalidChampionshipUsersListException
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.ui.adapters.MultiSelectUsersListAdapter
+import com.tal.android.pingpong.ui.dialogs.TextInputDialog
 
 import com.tal.android.pingpong.ui.mvp.model.NewChampionshipModel
 import com.tal.android.pingpong.ui.mvp.view.NewChampionshipView
+import com.tal.android.pingpong.utils.DateUtils
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
 
 class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionshipModel) :
     BaseActivityPresenter<NewChampionshipView, NewChampionshipModel>(view, model) {
+
+    init {
+        view.updateSelectedUsersCount(0)
+    }
 
     @Subscribe
     fun onUsersFetchedSuccessfully(event: NewChampionshipModel.UsersFetchedSuccessfullyEvent) {
@@ -30,12 +40,42 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
 
     @Subscribe
     fun onTitleEditButtonClicked(event: NewChampionshipView.TitleEditButtonClickedEvent) {
+        val championshipName = model.championshipName
+        TextInputDialog(model.getBus()).show(
+            context = view.activity ?: return,
+            title = R.string.championship_name,
+            positiveButtonText = R.string.accept,
+            negativeButtonText = R.string.cancel,
+            hint = R.string.championship_name,
+            preloadedInput = championshipName
+        )
+    }
 
+    @Subscribe
+    fun onPositiveButtonClicked(event: TextInputDialog.PositiveButtonClickedEvent) {
+        model.championshipName = event.input
+        view.setChampionshipName(model.championshipName)
     }
 
     @Subscribe
     fun onDateEditButtonClicked(event: NewChampionshipView.DateEditButtonClickedEvent) {
         openDateSelectionDialog(view.activity ?: return)
+    }
+
+    @Subscribe
+    fun onSelectedUsersChanged(event: MultiSelectUsersListAdapter.SelectedUsersChangedEvent) {
+        view.updateSelectedUsersCount(event.selectedUsers.size)
+    }
+
+    @Subscribe
+    fun onChampionshipCreatedSuccessfully(event: NewChampionshipModel.ChampionshipCreatedSuccessfullyEvent) {
+        view.showToast(R.string.championship_created)
+        view.activity?.finish()
+    }
+
+    @Subscribe
+    fun onChampionshipCreationFailed(event: NewChampionshipModel.ChampionshipCreationFailedEvent) {
+        view.showToast(R.string.championship_creation_failed)
     }
 
     private fun openDateSelectionDialog(context: Context) {
@@ -53,13 +93,15 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
         datePickerDialog.show()
     }
 
-    private fun openTimeSelectionDialog(context: Context,year: Int, monthOfYear: Int, dayOfMonth: Int) {
+    private fun openTimeSelectionDialog(context: Context, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         val now = Calendar.getInstance()
         val timePickerDialog = TimePickerDialog(
             context,
             TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
                 try {
                     model.saveChampionshipDate(year, monthOfYear, dayOfMonth, hourOfDay, minute)
+                    val formattedDate = DateUtils.formatDate(model.championshipDate)
+                    view.setChampionshipDate(formattedDate)
                 } catch (e: InvalidMatchTimeException) {
                     openTimeSelectionDialog(context, year, monthOfYear, dayOfMonth)
                 }
@@ -71,12 +113,31 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
         timePickerDialog.show()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        view.activity?.menuInflater?.inflate(R.menu.new_championship_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == android.R.id.home) {
-            view.activity?.finish()
-            return true
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                view.activity?.finish()
+                true
+            }
+            R.id.menu_save -> {
+                try {
+                    model.createChampionship()
+                } catch (e: InvalidChampionshipTimeException) {
+                    view.showToast(R.string.invalid_championship_time)
+                } catch (e: InvalidChampionshipNameException) {
+                    view.showToast(R.string.invalid_championship_name)
+                } catch (e: InvalidChampionshipUsersListException) {
+                    view.showToast(R.string.invalid_championship_users_list)
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
