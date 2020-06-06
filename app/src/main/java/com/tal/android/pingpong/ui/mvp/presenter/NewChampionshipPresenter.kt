@@ -24,12 +24,19 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
     BaseActivityPresenter<NewChampionshipView, NewChampionshipModel>(view, model) {
 
     init {
-        view.updateSelectedUsersCount(0)
+        view.updateSelectedUsersCount(1)
     }
 
     @Subscribe
     fun onUsersFetchedSuccessfully(event: NewChampionshipModel.UsersFetchedSuccessfullyEvent) {
-        view.setUsersAdapter(MultiSelectUsersListAdapter(model.usersList, model.getBus(), model.selectedUsers))
+        view.setUsersAdapter(
+            MultiSelectUsersListAdapter(
+                model.usersList,
+                model.getCurrentUser() ?: return,
+                model.getBus(),
+                model.selectedUsers
+            )
+        )
     }
 
     @Subscribe

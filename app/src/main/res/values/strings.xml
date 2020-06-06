@@ -96,7 +96,7 @@
     <string name="championship_creation_failed">Failed to create championship, please try again</string>
     <string name="invalid_championship_time">Invalid championship date/time</string>
     <string name="invalid_championship_name">Invalid championship name</string>
-    <string name="invalid_championship_users_list">Invalid championship users list</string>
+    <string name="invalid_championship_users_list">Please select at least 4 users</string>
 
     <plurals name="x_users_selected">
         <item quantity="one">%d user selected</item>

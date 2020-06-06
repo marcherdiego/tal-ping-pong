@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
@@ -16,12 +15,17 @@ import com.tal.android.pingpong.utils.load
 
 class MultiSelectUsersListAdapter(
     users: List<User>,
+    private val currentUser: User,
     private val bus: Bus,
     private var selectedUsers: MutableList<User>
 ) : RecyclerView.Adapter<ViewHolder>(), Filterable<User> {
 
     override var originalList = users.toMutableList()
     override var filteredList = users
+
+    init {
+        selectedUsers.add(currentUser)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -43,17 +47,23 @@ class MultiSelectUsersListAdapter(
             userRank.text = context.getString(R.string.user_rank, user.userRank)
 
             userSelected.isChecked = selectedUsers.contains(user)
-            val rowClickListener = View.OnClickListener {
-                if (selectedUsers.contains(user)) {
-                    selectedUsers.remove(user)
-                } else {
-                    selectedUsers.add(user)
+            if (user == currentUser) {
+                userSelected.isEnabled = false
+                userSelected.setOnClickListener(null)
+                itemView.setOnClickListener(null)
+            } else {
+                val rowClickListener = View.OnClickListener {
+                    if (selectedUsers.contains(user)) {
+                        selectedUsers.remove(user)
+                    } else {
+                        selectedUsers.add(user)
+                    }
+                    userSelected.isChecked = selectedUsers.contains(user)
+                    bus.post(SelectedUsersChangedEvent(selectedUsers))
                 }
-                userSelected.isChecked = selectedUsers.contains(user)
-                bus.post(SelectedUsersChangedEvent(selectedUsers))
+                userSelected.setOnClickListener(rowClickListener)
+                itemView.setOnClickListener(rowClickListener)
             }
-            userSelected.setOnClickListener(rowClickListener)
-            itemView.setOnClickListener(rowClickListener)
         }
     }
 

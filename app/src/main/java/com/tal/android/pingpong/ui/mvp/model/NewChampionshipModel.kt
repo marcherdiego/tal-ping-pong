@@ -55,7 +55,7 @@ class NewChampionshipModel(private val sharedPreferencesUtils: SharedPreferences
     fun createChampionship() {
         val championshipDate = championshipDate ?: throw InvalidChampionshipTimeException()
         val championshipName = championshipName ?: throw InvalidChampionshipNameException()
-        if (selectedUsers.isEmpty()) {
+        if (selectedUsers.size < CHAMPIONSHIP_MINIMUM_USERS) {
             throw InvalidChampionshipUsersListException()
         }
         val championship = Championship(
@@ -81,4 +81,8 @@ class NewChampionshipModel(private val sharedPreferencesUtils: SharedPreferences
 
     class ChampionshipCreatedSuccessfullyEvent
     class ChampionshipCreationFailedEvent
+
+    companion object {
+        private const val CHAMPIONSHIP_MINIMUM_USERS = 4
+    }
 }
