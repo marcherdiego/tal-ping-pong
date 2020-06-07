@@ -13,6 +13,7 @@ import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.domain.Championship
 import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.load
+import java.util.*
 
 class ChampionshipsAdapter(private val championships: List<Championship>, private val bus: Bus) : RecyclerView.Adapter<ViewHolder>() {
 
@@ -29,12 +30,22 @@ class ChampionshipsAdapter(private val championships: List<Championship>, privat
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val championship = championships[position]
         with(holder) {
+            val context = itemView.context
             championshipImage.load(championship.championshipImage, R.drawable.ic_championship)
-            championshipName.text = championship.championshipName
+            championshipName.text = context.getString(R.string.championship_x, championship.championshipName)
             championshipCreatorUserEmail.text = championship.creator?.userEmail
-            championshipDate.text = DateUtils.formatDate(championship.championshipDate)
+            val championshipStartDate = DateUtils.parseDate(championship.championshipDate)
+            val formattedDate = DateUtils.formatDate(championshipStartDate)
+            championshipDate.text = context.getString(
+                if (championshipStartDate?.before(Date()) == true) {
+                    R.string.started_on_x
+                } else {
+                    R.string.starts_on_x
+                },
+                formattedDate
+            )
             val usersCount = championship.usersCount ?: 0
-            championshipUsersCount.text = itemView.context.resources.getQuantityString(R.plurals.x_members, usersCount, usersCount)
+            championshipUsersCount.text = context.resources.getQuantityString(R.plurals.x_members, usersCount, usersCount)
             itemView.setOnClickListener {
                 bus.post(ChampionshipClickedEvent(championship))
             }

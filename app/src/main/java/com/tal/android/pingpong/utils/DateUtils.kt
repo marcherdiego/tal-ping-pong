@@ -11,6 +11,18 @@ object DateUtils {
     private const val DATE_INPUT_FORMAT = "yyyy-MM-dd HH:mm"
     private val format = SimpleDateFormat(DATE_INPUT_FORMAT, Locale.US)
 
+    fun parseDate(date: String?): Date? {
+        if (date == null) {
+            return null
+        }
+        return try {
+            format.parse(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
     fun formatDate(date: String?): String? {
         if (date == null) {
             return null
