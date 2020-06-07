@@ -98,14 +98,15 @@ class MainModel(
          * Possible screen states
          */
         @Retention(AnnotationRetention.SOURCE)
-        @IntDef(UNSET, MATCHES, FIND_RIVAL, RANKING, PROFILE)
+        @IntDef(UNSET, MATCHES, EVENTS, FIND_RIVAL, RANKING, PROFILE)
         annotation class ScreenState
 
         const val UNSET = -1
         const val MATCHES = 0
-        const val FIND_RIVAL = 1
-        const val RANKING = 2
-        const val PROFILE = 3
+        const val EVENTS = 1
+        const val FIND_RIVAL = 2
+        const val RANKING = 3
+        const val PROFILE = 4
 
         /**
          * Possible screen source

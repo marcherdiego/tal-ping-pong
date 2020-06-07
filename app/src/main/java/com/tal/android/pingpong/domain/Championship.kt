@@ -10,6 +10,12 @@ data class Championship(
     @SerializedName("name")
     var championshipName: String? = null,
 
+    @SerializedName("image")
+    var championshipImage: String? = null,
+
+    @SerializedName("creator")
+    var creator: User? = null,
+
     @SerializedName("users")
     var users: List<User> = arrayListOf()
 ) : Serializable

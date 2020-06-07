@@ -28,6 +28,7 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
     init {
         val itemId = when (model.initialScreenState) {
             MainModel.UNSET, MainModel.MATCHES -> R.id.menu_matches
+            MainModel.EVENTS -> R.id.menu_events
             MainModel.FIND_RIVAL -> R.id.menu_new_match
             MainModel.RANKING -> R.id.menu_ranking
             MainModel.PROFILE -> R.id.menu_profile
@@ -57,6 +58,7 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
                 }
                 Pair(MainModel.MATCHES, matchesFragment)
             }
+            R.id.menu_events -> Pair(MainModel.EVENTS, EventsFragment())
             R.id.menu_new_match -> Pair(MainModel.FIND_RIVAL, UsersListFragment())
             R.id.menu_ranking -> Pair(MainModel.RANKING, RankingFragment())
             R.id.menu_profile -> Pair(MainModel.PROFILE, UserProfileFragment())

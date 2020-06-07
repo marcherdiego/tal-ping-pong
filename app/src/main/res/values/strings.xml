@@ -97,6 +97,8 @@
     <string name="invalid_championship_time">Invalid championship date/time</string>
     <string name="invalid_championship_name">Invalid championship name</string>
     <string name="invalid_championship_users_list">Please select at least 4 users</string>
+    <string name="events">Events</string>
+    <string name="no_championships_yet">Nothing to show here…</string>
 
     <plurals name="x_users_selected">
         <item quantity="one">%d user selected</item>
