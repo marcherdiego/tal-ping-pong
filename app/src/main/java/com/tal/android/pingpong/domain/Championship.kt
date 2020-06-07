@@ -4,18 +4,24 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Championship(
-    @SerializedName("date")
+    @SerializedName("championshipId")
+    var championshipId: Int? = null,
+
+    @SerializedName("championshipDate")
     var championshipDate: String? = null,
 
-    @SerializedName("name")
+    @SerializedName("championshipName")
     var championshipName: String? = null,
 
-    @SerializedName("image")
+    @SerializedName("championshipImage")
     var championshipImage: String? = null,
 
     @SerializedName("creator")
     var creator: User? = null,
 
     @SerializedName("users")
-    var users: List<User> = arrayListOf()
+    var users: List<User> = arrayListOf(),
+
+    @SerializedName("usersCount")
+    var usersCount: Int? = null
 ) : Serializable

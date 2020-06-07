@@ -13,5 +13,9 @@ interface ChampionshipsService {
     fun createChampionship(@Body championship: Championship): Call<Unit>
 
     @GET("/getChampionships.php")
-    fun getChampionships(@Query("userId") userId: Int): Call<List<Championship>>
+    fun getChampionships(
+        @Query("userId") userId: Int,
+        @Query("startDate") startDate: Long? = null,
+        @Query("endDate") endDate: Long? = null
+    ): Call<List<Championship>>
 }

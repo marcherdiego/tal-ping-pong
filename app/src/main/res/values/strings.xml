@@ -100,6 +100,11 @@
     <string name="events">Events</string>
     <string name="no_championships_yet">Nothing to show here…</string>
 
+    <plurals name="x_members">
+        <item quantity="one">%d member</item>
+        <item quantity="other">%d members</item>
+    </plurals>
+
     <plurals name="x_users_selected">
         <item quantity="one">%d user selected</item>
         <item quantity="other">%d users selected</item>
