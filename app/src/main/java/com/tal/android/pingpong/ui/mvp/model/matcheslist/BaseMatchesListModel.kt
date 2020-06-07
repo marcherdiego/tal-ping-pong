@@ -16,7 +16,7 @@ abstract class BaseMatchesListModel(private val sharedPreferences: SharedPrefere
 
     fun getUserEmail() = sharedPreferences.getUser()?.userEmail
 
-    abstract fun fetchUserMatches()
+    abstract fun fetchMatches()
 
     fun notifyUpdateLists() {
         Bus.postDefault(MatchesUpdatedEvent())

@@ -1,6 +1,9 @@
 package com.tal.android.pingpong.networking.services
 
 import com.tal.android.pingpong.domain.Championship
+import com.tal.android.pingpong.domain.Match
+import com.tal.android.pingpong.domain.MatchRecord
+import com.tal.android.pingpong.domain.User
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,4 +21,10 @@ interface ChampionshipsService {
         @Query("startDate") startDate: Long? = null,
         @Query("endDate") endDate: Long? = null
     ): Call<List<Championship>>
+
+    @GET("/getChampionshipMatches.php")
+    fun getChampionshipMatches(@Query("championshipId") championshipId: Int): Call<List<Match>>
+
+    @GET("/getChampionshipMembers.php")
+    fun getChampionshipMembers(@Query("championshipId") championshipId: Int): Call<List<User>>
 }

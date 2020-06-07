@@ -1,19 +1,22 @@
 package com.tal.android.pingpong.ui.mvp.model.matcheslist
 
 import com.tal.android.pingpong.extensions.enqueueResponseNotNull
+import com.tal.android.pingpong.networking.ServiceGenerator
+import com.tal.android.pingpong.networking.services.ChampionshipsService
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
-import java.util.*
 
-class ReadOnlyMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatchesListModel(sharedPreferences) {
+class ReadOnlyMatchesModel(sharedPreferences: SharedPreferencesUtils, private val championshipId: Int) : BaseMatchesListModel(sharedPreferences) {
 
-    override fun fetchUserMatches() {
+    private val championshipsService = ServiceGenerator.createService(ChampionshipsService::class.java)
+
+    override fun fetchMatches() {
         val userId = getUserId()
         if (userId == null) {
             bus.post(MatchesFetchFailedEvent())
             return
         }
-        matchesService
-            .getMyMatches(userId = userId, startDate = null, endDate = Date().time)
+        championshipsService
+            .getChampionshipMatches(championshipId)
             .enqueueResponseNotNull(
                 success = {
                     bus.post(MatchesFetchedSuccessfullyEvent(it))

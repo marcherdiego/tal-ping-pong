@@ -10,6 +10,7 @@ import com.tal.android.pingpong.ui.mvp.model.ReadOnlyUsersListModel
 import com.tal.android.pingpong.ui.mvp.presenter.ReadOnlyUsersListPresenter
 import com.tal.android.pingpong.ui.mvp.view.ReadOnlyUsersListView
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
+import com.tal.android.pingpong.utils.multiLet
 
 class ReadOnlyUsersListFragment : BaseFragment<ReadOnlyUsersListPresenter>() {
     override fun onCreateView(
@@ -20,15 +21,17 @@ class ReadOnlyUsersListFragment : BaseFragment<ReadOnlyUsersListPresenter>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        context?.let {
+        val championshipId = arguments?.getInt(CHAMPIONSHIP_ID)
+        multiLet(championshipId, context) { championshipId, context ->
             presenter = ReadOnlyUsersListPresenter(
                 ReadOnlyUsersListView(this),
-                ReadOnlyUsersListModel(SharedPreferencesUtils(it))
+                ReadOnlyUsersListModel(SharedPreferencesUtils(context), championshipId)
             )
         }
     }
 
     companion object {
+        const val CHAMPIONSHIP_ID = "championship_id"
         const val TITLE = "Members"
     }
 }

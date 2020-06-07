@@ -7,7 +7,7 @@ import java.util.*
 
 class PastMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatchesListModel(sharedPreferences) {
 
-    override fun fetchUserMatches() {
+    override fun fetchMatches() {
         val userId = getUserId()
         if (userId == null) {
             bus.post(MatchesFetchFailedEvent())

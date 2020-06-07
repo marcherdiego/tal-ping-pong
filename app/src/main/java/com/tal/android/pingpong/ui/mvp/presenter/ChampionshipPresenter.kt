@@ -1,5 +1,6 @@
 package com.tal.android.pingpong.ui.mvp.presenter
 
+import androidx.core.os.bundleOf
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.TabsAdapter
@@ -16,7 +17,13 @@ class ChampionshipPresenter(view: ChampionshipView, model: ChampionshipModel) :
     init {
         with(model.championship) {
             view.withFragmentManager {
-                val tabsFragment = listOf(ReadOnlyMatchesFragment(), ReadOnlyUsersListFragment())
+                val matchesFragment = ReadOnlyMatchesFragment().apply {
+                    arguments = bundleOf(ReadOnlyMatchesFragment.CHAMPIONSHIP_ID to championshipId)
+                }
+                val usersFragment = ReadOnlyUsersListFragment().apply {
+                    arguments = bundleOf(ReadOnlyUsersListFragment.CHAMPIONSHIP_ID to championshipId)
+                }
+                val tabsFragment = listOf(matchesFragment, usersFragment)
                 val titles = listOf(ReadOnlyMatchesFragment.TITLE, ReadOnlyUsersListFragment.TITLE)
                 view.setTabsAdapter(TabsAdapter(this, tabsFragment, titles))
             }

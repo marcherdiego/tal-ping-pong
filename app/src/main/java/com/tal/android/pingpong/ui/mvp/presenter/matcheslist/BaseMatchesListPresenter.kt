@@ -18,18 +18,18 @@ abstract class BaseMatchesListPresenter<V : BaseMatchesListView, M : BaseMatches
 
     @Subscribe
     fun onRefreshMatches(event: BaseMatchesListView.RefreshMatchesEvent) {
-        model.fetchUserMatches()
+        model.fetchMatches()
     }
 
     @Subscribe
     fun onMatchesUpdated(event: MatchesUpdatedEvent) {
         view.setRefreshing(true)
-        model.fetchUserMatches()
+        model.fetchMatches()
     }
 
     override fun onResume() {
         super.onResume()
         view.setRefreshing(true)
-        model.fetchUserMatches()
+        model.fetchMatches()
     }
 }
