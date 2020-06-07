@@ -16,8 +16,8 @@ class NewChampionshipActivity : BaseActivity<NewChampionshipPresenter>() {
         setContentView(R.layout.new_championship_activity)
 
         presenter = NewChampionshipPresenter(
-                NewChampionshipView(this),
-                NewChampionshipModel(SharedPreferencesUtils(this))
+            NewChampionshipView(this),
+            NewChampionshipModel(SharedPreferencesUtils(this))
         )
     }
 }

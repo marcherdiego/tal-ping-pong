@@ -19,20 +19,16 @@ fun ImageView?.load(
     if (this == null) {
         return
     }
-    if (url == null) {
-        setImageResource(fallbackImage ?: R.drawable.ic_incognito)
-    } else {
-        var builder = Glide
-            .with(context)
-            .load(url)
-            .error(R.drawable.ic_incognito)
-        if (rounded) {
-            builder = builder.transform(CropCircleWithBorderTransformation())
-        }
-        fallbackImage?.let {
-            builder = builder.error(it)
-        }
-        builder.into(this)
+    var builder = Glide
+        .with(context)
+        .load(url ?: fallbackImage ?: R.drawable.ic_incognito)
+        .error(R.drawable.ic_incognito)
+    if (rounded) {
+        builder = builder.transform(CropCircleWithBorderTransformation())
     }
+    fallbackImage?.let {
+        builder = builder.error(it)
+    }
+    builder.into(this)
     this.alpha = alpha
 }

@@ -25,6 +25,7 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
 
     init {
         view.updateSelectedUsersCount(1)
+        view.setChampionshipImage(null)
     }
 
     @Subscribe
@@ -43,6 +44,11 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
     fun onUsersFetchFailed(event: NewChampionshipModel.UsersFetchFailedEvent) {
         view.showToast(R.string.network_error_message)
         view.activity?.finish()
+    }
+
+    @Subscribe
+    fun onIconEditButtonClicked(event: NewChampionshipView.IconEditButtonClickedEvent) {
+        // Open file chooser
     }
 
     @Subscribe

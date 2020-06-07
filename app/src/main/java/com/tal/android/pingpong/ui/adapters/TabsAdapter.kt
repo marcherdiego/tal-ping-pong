@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 
-class MatchesTabsAdapter(fm: FragmentManager, private val fragments: List<Fragment>, private val titles: List<String?>) :
+class TabsAdapter(fm: FragmentManager, private val fragments: List<Fragment>, private val titles: List<String?>) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_SET_USER_VISIBLE_HINT) {
 
     override fun getPageTitle(position: Int) = titles[position]

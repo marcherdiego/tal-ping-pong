@@ -99,6 +99,7 @@
     <string name="invalid_championship_users_list">Please select at least 4 users</string>
     <string name="events">Events</string>
     <string name="no_championships_yet">Nothing to show here…</string>
+    <string name="championship_details">Championship Details</string>
 
     <plurals name="x_members">
         <item quantity="one">%d member</item>

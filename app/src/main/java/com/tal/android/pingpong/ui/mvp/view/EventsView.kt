@@ -24,10 +24,10 @@ class EventsView(fragment: Fragment) : BaseFragmentView(fragment) {
         championshipsList?.addItemDecoration(
             DividerItemDecoration(fragment.context, DividerItemDecoration.VERTICAL)
         )
-
         refreshLayout?.setOnRefreshListener {
             bus.post(RefreshChampionshipsEvent())
         }
+        onClick(R.id.new_championship_button, NewChampionshipButtonClickedEvent())
     }
 
     fun showNetworkErrorMessage() {
@@ -54,4 +54,5 @@ class EventsView(fragment: Fragment) : BaseFragmentView(fragment) {
     }
 
     class RefreshChampionshipsEvent
+    class NewChampionshipButtonClickedEvent
 }

@@ -1,9 +1,14 @@
 package com.tal.android.pingpong.ui.mvp.presenter
 
+import android.os.Bundle
+import androidx.core.os.bundleOf
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
+import com.tal.android.pingpong.ui.activities.ChampionshipActivity
+import com.tal.android.pingpong.ui.activities.NewChampionshipActivity
 import com.tal.android.pingpong.ui.adapters.ChampionshipsAdapter
 import com.tal.android.pingpong.ui.mvp.view.EventsView
 import com.tal.android.pingpong.ui.mvp.model.EventsModel
+import com.tal.android.pingpong.ui.mvp.view.UsersListView
 import org.greenrobot.eventbus.Subscribe
 
 class EventsPresenter(view: EventsView, model: EventsModel) :
@@ -24,6 +29,19 @@ class EventsPresenter(view: EventsView, model: EventsModel) :
     @Subscribe
     fun onRefreshChampionships(event: EventsView.RefreshChampionshipsEvent) {
         model.fetchChampionships()
+    }
+
+    @Subscribe
+    fun onNewChampionshipButtonClicked(event: EventsView.NewChampionshipButtonClickedEvent) {
+        startActivity(NewChampionshipActivity::class.java)
+    }
+
+    @Subscribe
+    fun onChampionshipClicked(event: ChampionshipsAdapter.ChampionshipClickedEvent) {
+        startActivity(
+            ChampionshipActivity::class.java,
+            bundleOf(ChampionshipActivity.CHAMPIONSHIP to event.championship)
+        )
     }
 
     override fun onResume() {

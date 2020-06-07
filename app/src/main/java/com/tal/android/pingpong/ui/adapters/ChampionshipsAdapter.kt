@@ -29,7 +29,7 @@ class ChampionshipsAdapter(private val championships: List<Championship>, privat
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val championship = championships[position]
         with(holder) {
-            championshipImage.load(championship.championshipImage, R.drawable.ic_championship, true)
+            championshipImage.load(championship.championshipImage, R.drawable.ic_championship)
             championshipName.text = championship.championshipName
             championshipCreatorUserEmail.text = championship.creator?.userEmail
             championshipDate.text = DateUtils.formatDate(championship.championshipDate)
