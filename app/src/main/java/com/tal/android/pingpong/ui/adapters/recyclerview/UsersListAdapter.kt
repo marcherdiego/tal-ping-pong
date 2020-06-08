@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.adapters
+package com.tal.android.pingpong.ui.adapters.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.User
-import com.tal.android.pingpong.ui.adapters.UsersListAdapter.ViewHolder
+import com.tal.android.pingpong.ui.adapters.recyclerview.UsersListAdapter.ViewHolder
+import com.tal.android.pingpong.ui.adapters.interfaces.Filterable
 import com.tal.android.pingpong.utils.load
 
 class UsersListAdapter(

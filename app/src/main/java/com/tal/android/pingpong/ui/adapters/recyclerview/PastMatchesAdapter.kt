@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.adapters
+package com.tal.android.pingpong.ui.adapters.recyclerview
 
 import android.content.Context
 import android.graphics.Typeface
@@ -124,7 +124,11 @@ class PastMatchesAdapter(private val matches: List<Match>, private val userEmail
                 )
             )
             itemView.setOnClickListener {
-                bus.post(MatchClickedEvent(matchRecord))
+                bus.post(
+                    MatchClickedEvent(
+                        matchRecord
+                    )
+                )
             }
         }
     }

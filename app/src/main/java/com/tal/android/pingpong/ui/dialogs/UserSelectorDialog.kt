@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.User
-import com.tal.android.pingpong.ui.adapters.UsersListAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.UsersListAdapter
 import com.tal.android.pingpong.utils.*
 import org.greenrobot.eventbus.Subscribe
 
@@ -33,7 +33,12 @@ class UserSelectorDialog(
             .inflate(R.layout.user_selector_dialog, null)
 
         val usersList: RecyclerView = view.findViewById(R.id.users_list)
-        usersList.adapter = UsersListAdapter(users, usersAdapterBus, true, selectedUser)
+        usersList.adapter = UsersListAdapter(
+            users,
+            usersAdapterBus,
+            true,
+            selectedUser
+        )
 
         val dialogBuilder = DialogFactory
             .Builder()

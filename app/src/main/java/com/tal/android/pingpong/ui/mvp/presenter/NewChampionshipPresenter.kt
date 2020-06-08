@@ -11,7 +11,7 @@ import com.tal.android.pingpong.exceptions.InvalidChampionshipNameException
 import com.tal.android.pingpong.exceptions.InvalidChampionshipTimeException
 import com.tal.android.pingpong.exceptions.InvalidChampionshipUsersListException
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
-import com.tal.android.pingpong.ui.adapters.MultiSelectUsersListAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.MultiSelectUsersListAdapter
 import com.tal.android.pingpong.ui.dialogs.TextInputDialog
 
 import com.tal.android.pingpong.ui.mvp.model.NewChampionshipModel

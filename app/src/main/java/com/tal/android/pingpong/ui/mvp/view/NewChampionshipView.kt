@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nerdscorner.mvplib.events.view.BaseActivityView
 import com.nerdscorner.mvplib.events.activity.BaseActivity
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.MultiSelectUsersListAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.MultiSelectUsersListAdapter
 import com.tal.android.pingpong.utils.load
 
 class NewChampionshipView(activity: BaseActivity<*>) : BaseActivityView(activity) {

@@ -8,7 +8,7 @@ import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.events.ChallengeSubmitFailedEvent
 import com.tal.android.pingpong.events.ChallengeSubmittedSuccessfullyEvent
 import com.tal.android.pingpong.notifications.Constants
-import com.tal.android.pingpong.ui.adapters.UnconfirmedMatchesAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.UnconfirmedMatchesAdapter
 import com.tal.android.pingpong.ui.dialogs.DeclineMatchDialog
 import com.tal.android.pingpong.ui.dialogs.IncomingDoublesMatchDialog
 import com.tal.android.pingpong.ui.dialogs.IncomingSinglesMatchDialog

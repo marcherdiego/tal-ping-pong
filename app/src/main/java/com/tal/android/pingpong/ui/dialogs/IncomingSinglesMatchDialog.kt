@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
-import com.tal.android.pingpong.ui.adapters.UsersStatsAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.UsersStatsAdapter
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.DialogFactory
@@ -44,7 +44,12 @@ class IncomingSinglesMatchDialog(private val match: MatchRecord, private val myU
         difficultyBar.setup(myUser.matchesRatioValue, rivalUser.matchesRatioValue)
 
         usersStats.apply {
-            adapter = UsersStatsAdapter(fragmentActivity, match, localUser, visitorUser)
+            adapter = UsersStatsAdapter(
+                fragmentActivity,
+                match,
+                localUser,
+                visitorUser
+            )
             offscreenPageLimit = usersStats.adapter?.itemCount ?: 2
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER

@@ -14,7 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.UsersListAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.UsersListAdapter
 import com.tal.android.pingpong.ui.widgets.listeners.SimpleAnimatorListener
 import com.tal.android.pingpong.utils.onTextChanged
 

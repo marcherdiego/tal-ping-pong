@@ -2,7 +2,7 @@ package com.tal.android.pingpong.ui.mvp.presenter
 
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.UsersListAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.UsersListAdapter
 import com.tal.android.pingpong.ui.dialogs.NewSinglesMatchDialog
 import com.tal.android.pingpong.ui.mvp.model.RankingModel
 import com.tal.android.pingpong.ui.mvp.view.RankingView

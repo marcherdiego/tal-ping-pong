@@ -3,7 +3,7 @@ package com.tal.android.pingpong.ui.mvp.presenter
 import androidx.core.os.bundleOf
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.TabsAdapter
+import com.tal.android.pingpong.ui.adapters.tabs.TabsAdapter
 import com.tal.android.pingpong.ui.fragments.ReadOnlyUsersListFragment
 import com.tal.android.pingpong.ui.fragments.matcheslist.ReadOnlyMatchesFragment
 

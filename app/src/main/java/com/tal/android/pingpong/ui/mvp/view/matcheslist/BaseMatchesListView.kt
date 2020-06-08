@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.EmptyAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.EmptyAdapter
 
 open class BaseMatchesListView(fragment: Fragment) : BaseFragmentView(fragment) {
     private val emptyListLayout: View? = fragment.view?.findViewById(R.id.empty_list_layout)

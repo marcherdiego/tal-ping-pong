@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.adapters
+package com.tal.android.pingpong.ui.adapters.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

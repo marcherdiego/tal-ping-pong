@@ -1,11 +1,8 @@
 package com.tal.android.pingpong.ui.mvp.presenter.matcheslist
 
 import com.nerdscorner.mvplib.events.bus.Bus
-import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.PastMatchesAdapter
-import com.tal.android.pingpong.ui.dialogs.MatchEditDialog
+import com.tal.android.pingpong.ui.adapters.recyclerview.PastMatchesAdapter
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
-import com.tal.android.pingpong.ui.mvp.model.matcheslist.PastMatchesModel
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.ReadOnlyMatchesModel
 import com.tal.android.pingpong.ui.mvp.view.matcheslist.BaseMatchesListView
 import org.greenrobot.eventbus.Subscribe
@@ -16,6 +13,12 @@ class ReadOnlyMatchesPresenter(view: BaseMatchesListView, model: ReadOnlyMatches
     @Subscribe
     fun onMatchesFetchedSuccessfully(event: BaseMatchesListModel.MatchesFetchedSuccessfullyEvent) {
         view.setRefreshing(false)
-        view.setMatchesAdapter(PastMatchesAdapter(event.matches, model.getUserEmail(), model.getBus()))
+        view.setMatchesAdapter(
+            PastMatchesAdapter(
+                event.matches,
+                model.getUserEmail(),
+                model.getBus()
+            )
+        )
     }
 }

@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.adapters
+package com.tal.android.pingpong.ui.adapters.interfaces
 
 import com.tal.android.pingpong.domain.FilterableObject
 

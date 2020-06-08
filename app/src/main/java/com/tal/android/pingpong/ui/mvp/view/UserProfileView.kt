@@ -13,7 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.EmptyAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.EmptyAdapter
 import com.tal.android.pingpong.ui.widgets.DifficultyBar
 import com.tal.android.pingpong.utils.load
 

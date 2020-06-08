@@ -7,7 +7,7 @@ import com.google.android.material.tabs.TabLayout
 import com.nerdscorner.mvplib.events.view.BaseActivityView
 import com.nerdscorner.mvplib.events.activity.BaseActivity
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.TabsAdapter
+import com.tal.android.pingpong.ui.adapters.tabs.TabsAdapter
 
 class ChampionshipView(activity: BaseActivity<*>) : BaseActivityView(activity) {
     private val viewPager: ViewPager = activity.findViewById(R.id.view_pager)

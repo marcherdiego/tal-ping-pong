@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.UsersListAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.UsersListAdapter
 
 class ReadOnlyUsersListView(fragment: Fragment) : BaseFragmentView(fragment) {
     private val usersList: RecyclerView? = fragment.view?.findViewById(R.id.users_list)

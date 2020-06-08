@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.adapters
+package com.tal.android.pingpong.ui.adapters.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.User
-import com.tal.android.pingpong.ui.adapters.MultiSelectUsersListAdapter.ViewHolder
+import com.tal.android.pingpong.ui.adapters.recyclerview.MultiSelectUsersListAdapter.ViewHolder
+import com.tal.android.pingpong.ui.adapters.interfaces.Filterable
 import com.tal.android.pingpong.utils.load
 
 class MultiSelectUsersListAdapter(
@@ -59,7 +60,11 @@ class MultiSelectUsersListAdapter(
                         selectedUsers.add(user)
                     }
                     userSelected.isChecked = selectedUsers.contains(user)
-                    bus.post(SelectedUsersChangedEvent(selectedUsers))
+                    bus.post(
+                        SelectedUsersChangedEvent(
+                            selectedUsers
+                        )
+                    )
                 }
                 userSelected.setOnClickListener(rowClickListener)
                 itemView.setOnClickListener(rowClickListener)

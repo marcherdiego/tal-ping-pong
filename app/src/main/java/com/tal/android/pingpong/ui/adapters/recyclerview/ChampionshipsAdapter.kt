@@ -1,13 +1,12 @@
-package com.tal.android.pingpong.ui.adapters
+package com.tal.android.pingpong.ui.adapters.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.ChampionshipsAdapter.ViewHolder
+import com.tal.android.pingpong.ui.adapters.recyclerview.ChampionshipsAdapter.ViewHolder
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.domain.Championship
@@ -47,7 +46,11 @@ class ChampionshipsAdapter(private val championships: List<Championship>, privat
             val usersCount = championship.usersCount ?: 0
             championshipUsersCount.text = context.resources.getQuantityString(R.plurals.x_members, usersCount, usersCount)
             itemView.setOnClickListener {
-                bus.post(ChampionshipClickedEvent(championship))
+                bus.post(
+                    ChampionshipClickedEvent(
+                        championship
+                    )
+                )
             }
         }
     }

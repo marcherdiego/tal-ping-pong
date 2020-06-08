@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.adapters
+package com.tal.android.pingpong.ui.adapters.recyclerview
 
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.domain.Match
@@ -15,7 +15,11 @@ class UnconfirmedMatchesAdapter(
         super.onBindViewHolder(holder, position)
         val match = matches[position].match ?: return
         holder.itemView.setOnClickListener {
-            bus.post(UpcomingMatchClickedEvent(match))
+            bus.post(
+                UpcomingMatchClickedEvent(
+                    match
+                )
+            )
         }
     }
 

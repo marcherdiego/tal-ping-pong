@@ -6,7 +6,7 @@ import com.google.android.material.tabs.TabLayout
 
 import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.TabsAdapter
+import com.tal.android.pingpong.ui.adapters.tabs.TabsAdapter
 
 class MatchesListView(fragment: Fragment) : BaseFragmentView(fragment) {
     private val viewPager: ViewPager? = fragment.view?.findViewById(R.id.view_pager)

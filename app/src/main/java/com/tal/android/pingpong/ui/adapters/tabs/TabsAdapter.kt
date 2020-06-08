@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.adapters
+package com.tal.android.pingpong.ui.adapters.tabs
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

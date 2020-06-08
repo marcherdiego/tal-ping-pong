@@ -2,7 +2,7 @@ package com.tal.android.pingpong.ui.mvp.presenter.matcheslist
 
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.PastMatchesAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.PastMatchesAdapter
 import com.tal.android.pingpong.ui.dialogs.MatchEditDialog
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.PastMatchesModel
@@ -17,7 +17,13 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchesFetchedSuccessfully(event: BaseMatchesListModel.MatchesFetchedSuccessfullyEvent) {
         view.setRefreshing(false)
-        view.setMatchesAdapter(PastMatchesAdapter(event.matches, model.getUserEmail(), model.getBus()))
+        view.setMatchesAdapter(
+            PastMatchesAdapter(
+                event.matches,
+                model.getUserEmail(),
+                model.getBus()
+            )
+        )
     }
 
     @Subscribe
