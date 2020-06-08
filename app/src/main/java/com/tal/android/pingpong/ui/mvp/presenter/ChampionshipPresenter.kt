@@ -1,5 +1,6 @@
 package com.tal.android.pingpong.ui.mvp.presenter
 
+import android.view.MenuItem
 import androidx.core.os.bundleOf
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
@@ -43,6 +44,16 @@ class ChampionshipPresenter(view: ChampionshipView, model: ChampionshipModel) :
             )
 
             view.setMembersCount(usersCount ?: 0)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            android.R.id.home -> {
+                view.activity?.finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

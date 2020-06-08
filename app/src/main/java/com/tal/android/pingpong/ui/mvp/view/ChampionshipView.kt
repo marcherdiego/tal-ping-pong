@@ -18,6 +18,12 @@ class ChampionshipView(activity: BaseActivity<*>) : BaseActivityView(activity) {
     private val date: TextView = activity.findViewById(R.id.date)
     private val members: TextView = activity.findViewById(R.id.members)
 
+    init {
+        activity.setSupportActionBar(toolbar)
+        activity.supportActionBar?.setHomeAsUpIndicator(R.drawable.back_arrow)
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
     fun setTabsAdapter(adapter: TabsAdapter) {
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)

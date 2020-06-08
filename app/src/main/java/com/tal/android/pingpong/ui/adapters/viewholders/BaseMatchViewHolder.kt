@@ -19,6 +19,8 @@ open class BaseMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     private val localUserImage: ImageView = itemView.findViewById(R.id.local_user_image)
     private val visitorUserName: TextView = itemView.findViewById(R.id.visitor_user_name)
     private val matchDate: TextView = itemView.findViewById(R.id.match_date)
+    private val matchChampionshipContainer: View = itemView.findViewById(R.id.match_championship_container)
+    private val matchChampionship: TextView = itemView.findViewById(R.id.match_championship)
     val visitorUserImage: ImageView = itemView.findViewById(R.id.visitor_image)
 
     // Upcoming matches fields
@@ -49,6 +51,13 @@ open class BaseMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
         visitorUserImage.load(match.visitor?.userImage, R.drawable.ic_incognito, true, getUserImageAlpha(match.confirmed))
 
         matchDate.text = DateUtils.formatDate(match.matchDate)
+
+        if (match.championship == null) {
+            matchChampionshipContainer.visibility = View.GONE
+        } else {
+            matchChampionshipContainer.visibility = View.VISIBLE
+            matchChampionship.text = match.championship?.championshipName
+        }
     }
 
     fun getUserImageAlpha(confirmed: Boolean?) = if (confirmed == true) {

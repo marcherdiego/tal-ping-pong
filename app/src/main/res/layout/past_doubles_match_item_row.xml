@@ -22,6 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/local_user_image" />
 
     <TextView
+        android:id="@+id/local_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -172,16 +173,6 @@
             tools:text="Local companion" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/match_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Wed, 3rd Oct 2020 15:50" />
-
     <ImageView
         android:id="@+id/visitor_image"
         android:layout_width="56dp"
@@ -207,5 +198,44 @@
         app:layout_constraintEnd_toEndOf="@+id/visitor_companion_image"
         app:layout_constraintStart_toStartOf="@+id/visitor_companion_image"
         app:layout_constraintTop_toBottomOf="@+id/visitor_companion_image" />
+
+    <TextView
+        android:id="@+id/match_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/local_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/local_label"
+        tools:text="Wed, 3rd Oct 2020 15:50" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/match_championship_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/match_date">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="2dp"
+            android:src="@drawable/ic_first_place_trophy"
+            app:layout_constraintBottom_toBottomOf="@+id/match_championship"
+            app:layout_constraintEnd_toStartOf="@+id/match_championship"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/match_championship" />
+
+        <TextView
+            android:id="@+id/match_championship"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Copa del rey" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

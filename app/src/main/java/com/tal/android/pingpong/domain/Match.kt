@@ -8,8 +8,5 @@ data class Match(
     var match: MatchRecord? = null,
 
     @SerializedName("matchesHistory")
-    var matchesHistory: List<MatchRecord> = arrayListOf(),
-
-    @SerializedName("championship")
-    var championship: Championship? = null
+    var matchesHistory: List<MatchRecord> = arrayListOf()
 ) : Serializable

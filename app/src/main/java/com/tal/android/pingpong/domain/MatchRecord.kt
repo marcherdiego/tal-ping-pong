@@ -50,7 +50,10 @@ data class MatchRecord(
     var visitorUserConfirmed: Boolean? = null,
 
     @SerializedName("visitorCompanionUserConfirmed")
-    var visitorCompanionUserConfirmed: Boolean? = null
+    var visitorCompanionUserConfirmed: Boolean? = null,
+
+    @SerializedName("championship")
+    var championship: Championship? = null
 ) : Serializable {
 
     fun myVictory(myEmail: String?): Boolean {

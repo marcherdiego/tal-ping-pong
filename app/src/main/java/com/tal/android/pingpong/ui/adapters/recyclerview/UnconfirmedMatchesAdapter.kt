@@ -15,11 +15,7 @@ class UnconfirmedMatchesAdapter(
         super.onBindViewHolder(holder, position)
         val match = matches[position].match ?: return
         holder.itemView.setOnClickListener {
-            bus.post(
-                UpcomingMatchClickedEvent(
-                    match
-                )
-            )
+            bus.post(UpcomingMatchClickedEvent(match))
         }
     }
 
