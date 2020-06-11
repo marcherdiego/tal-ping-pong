@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.fragments
+package com.tal.android.pingpong.ui.fragments.championship
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.nerdscorner.mvplib.events.fragment.BaseFragment
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.mvp.model.ReadOnlyUsersListModel
-import com.tal.android.pingpong.ui.mvp.presenter.ReadOnlyUsersListPresenter
-import com.tal.android.pingpong.ui.mvp.view.ReadOnlyUsersListView
+import com.tal.android.pingpong.ui.mvp.model.championship.ReadOnlyUsersListModel
+import com.tal.android.pingpong.ui.mvp.presenter.championship.ReadOnlyUsersListPresenter
+import com.tal.android.pingpong.ui.mvp.view.championship.ReadOnlyUsersListView
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import com.tal.android.pingpong.utils.multiLet
 
@@ -25,7 +25,10 @@ class ReadOnlyUsersListFragment : BaseFragment<ReadOnlyUsersListPresenter>() {
         multiLet(championshipId, context) { championshipId, context ->
             presenter = ReadOnlyUsersListPresenter(
                 ReadOnlyUsersListView(this),
-                ReadOnlyUsersListModel(SharedPreferencesUtils(context), championshipId)
+                ReadOnlyUsersListModel(
+                    SharedPreferencesUtils(context),
+                    championshipId
+                )
             )
         }
     }

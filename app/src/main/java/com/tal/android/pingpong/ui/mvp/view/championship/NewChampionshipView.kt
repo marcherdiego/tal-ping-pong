@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.mvp.view
+package com.tal.android.pingpong.ui.mvp.view.championship
 
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,14 +25,26 @@ class NewChampionshipView(activity: BaseActivity<*>) : BaseActivityView(activity
         activity.supportActionBar?.setHomeAsUpIndicator(R.drawable.back_arrow)
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        onClick(R.id.icon, IconEditButtonClickedEvent())
-        onClick(R.id.edit_icon_button, IconEditButtonClickedEvent())
+        onClick(R.id.icon,
+            IconEditButtonClickedEvent()
+        )
+        onClick(R.id.edit_icon_button,
+            IconEditButtonClickedEvent()
+        )
 
-        onClick(R.id.title, TitleEditButtonClickedEvent())
-        onClick(R.id.edit_title_button, TitleEditButtonClickedEvent())
+        onClick(R.id.title,
+            TitleEditButtonClickedEvent()
+        )
+        onClick(R.id.edit_title_button,
+            TitleEditButtonClickedEvent()
+        )
 
-        onClick(R.id.date, DateEditButtonClickedEvent())
-        onClick(R.id.edit_date_button, DateEditButtonClickedEvent())
+        onClick(R.id.date,
+            DateEditButtonClickedEvent()
+        )
+        onClick(R.id.edit_date_button,
+            DateEditButtonClickedEvent()
+        )
     }
 
     fun setUsersAdapter(adapter: MultiSelectUsersListAdapter) {

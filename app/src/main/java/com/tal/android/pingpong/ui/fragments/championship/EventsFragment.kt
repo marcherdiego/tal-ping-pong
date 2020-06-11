@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.fragments
+package com.tal.android.pingpong.ui.fragments.championship
 
 import android.os.Bundle
 import android.view.LayoutInflater

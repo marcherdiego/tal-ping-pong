@@ -1,10 +1,10 @@
-package com.tal.android.pingpong.ui.mvp.presenter
+package com.tal.android.pingpong.ui.mvp.presenter.championship
 
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.recyclerview.UsersListAdapter
-import com.tal.android.pingpong.ui.mvp.model.ReadOnlyUsersListModel
-import com.tal.android.pingpong.ui.mvp.view.ReadOnlyUsersListView
+import com.tal.android.pingpong.ui.mvp.model.championship.ReadOnlyUsersListModel
+import com.tal.android.pingpong.ui.mvp.view.championship.ReadOnlyUsersListView
 import org.greenrobot.eventbus.Subscribe
 
 class ReadOnlyUsersListPresenter(view: ReadOnlyUsersListView, model: ReadOnlyUsersListModel) :

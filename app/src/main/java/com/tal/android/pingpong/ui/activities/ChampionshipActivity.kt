@@ -6,8 +6,8 @@ import com.nerdscorner.mvplib.events.activity.BaseActivity
 
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.Championship
-import com.tal.android.pingpong.ui.mvp.model.ChampionshipModel
-import com.tal.android.pingpong.ui.mvp.presenter.ChampionshipPresenter
+import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipModel
+import com.tal.android.pingpong.ui.mvp.presenter.championship.ChampionshipPresenter
 import com.tal.android.pingpong.ui.mvp.view.ChampionshipView
 
 class ChampionshipActivity : BaseActivity<ChampionshipPresenter>() {

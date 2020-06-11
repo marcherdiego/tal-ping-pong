@@ -1,8 +1,9 @@
-package com.tal.android.pingpong.ui.mvp.model.matcheslist
+package com.tal.android.pingpong.ui.mvp.model.championship
 
 import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.ChampionshipsService
+import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class ReadOnlyMatchesModel(sharedPreferences: SharedPreferencesUtils, private val championshipId: Int) : BaseMatchesListModel(sharedPreferences) {
@@ -19,7 +20,11 @@ class ReadOnlyMatchesModel(sharedPreferences: SharedPreferencesUtils, private va
             .getChampionshipMatches(championshipId)
             .enqueueResponseNotNull(
                 success = {
-                    bus.post(MatchesFetchedSuccessfullyEvent(it))
+                    bus.post(
+                        MatchesFetchedSuccessfullyEvent(
+                            it
+                        )
+                    )
                 },
                 fail = {
                     bus.post(MatchesFetchFailedEvent())

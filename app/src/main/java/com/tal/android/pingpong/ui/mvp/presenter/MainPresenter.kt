@@ -13,6 +13,7 @@ import com.tal.android.pingpong.ui.dialogs.DeclineMatchDialog
 import com.tal.android.pingpong.ui.dialogs.IncomingDoublesMatchDialog
 import com.tal.android.pingpong.ui.dialogs.IncomingSinglesMatchDialog
 import com.tal.android.pingpong.ui.fragments.*
+import com.tal.android.pingpong.ui.fragments.championship.EventsFragment
 
 import com.tal.android.pingpong.ui.mvp.model.MainModel
 import com.tal.android.pingpong.ui.mvp.view.MainView
@@ -58,7 +59,9 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
                 }
                 Pair(MainModel.MATCHES, matchesFragment)
             }
-            R.id.menu_events -> Pair(MainModel.EVENTS, EventsFragment())
+            R.id.menu_events -> Pair(MainModel.EVENTS,
+                EventsFragment()
+            )
             R.id.menu_new_match -> Pair(MainModel.FIND_RIVAL, UsersListFragment())
             R.id.menu_ranking -> Pair(MainModel.RANKING, RankingFragment())
             R.id.menu_profile -> Pair(MainModel.PROFILE, UserProfileFragment())

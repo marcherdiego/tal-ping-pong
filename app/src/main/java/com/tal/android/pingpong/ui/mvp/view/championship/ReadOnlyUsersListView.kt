@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.mvp.view
+package com.tal.android.pingpong.ui.mvp.view.championship
 
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration

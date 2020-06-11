@@ -5,9 +5,9 @@ import android.os.Bundle
 import com.nerdscorner.mvplib.events.activity.BaseActivity
 
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.mvp.model.NewChampionshipModel
-import com.tal.android.pingpong.ui.mvp.presenter.NewChampionshipPresenter
-import com.tal.android.pingpong.ui.mvp.view.NewChampionshipView
+import com.tal.android.pingpong.ui.mvp.model.championship.NewChampionshipModel
+import com.tal.android.pingpong.ui.mvp.presenter.championship.NewChampionshipPresenter
+import com.tal.android.pingpong.ui.mvp.view.championship.NewChampionshipView
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
 class NewChampionshipActivity : BaseActivity<NewChampionshipPresenter>() {

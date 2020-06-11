@@ -1,9 +1,10 @@
-package com.tal.android.pingpong.ui.mvp.presenter.matcheslist
+package com.tal.android.pingpong.ui.mvp.presenter.championship
 
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.ui.adapters.recyclerview.PastMatchesAdapter
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
-import com.tal.android.pingpong.ui.mvp.model.matcheslist.ReadOnlyMatchesModel
+import com.tal.android.pingpong.ui.mvp.model.championship.ReadOnlyMatchesModel
+import com.tal.android.pingpong.ui.mvp.presenter.matcheslist.BaseMatchesListPresenter
 import com.tal.android.pingpong.ui.mvp.view.matcheslist.BaseMatchesListView
 import org.greenrobot.eventbus.Subscribe
 

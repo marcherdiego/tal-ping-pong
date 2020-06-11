@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.mvp.model
+package com.tal.android.pingpong.ui.mvp.model.championship
 
 import com.tal.android.pingpong.domain.Championship
 import com.tal.android.pingpong.domain.User
@@ -11,6 +11,7 @@ import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.ChampionshipsService
 import com.tal.android.pingpong.networking.services.UsersService
+import com.tal.android.pingpong.ui.mvp.model.BaseModel
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import java.util.*
 

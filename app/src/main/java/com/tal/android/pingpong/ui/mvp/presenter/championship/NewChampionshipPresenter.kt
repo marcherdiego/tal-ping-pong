@@ -1,4 +1,4 @@
-package com.tal.android.pingpong.ui.mvp.presenter
+package com.tal.android.pingpong.ui.mvp.presenter.championship
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -14,8 +14,8 @@ import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.ui.adapters.recyclerview.MultiSelectUsersListAdapter
 import com.tal.android.pingpong.ui.dialogs.TextInputDialog
 
-import com.tal.android.pingpong.ui.mvp.model.NewChampionshipModel
-import com.tal.android.pingpong.ui.mvp.view.NewChampionshipView
+import com.tal.android.pingpong.ui.mvp.model.championship.NewChampionshipModel
+import com.tal.android.pingpong.ui.mvp.view.championship.NewChampionshipView
 import com.tal.android.pingpong.utils.DateUtils
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
