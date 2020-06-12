@@ -11,12 +11,19 @@ class StandingsPresenter(view: StandingsView, model: StandingsModel) :
 
     @Subscribe
     fun onStandingsFetchedSuccessfully(event: StandingsModel.StandingsFetchedSuccessfullyEvent) {
+        view.setRefreshing(false)
         view.setStandingsAdapter(StandingsAdapter(event.standings))
     }
 
     @Subscribe
     fun onStandingsFetchFailed(event: StandingsModel.StandingsFetchFailedEvent) {
+        view.setRefreshing(false)
         view.showNetworkErrorMessage()
+    }
+
+    @Subscribe
+    fun onRefreshStandings(event: StandingsView.RefreshStandingsEvent) {
+        model.fetchStandings()
     }
 
     override fun onResume() {

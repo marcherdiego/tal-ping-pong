@@ -62,6 +62,7 @@ class NewChampionshipModel(private val sharedPreferencesUtils: SharedPreferences
         val championship = Championship(
             championshipDate = championshipDate.toString(),
             championshipName = championshipName,
+            creator = getCurrentUser(),
             users = selectedUsers
         )
         championshipsService
