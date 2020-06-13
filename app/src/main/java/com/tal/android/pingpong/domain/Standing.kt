@@ -3,9 +3,6 @@ package com.tal.android.pingpong.domain
 import com.google.gson.annotations.SerializedName
 
 data class Standing(
-    @SerializedName("position")
-    var position: Int? = null,
-
     @SerializedName("user")
     var user: User? = null,
 
@@ -24,9 +21,16 @@ data class Standing(
     @SerializedName("goalsAgainst")
     var goalsAgainst: Int? = null,
 
-    @SerializedName("goalsDifference")
-    var goalsDifference: Int? = null,
-
     @SerializedName("points")
     var points: Int? = null
-)
+) : Comparable<Standing> {
+    fun getGoalsDifference() = (goalsScored ?: 0) - (goalsAgainst ?: 0)
+
+    override fun compareTo(other: Standing): Int {
+        return if (points == other.points) {
+            getGoalsDifference().compareTo(other.getGoalsDifference())
+        } else {
+            points?.compareTo(other.points ?: 0) ?: 0
+        }
+    }
+}

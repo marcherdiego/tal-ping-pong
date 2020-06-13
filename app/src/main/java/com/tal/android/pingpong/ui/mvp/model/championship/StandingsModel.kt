@@ -13,8 +13,12 @@ class StandingsModel(private val championshipId: Int) : BaseModel() {
         championshipsService
             .getChampionshipStandings(championshipId)
             .enqueueResponseNotNull(
-                success = {
-                    bus.post(StandingsFetchedSuccessfullyEvent(it))
+                success = { standings ->
+                    bus.post(
+                        StandingsFetchedSuccessfullyEvent(
+                            standings.sortedDescending()
+                        )
+                    )
                 },
                 fail = {
                     bus.post(StandingsFetchFailedEvent())

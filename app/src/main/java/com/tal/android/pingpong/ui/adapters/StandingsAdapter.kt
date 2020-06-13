@@ -43,7 +43,7 @@ class StandingsAdapter(private val standings: List<Standing>) : RecyclerView.Ada
         if (holder.itemViewType == ITEM) {
             val standing = standings[index - 1]
             with(holder) {
-                position.text = standing.position.toString()
+                position.text = index.toString()
                 avatar.load(
                     standing.user?.userImage,
                     R.drawable.ic_incognito,
@@ -55,7 +55,7 @@ class StandingsAdapter(private val standings: List<Standing>) : RecyclerView.Ada
                 lost.text = standing.lost.toString()
                 goalsScored.text = standing.goalsScored.toString()
                 goalsAgainst.text = standing.goalsAgainst.toString()
-                goalsDifference.text = standing.goalsDifference.toString()
+                goalsDifference.text = standing.getGoalsDifference().toString()
                 points.text = standing.points.toString()
             }
         }

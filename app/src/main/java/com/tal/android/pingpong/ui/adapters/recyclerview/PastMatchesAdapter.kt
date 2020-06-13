@@ -72,7 +72,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val userEmail
                 val requestedLocalScore = matchRecord.requestedLocalScore
                 if (requestedLocalScore == localPlayerScore) {
                     // Local score unchanged
-                    oldLocalScore?.visibility = View.GONE
+                    oldLocalScore?.visibility = View.INVISIBLE
                     localScore?.text = localPlayerScore.toString()
                 } else {
                     oldLocalScore?.visibility = View.VISIBLE
@@ -83,7 +83,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val userEmail
                 val requestedVisitorScore = matchRecord.requestedVisitorScore
                 if (requestedVisitorScore == visitorPlayerScore) {
                     // Visitor score unchanged
-                    oldVisitorScore?.visibility = View.GONE
+                    oldVisitorScore?.visibility = View.INVISIBLE
                     visitorScore?.text = visitorPlayerScore.toString()
                 } else {
                     oldVisitorScore?.visibility = View.VISIBLE
@@ -92,8 +92,8 @@ class PastMatchesAdapter(private val matches: List<Match>, private val userEmail
                 }
             } else {
                 // No changes requested
-                oldLocalScore?.visibility = View.GONE
-                oldVisitorScore?.visibility = View.GONE
+                oldLocalScore?.visibility = View.INVISIBLE
+                oldVisitorScore?.visibility = View.INVISIBLE
                 localScore?.text = localPlayerScore.toString()
                 visitorScore?.text = visitorPlayerScore.toString()
                 if (matchRecord.confirmed == true) {
@@ -124,11 +124,7 @@ class PastMatchesAdapter(private val matches: List<Match>, private val userEmail
                 )
             )
             itemView.setOnClickListener {
-                bus.post(
-                    MatchClickedEvent(
-                        matchRecord
-                    )
-                )
+                bus.post(MatchClickedEvent(matchRecord))
             }
         }
     }
