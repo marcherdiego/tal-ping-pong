@@ -10,7 +10,10 @@ import retrofit2.http.Query
 interface ChampionshipsService {
 
     @POST("/createChampionship.php")
-    fun createChampionship(@Body championship: Championship): Call<Unit>
+    fun createChampionship(
+        @Query("userId") userId: Int,
+        @Body championship: Championship
+    ): Call<Unit>
 
     @GET("/getChampionships.php")
     fun getChampionships(

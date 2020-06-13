@@ -21,10 +21,15 @@ class EventsFragment : BaseFragment<EventsPresenter>() {
         super.onActivityCreated(savedInstanceState)
         context?.let {
             val sharedPreferences = SharedPreferencesUtils(it)
+            val selectedEvent = arguments?.getInt(SELECTED_EVENT) ?: EventsModel.UNSET
             presenter = EventsPresenter(
                 EventsView(this),
-                EventsModel(sharedPreferences)
+                EventsModel(sharedPreferences, selectedEvent)
             )
         }
+    }
+
+    companion object {
+        const val SELECTED_EVENT = "selected_event"
     }
 }

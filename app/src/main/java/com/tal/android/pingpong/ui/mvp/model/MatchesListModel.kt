@@ -17,7 +17,7 @@ class MatchesListModel(
         annotation class TabsState {
             companion object {
                 const val UPCOMING = "upcoming"
-                const val UNCONFIRMED = "invitations"
+                const val UNCONFIRMED = "unconfirmed"
                 const val PAST = "past"
             }
         }

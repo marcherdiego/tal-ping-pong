@@ -1,6 +1,5 @@
 package com.tal.android.pingpong.ui.mvp.model
 
-import androidx.annotation.IntDef
 import androidx.annotation.StringDef
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.events.MatchesUpdatedEvent
@@ -15,7 +14,7 @@ class MainModel(
     var match: MatchRecord? = null,
     @ScreenState
     @get:ScreenState
-    var initialScreenState: Int = UNSET,
+    var initialScreenState: String = ScreenState.UNSET,
     @MatchesListModel.Companion.TabsState
     @get:MatchesListModel.Companion.TabsState
     var matchesTabsState: String = MatchesListModel.Companion.TabsState.UPCOMING,
@@ -28,7 +27,7 @@ class MainModel(
 
     @ScreenState
     @get:ScreenState
-    var currentState: Int = UNSET
+    var currentState: String = ScreenState.UNSET
 
     fun getUserId() = sharedPreferences.getUser()?.userId
 
@@ -94,19 +93,29 @@ class MainModel(
     class ChallengeDeclineFailedEvent
 
     companion object {
+
         /**
-         * Possible screen states
+         * Possible tabs states
          */
         @Retention(AnnotationRetention.SOURCE)
-        @IntDef(UNSET, MATCHES, EVENTS, FIND_RIVAL, RANKING, PROFILE)
-        annotation class ScreenState
-
-        const val UNSET = -1
-        const val MATCHES = 0
-        const val EVENTS = 1
-        const val FIND_RIVAL = 2
-        const val RANKING = 3
-        const val PROFILE = 4
+        @StringDef(
+            ScreenState.UNSET,
+            ScreenState.MATCHES,
+            ScreenState.EVENTS,
+            ScreenState.FIND_RIVAL,
+            ScreenState.RANKING,
+            ScreenState.PROFILE
+        )
+        annotation class ScreenState {
+            companion object {
+                const val UNSET = "unset"
+                const val MATCHES = "matches"
+                const val EVENTS = "events"
+                const val FIND_RIVAL = "find_rival"
+                const val RANKING = "ranking"
+                const val PROFILE = "profile"
+            }
+        }
 
         /**
          * Possible screen source

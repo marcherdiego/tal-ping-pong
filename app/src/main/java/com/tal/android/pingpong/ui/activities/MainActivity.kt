@@ -17,7 +17,7 @@ class MainActivity : BaseActivity<MainPresenter>() {
         setContentView(R.layout.main_activity)
 
         val challengeMatch = intent.getSerializableExtra(EXTRA_MATCH) as? MatchRecord
-        val screenState = intent.getIntExtra(EXTRA_SCREEN, MainModel.UNSET)
+        val screenState = intent.getStringExtra(EXTRA_SCREEN) ?: MainModel.Companion.ScreenState.UNSET
         val selectedTab = intent.getStringExtra(EXTRA_TAB) ?: MatchesListModel.Companion.TabsState.UPCOMING
         val actionType = intent.getStringExtra(ACTION_TYPE) ?: Constants.NONE
         presenter = MainPresenter(

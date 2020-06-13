@@ -16,6 +16,7 @@ import com.tal.android.pingpong.ui.fragments.*
 import com.tal.android.pingpong.ui.fragments.championship.EventsFragment
 
 import com.tal.android.pingpong.ui.mvp.model.MainModel
+import com.tal.android.pingpong.ui.mvp.model.MainModel.Companion.ScreenState
 import com.tal.android.pingpong.ui.mvp.view.MainView
 import com.tal.android.pingpong.utils.multiLet
 import org.greenrobot.eventbus.Subscribe
@@ -28,11 +29,11 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
 
     init {
         val itemId = when (model.initialScreenState) {
-            MainModel.UNSET, MainModel.MATCHES -> R.id.menu_matches
-            MainModel.EVENTS -> R.id.menu_events
-            MainModel.FIND_RIVAL -> R.id.menu_new_match
-            MainModel.RANKING -> R.id.menu_ranking
-            MainModel.PROFILE -> R.id.menu_profile
+            ScreenState.UNSET, ScreenState.MATCHES -> R.id.menu_matches
+            ScreenState.EVENTS -> R.id.menu_events
+            ScreenState.FIND_RIVAL -> R.id.menu_new_match
+            ScreenState.RANKING -> R.id.menu_ranking
+            ScreenState.PROFILE -> R.id.menu_profile
             else -> throw IllegalArgumentException()
         }
         onNavigationItemSelected(MainView.NavigationItemSelectedEvent(itemId, true))
@@ -46,6 +47,7 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
     @Subscribe
     fun onNavigationItemSelected(event: MainView.NavigationItemSelectedEvent) {
         val currentState = model.currentState
+        val originalBundle = view.activity?.intent?.extras
         val (newState, fragment) = when (event.itemId) {
             R.id.menu_matches -> {
                 val matchesFragment = MatchesListFragment().apply {
@@ -57,14 +59,21 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
                         }
                     }
                 }
-                Pair(MainModel.MATCHES, matchesFragment)
+                Pair(ScreenState.MATCHES, matchesFragment)
             }
-            R.id.menu_events -> Pair(MainModel.EVENTS,
-                EventsFragment()
-            )
-            R.id.menu_new_match -> Pair(MainModel.FIND_RIVAL, UsersListFragment())
-            R.id.menu_ranking -> Pair(MainModel.RANKING, RankingFragment())
-            R.id.menu_profile -> Pair(MainModel.PROFILE, UserProfileFragment())
+            R.id.menu_events -> {
+                val eventsFragment = EventsFragment().apply {
+                    if (event.manualEvent) {
+                        arguments = Bundle().apply {
+                            putAll(originalBundle)
+                        }
+                    }
+                }
+                Pair(ScreenState.EVENTS, eventsFragment)
+            }
+            R.id.menu_new_match -> Pair(ScreenState.FIND_RIVAL, UsersListFragment())
+            R.id.menu_ranking -> Pair(ScreenState.RANKING, RankingFragment())
+            R.id.menu_profile -> Pair(ScreenState.PROFILE, UserProfileFragment())
             else -> return
         }
         model.currentState = newState
@@ -73,7 +82,7 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
             return
         }
         view.setToolbarTitle(TOOLBAR_TITLE)
-        if (newState == MainModel.PROFILE) {
+        if (newState == ScreenState.PROFILE) {
             view.expandToolbar()
         } else {
             view.collapseToolbar()
@@ -167,7 +176,7 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
     }
 
     override fun onBackPressed(): Boolean {
-        return if (model.currentState == MainModel.MATCHES) {
+        return if (model.currentState == ScreenState.MATCHES) {
             super.onBackPressed()
         } else {
             view.setSelectedTab(R.id.menu_matches)

@@ -17,10 +17,13 @@ class EventsPresenter(view: EventsView, model: EventsModel) :
         view.setRefreshing(false)
         view.setChampionshipsAdapter(
             ChampionshipsAdapter(
-                event.championships,
+                model.championships,
                 model.getBus()
             )
         )
+        model.getSelectedChampionship()?.let {
+            onChampionshipClicked(ChampionshipsAdapter.ChampionshipClickedEvent(it))
+        }
     }
 
     @Subscribe

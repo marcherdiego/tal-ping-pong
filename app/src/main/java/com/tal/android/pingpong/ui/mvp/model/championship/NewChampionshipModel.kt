@@ -55,18 +55,21 @@ class NewChampionshipModel(private val sharedPreferencesUtils: SharedPreferences
     @Throws(InvalidChampionshipTimeException::class, InvalidChampionshipNameException::class, InvalidChampionshipUsersListException::class)
     fun createChampionship() {
         val championshipDate = championshipDate ?: throw InvalidChampionshipTimeException()
-        val championshipName = championshipName ?: throw InvalidChampionshipNameException()
+        if (championshipName.isNullOrBlank()) {
+            throw InvalidChampionshipNameException()
+        }
         if (selectedUsers.size < CHAMPIONSHIP_MINIMUM_USERS) {
             throw InvalidChampionshipUsersListException()
         }
+        val currentUser = getCurrentUser()
         val championship = Championship(
             championshipDate = championshipDate.toString(),
             championshipName = championshipName,
-            creator = getCurrentUser(),
+            creator = currentUser,
             users = selectedUsers
         )
         championshipsService
-            .createChampionship(championship)
+            .createChampionship(currentUser?.userId ?: return, championship)
             .enqueue(
                 success = {
                     bus.post(ChampionshipCreatedSuccessfullyEvent())

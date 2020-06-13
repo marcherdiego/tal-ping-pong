@@ -20,7 +20,8 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.events.MatchesUpdatedEvent
 import com.tal.android.pingpong.ui.activities.MainActivity
-import com.tal.android.pingpong.ui.mvp.model.MainModel
+import com.tal.android.pingpong.ui.fragments.championship.EventsFragment
+import com.tal.android.pingpong.ui.mvp.model.MainModel.Companion.ScreenState
 import org.greenrobot.eventbus.ThreadMode
 
 object NotificationsManager {
@@ -35,8 +36,7 @@ object NotificationsManager {
     private const val KEY_NOTIFICATION_SCREEN = "screen"
     private const val KEY_NOTIFICATION_TAB = "tab"
     private const val KEY_NOTIFICATION_MATCH = "match"
-
-    private const val VALUE_SCREEN_MATCHES = "matches"
+    private const val KEY_EVENT_ID = "event_id"
 
     fun showNotification(context: Context, data: Map<String, String>) {
         val logoBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_racket_icon)
@@ -56,22 +56,27 @@ object NotificationsManager {
         NotificationManagerCompat
             .from(context)
             .notify(notificationData[KEY_NOTIFICATION_ID].hashCode(), builder.build())
+        Bus.postDefault(MatchesUpdatedEvent(), ThreadMode.MAIN)
     }
 
     private fun buildNotificationPendingIntent(context: Context, data: Map<String, String>): PendingIntent? {
-        val intent = when (data[KEY_NOTIFICATION_SCREEN]) {
-            VALUE_SCREEN_MATCHES -> {
+        val intent = Intent(context, MainActivity::class.java)
+        when (data[KEY_NOTIFICATION_SCREEN]) {
+            ScreenState.MATCHES -> {
                 val match = gson.fromJson(data[KEY_NOTIFICATION_MATCH], MatchRecord::class.java)
                 val tab = data[KEY_NOTIFICATION_TAB]
                 val actionType = data[KEY_NOTIFICATION_ACTION_TYPE]
-                Bus.postDefault(MatchesUpdatedEvent(), ThreadMode.MAIN)
-                Intent(context, MainActivity::class.java)
+                intent
                     .putExtra(MainActivity.EXTRA_MATCH, match)
-                    .putExtra(MainActivity.EXTRA_SCREEN, MainModel.MATCHES)
+                    .putExtra(MainActivity.EXTRA_SCREEN, ScreenState.MATCHES)
                     .putExtra(MainActivity.EXTRA_TAB, tab)
                     .putExtra(MainActivity.ACTION_TYPE, actionType)
             }
-            else -> Intent(context, MainActivity::class.java)
+            ScreenState.EVENTS -> {
+                intent
+                    .putExtra(MainActivity.EXTRA_SCREEN, ScreenState.EVENTS)
+                    .putExtra(EventsFragment.SELECTED_EVENT, data[KEY_EVENT_ID]?.toInt())
+            }
         }
         val stackBuilder = TaskStackBuilder.create(context.applicationContext)
         stackBuilder.addNextIntentWithParentStack(intent)

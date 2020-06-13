@@ -10,12 +10,14 @@ import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.utils.DialogFactory
 
-class TextInputDialog(private val bus: Bus) {
+class TextInputDialog(private val bus: Bus, private val allowEmpty: Boolean = false) {
 
     private var dialog: AlertDialog? = null
 
-    fun show(context: Context, @StringRes title: Int, @StringRes positiveButtonText: Int, @StringRes negativeButtonText: Int,
-             @StringRes hint: Int = 0, preloadedInput: String? = null, requestCode: Int = 0) {
+    fun show(
+        context: Context, @StringRes title: Int, @StringRes positiveButtonText: Int, @StringRes negativeButtonText: Int,
+        @StringRes hint: Int = 0, preloadedInput: String? = null, requestCode: Int = 0
+    ) {
         val challengeDialogView = LayoutInflater
             .from(context)
             .inflate(R.layout.text_input_dialog, null)
@@ -29,12 +31,17 @@ class TextInputDialog(private val bus: Bus) {
         dialog = DialogFactory
             .Builder()
             .setCancelable(true)
+            .setAutoDismiss(false)
             .setTitle(title)
             .setView(challengeDialogView)
             .setPositiveButtonText(positiveButtonText)
             .setNegativeButtonText(negativeButtonText)
             .setPositiveButtonListener {
-                bus.post(PositiveButtonClickedEvent(requestCode, userInput.text.toString()))
+                val input = userInput.text.toString()
+                if (allowEmpty || input.isBlank().not()) {
+                    bus.post(PositiveButtonClickedEvent(requestCode, input))
+                    dismiss()
+                }
             }
             .build(context)
         dialog?.show()
