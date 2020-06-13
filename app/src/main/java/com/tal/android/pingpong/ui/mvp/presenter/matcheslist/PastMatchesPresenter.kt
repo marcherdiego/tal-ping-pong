@@ -29,7 +29,7 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchClicked(event: PastMatchesAdapter.MatchClickedEvent) {
         view.activity?.let {
-            matchEditDialog = MatchEditDialog(event.match, model.getBus(), model.isMyMatchEdit(event.match))
+            matchEditDialog = MatchEditDialog(event.match, model.getBus())
             matchEditDialog?.show(it)
         }
     }
@@ -37,16 +37,6 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchEditButtonClicked(event: MatchEditDialog.MatchEditButtonClickedEvent) {
         model.editMatch(event.match)
-    }
-
-    @Subscribe
-    fun onMatchAcceptChangesButtonClicked(event: MatchEditDialog.MatchAcceptChangesButtonClickedEvent) {
-        model.acceptMatchEdit(event.match)
-    }
-
-    @Subscribe
-    fun onDeclineMatchEditButtonClicked(event: MatchEditDialog.DeclineMatchEditButtonClickedEvent) {
-        model.declineMatchEdit(event.match)
     }
 
     @Subscribe
@@ -71,17 +61,5 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
     @Subscribe
     fun onMatchEditFailed(event: PastMatchesModel.MatchEditFailedEvent) {
         view.showToast(R.string.edit_request_send_failed)
-    }
-
-    @Subscribe
-    fun onMatchEditAcceptedSuccessfully(event: PastMatchesModel.MatchEditAcceptedSuccessfullyEvent) {
-        view.showToast(R.string.edit_accepted)
-        model.notifyUpdateLists()
-        matchEditDialog?.dismiss()
-    }
-
-    @Subscribe
-    fun onMatchEditAcceptFailed(event: PastMatchesModel.MatchEditAcceptFailedEvent) {
-        view.showToast(R.string.network_error_message)
     }
 }

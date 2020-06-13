@@ -1,6 +1,5 @@
 package com.tal.android.pingpong.ui.adapters.recyclerview
 
-import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
@@ -64,62 +63,29 @@ class PastMatchesAdapter(private val matches: List<Match>, private val userEmail
                 visitorScore?.setTypeface(visitorScore.typeface, Typeface.BOLD)
             }
 
-            if (matchRecord.hasRequestedChanges == true) {
-                // User has requested changes
-                confirmedLabel?.text = getChangesRequesterName(context, matchRecord)
-                confirmedIcon?.setImageResource(R.drawable.ic_warning)
-
-                val requestedLocalScore = matchRecord.requestedLocalScore
-                if (requestedLocalScore == localPlayerScore) {
-                    // Local score unchanged
-                    oldLocalScore?.visibility = View.INVISIBLE
-                    localScore?.text = localPlayerScore.toString()
-                } else {
-                    oldLocalScore?.visibility = View.VISIBLE
-                    oldLocalScore?.text = localPlayerScore.toString()
-                    localScore?.text = matchRecord.requestedLocalScore.toString()
-                }
-
-                val requestedVisitorScore = matchRecord.requestedVisitorScore
-                if (requestedVisitorScore == visitorPlayerScore) {
-                    // Visitor score unchanged
-                    oldVisitorScore?.visibility = View.INVISIBLE
-                    visitorScore?.text = visitorPlayerScore.toString()
-                } else {
-                    oldVisitorScore?.visibility = View.VISIBLE
-                    oldVisitorScore?.text = visitorPlayerScore.toString()
-                    visitorScore?.text = matchRecord.requestedVisitorScore.toString()
-                }
+            oldLocalScore?.visibility = View.INVISIBLE
+            oldVisitorScore?.visibility = View.INVISIBLE
+            localScore?.text = localPlayerScore.toString()
+            visitorScore?.text = visitorPlayerScore.toString()
+            if (matchRecord.confirmed == true) {
+                confirmedLabel?.setText(R.string.confirmed)
+                confirmedIcon?.setImageResource(R.drawable.ic_verified)
             } else {
-                // No changes requested
-                oldLocalScore?.visibility = View.INVISIBLE
-                oldVisitorScore?.visibility = View.INVISIBLE
-                localScore?.text = localPlayerScore.toString()
-                visitorScore?.text = visitorPlayerScore.toString()
-                if (matchRecord.confirmed == true) {
-                    confirmedLabel?.setText(R.string.confirmed)
-                    confirmedIcon?.setImageResource(R.drawable.ic_verified)
-                } else {
-                    confirmedLabel?.setText(R.string.not_played)
-                    confirmedIcon?.setImageResource(R.drawable.ic_close)
-                }
+                confirmedLabel?.setText(R.string.not_played)
+                confirmedIcon?.setImageResource(R.drawable.ic_close)
             }
 
             itemView.setBackgroundColor(
                 ContextCompat.getColor(
                     context,
-                    if (matchRecord.hasRequestedChanges == true) {
-                        R.color.changes_requested_background_color
-                    } else {
-                        if (matchRecord.confirmed == true) {
-                            if (matchRecord.myVictory(userEmail)) {
-                                R.color.victory_background_color
-                            } else {
-                                R.color.defeat_background_color
-                            }
+                    if (matchRecord.confirmed == true) {
+                        if (matchRecord.myVictory(userEmail)) {
+                            R.color.victory_background_color
                         } else {
-                            R.color.match_not_played
+                            R.color.defeat_background_color
                         }
+                    } else {
+                        R.color.match_not_played
                     }
                 )
             )
@@ -127,24 +93,6 @@ class PastMatchesAdapter(private val matches: List<Match>, private val userEmail
                 bus.post(MatchClickedEvent(matchRecord))
             }
         }
-    }
-
-    private fun getChangesRequesterName(context: Context, matchRecord: MatchRecord): String? {
-        val local = matchRecord.local ?: return null
-        val visitor = matchRecord.visitor ?: return null
-        val (myUser, rivalUser) = if (local.userEmail == userEmail) {
-            Pair(local, visitor)
-        } else {
-            Pair(visitor, local)
-        }
-        return context.getString(
-            R.string.changes_requested_by_x,
-            if (matchRecord.changeRequestUserId == myUser.userId) {
-                context.getString(R.string.me)
-            } else {
-                rivalUser.firstName()
-            }
-        )
     }
 
     class MatchClickedEvent(val match: MatchRecord)

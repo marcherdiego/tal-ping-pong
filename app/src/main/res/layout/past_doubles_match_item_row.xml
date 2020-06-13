@@ -44,22 +44,22 @@
         app:layout_constraintTop_toTopOf="@+id/local_user_image">
 
         <TextView
-            android:id="@+id/visitor_user_name"
+            android:id="@+id/local_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="User name" />
+            tools:text="@string/me_capital" />
 
         <TextView
-            android:id="@+id/local_user_name"
+            android:id="@+id/visitor_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/me_capital"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="User name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -155,22 +155,22 @@
         app:layout_constraintStart_toEndOf="@+id/local_companion_image">
 
         <TextView
-            android:id="@+id/visitor_companion_user_name"
+            android:id="@+id/local_companion_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Visitor companion" />
+            tools:text="Local companion" />
 
         <TextView
-            android:id="@+id/local_companion_user_name"
+            android:id="@+id/visitor_companion_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Local companion" />
+            tools:text="Visitor companion" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView

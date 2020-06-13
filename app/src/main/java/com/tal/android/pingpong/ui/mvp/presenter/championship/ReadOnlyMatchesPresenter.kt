@@ -30,7 +30,7 @@ class ReadOnlyMatchesPresenter(view: BaseMatchesListView, model: ReadOnlyMatches
     @Subscribe
     fun onMatchClicked(event: PastMatchesAdapter.MatchClickedEvent) {
         view.activity?.let {
-            matchEditDialog = MatchEditDialog(event.match, model.getBus(), model.isMyMatchEdit(event.match))
+            matchEditDialog = MatchEditDialog(event.match, model.getBus())
             matchEditDialog?.show(it)
         }
     }
@@ -38,16 +38,6 @@ class ReadOnlyMatchesPresenter(view: BaseMatchesListView, model: ReadOnlyMatches
     @Subscribe
     fun onMatchEditButtonClicked(event: MatchEditDialog.MatchEditButtonClickedEvent) {
         model.editMatch(event.match)
-    }
-
-    @Subscribe
-    fun onMatchAcceptChangesButtonClicked(event: MatchEditDialog.MatchAcceptChangesButtonClickedEvent) {
-        model.acceptMatchEdit(event.match)
-    }
-
-    @Subscribe
-    fun onDeclineMatchEditButtonClicked(event: MatchEditDialog.DeclineMatchEditButtonClickedEvent) {
-        model.declineMatchEdit(event.match)
     }
 
     @Subscribe
@@ -65,13 +55,6 @@ class ReadOnlyMatchesPresenter(view: BaseMatchesListView, model: ReadOnlyMatches
     @Subscribe
     fun onMatchEditedSuccessfully(event: ReadOnlyMatchesModel.MatchEditedSuccessfullyEvent) {
         view.showToast(R.string.edit_request_sent)
-        model.notifyUpdateLists()
-        matchEditDialog?.dismiss()
-    }
-
-    @Subscribe
-    fun onMatchEditAcceptedSuccessfully(event: ReadOnlyMatchesModel.MatchEditAcceptedSuccessfullyEvent) {
-        view.showToast(R.string.edit_accepted)
         model.notifyUpdateLists()
         matchEditDialog?.dismiss()
     }
