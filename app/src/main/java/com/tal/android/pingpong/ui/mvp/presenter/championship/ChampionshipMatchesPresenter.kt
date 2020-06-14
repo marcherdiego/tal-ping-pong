@@ -5,13 +5,14 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.recyclerview.PastMatchesAdapter
 import com.tal.android.pingpong.ui.dialogs.MatchEditDialog
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
-import com.tal.android.pingpong.ui.mvp.model.championship.ReadOnlyMatchesModel
+import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipMatchesModel
 import com.tal.android.pingpong.ui.mvp.presenter.matcheslist.BaseMatchesListPresenter
+import com.tal.android.pingpong.ui.mvp.view.championship.ChampionshipMatchesListView
 import com.tal.android.pingpong.ui.mvp.view.matcheslist.BaseMatchesListView
 import org.greenrobot.eventbus.Subscribe
 
-class ReadOnlyMatchesPresenter(view: BaseMatchesListView, model: ReadOnlyMatchesModel, bus: Bus) :
-    BaseMatchesListPresenter<BaseMatchesListView, ReadOnlyMatchesModel>(view, model, bus) {
+class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: ChampionshipMatchesModel, bus: Bus) :
+    BaseMatchesListPresenter<ChampionshipMatchesListView, ChampionshipMatchesModel>(view, model, bus) {
 
     private var matchEditDialog: MatchEditDialog? = null
 
@@ -41,19 +42,19 @@ class ReadOnlyMatchesPresenter(view: BaseMatchesListView, model: ReadOnlyMatches
     }
 
     @Subscribe
-    fun onMatchEditDeclinedSuccessfully(event: ReadOnlyMatchesModel.MatchEditDeclinedSuccessfullyEvent) {
+    fun onMatchEditDeclinedSuccessfully(event: ChampionshipMatchesModel.MatchEditDeclinedSuccessfullyEvent) {
         view.showToast(R.string.edit_declined)
         model.notifyUpdateLists()
         matchEditDialog?.dismiss()
     }
 
     @Subscribe
-    fun onMatchEditDeclineFailed(event: ReadOnlyMatchesModel.MatchEditDeclineFailedEvent) {
+    fun onMatchEditDeclineFailed(event: ChampionshipMatchesModel.MatchEditDeclineFailedEvent) {
         view.showToast(R.string.edit_decline_failed)
     }
 
     @Subscribe
-    fun onMatchEditedSuccessfully(event: ReadOnlyMatchesModel.MatchEditedSuccessfullyEvent) {
+    fun onMatchEditedSuccessfully(event: ChampionshipMatchesModel.MatchEditedSuccessfullyEvent) {
         view.showToast(R.string.edit_request_sent)
         model.notifyUpdateLists()
         matchEditDialog?.dismiss()

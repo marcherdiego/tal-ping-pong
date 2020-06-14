@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.nerdscorner.mvplib.events.fragment.BaseFragment
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.mvp.model.championship.ReadOnlyUsersListModel
-import com.tal.android.pingpong.ui.mvp.presenter.championship.ReadOnlyUsersListPresenter
-import com.tal.android.pingpong.ui.mvp.view.championship.ReadOnlyUsersListView
+import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipUsersListModel
+import com.tal.android.pingpong.ui.mvp.presenter.championship.ChampionshipUsersListPresenter
+import com.tal.android.pingpong.ui.mvp.view.championship.ChampionshipUsersListView
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import com.tal.android.pingpong.utils.multiLet
 
-class ReadOnlyUsersListFragment : BaseFragment<ReadOnlyUsersListPresenter>() {
+class ChampionshipUsersListFragment : BaseFragment<ChampionshipUsersListPresenter>() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,9 +23,9 @@ class ReadOnlyUsersListFragment : BaseFragment<ReadOnlyUsersListPresenter>() {
         super.onActivityCreated(savedInstanceState)
         val championshipId = arguments?.getInt(CHAMPIONSHIP_ID)
         multiLet(championshipId, context) { championshipId, context ->
-            presenter = ReadOnlyUsersListPresenter(
-                ReadOnlyUsersListView(this),
-                ReadOnlyUsersListModel(
+            presenter = ChampionshipUsersListPresenter(
+                ChampionshipUsersListView(this),
+                ChampionshipUsersListModel(
                     SharedPreferencesUtils(context),
                     championshipId
                 )

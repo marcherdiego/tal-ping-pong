@@ -8,7 +8,7 @@ import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.recyclerview.UsersListAdapter
 
-class ReadOnlyUsersListView(fragment: Fragment) : BaseFragmentView(fragment) {
+class ChampionshipUsersListView(fragment: Fragment) : BaseFragmentView(fragment) {
     private val usersList: RecyclerView? = fragment.view?.findViewById(R.id.users_list)
     private val refreshLayout: SwipeRefreshLayout? = fragment.view?.findViewById(R.id.refresh_layout)
 

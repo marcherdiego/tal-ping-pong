@@ -5,8 +5,8 @@ import androidx.core.os.bundleOf
 import com.nerdscorner.mvplib.events.presenter.BaseActivityPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.tabs.TabsAdapter
-import com.tal.android.pingpong.ui.fragments.championship.ReadOnlyUsersListFragment
-import com.tal.android.pingpong.ui.fragments.championship.ReadOnlyMatchesFragment
+import com.tal.android.pingpong.ui.fragments.championship.ChampionshipUsersListFragment
+import com.tal.android.pingpong.ui.fragments.championship.ChampionshipMatchesFragment
 import com.tal.android.pingpong.ui.fragments.championship.StandingsFragment
 
 import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipModel
@@ -19,11 +19,11 @@ class ChampionshipPresenter(view: ChampionshipView, model: ChampionshipModel) :
     init {
         with(model.championship) {
             view.withFragmentManager {
-                val matchesFragment = ReadOnlyMatchesFragment().apply {
-                    arguments = bundleOf(ReadOnlyMatchesFragment.CHAMPIONSHIP_ID to championshipId)
+                val matchesFragment = ChampionshipMatchesFragment().apply {
+                    arguments = bundleOf(ChampionshipMatchesFragment.CHAMPIONSHIP_ID to championshipId)
                 }
-                val usersFragment = ReadOnlyUsersListFragment().apply {
-                    arguments = bundleOf(ReadOnlyUsersListFragment.CHAMPIONSHIP_ID to championshipId)
+                val usersFragment = ChampionshipUsersListFragment().apply {
+                    arguments = bundleOf(ChampionshipUsersListFragment.CHAMPIONSHIP_ID to championshipId)
                 }
                 val standingsFragment = StandingsFragment().apply {
                     arguments = bundleOf(StandingsFragment.CHAMPIONSHIP_ID to championshipId)
@@ -34,14 +34,14 @@ class ChampionshipPresenter(view: ChampionshipView, model: ChampionshipModel) :
                     standingsFragment
                 )
                 val titles = listOf(
-                    ReadOnlyMatchesFragment.TITLE,
-                    ReadOnlyUsersListFragment.TITLE,
+                    ChampionshipMatchesFragment.TITLE,
+                    ChampionshipUsersListFragment.TITLE,
                     StandingsFragment.TITLE
                 )
                 view.setTabsAdapter(TabsAdapter(this, tabsFragment, titles))
             }
             view.setTitle(championshipName)
-            view.setCreator(creator?.userEmail)
+            view.setCreator(creator?.userName)
             val championshipStartDate = DateUtils.parseDate(championshipDate)
             val formattedDate = DateUtils.formatDate(championshipDate)
             view.setDate(

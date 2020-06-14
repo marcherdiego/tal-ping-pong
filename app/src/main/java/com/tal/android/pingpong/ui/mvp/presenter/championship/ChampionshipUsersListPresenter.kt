@@ -3,15 +3,15 @@ package com.tal.android.pingpong.ui.mvp.presenter.championship
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.recyclerview.UsersListAdapter
-import com.tal.android.pingpong.ui.mvp.model.championship.ReadOnlyUsersListModel
-import com.tal.android.pingpong.ui.mvp.view.championship.ReadOnlyUsersListView
+import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipUsersListModel
+import com.tal.android.pingpong.ui.mvp.view.championship.ChampionshipUsersListView
 import org.greenrobot.eventbus.Subscribe
 
-class ReadOnlyUsersListPresenter(view: ReadOnlyUsersListView, model: ReadOnlyUsersListModel) :
-    BaseFragmentPresenter<ReadOnlyUsersListView, ReadOnlyUsersListModel>(view, model) {
+class ChampionshipUsersListPresenter(view: ChampionshipUsersListView, model: ChampionshipUsersListModel) :
+    BaseFragmentPresenter<ChampionshipUsersListView, ChampionshipUsersListModel>(view, model) {
 
     @Subscribe
-    fun onUsersFetchedSuccessfully(event: ReadOnlyUsersListModel.UsersFetchedSuccessfullyEvent) {
+    fun onUsersFetchedSuccessfully(event: ChampionshipUsersListModel.UsersFetchedSuccessfullyEvent) {
         model.updateCurrentUser(model.usersList.first { it.userEmail == model.getCurrentUser()?.userEmail })
         view.setUsersListAdapter(
             UsersListAdapter(
@@ -24,13 +24,13 @@ class ReadOnlyUsersListPresenter(view: ReadOnlyUsersListView, model: ReadOnlyUse
     }
 
     @Subscribe
-    fun onUsersFetchFailed(event: ReadOnlyUsersListModel.UsersFetchFailedEvent) {
+    fun onUsersFetchFailed(event: ChampionshipUsersListModel.UsersFetchFailedEvent) {
         view.showToast(R.string.failed_to_load_users_list)
         view.setRefreshing(false)
     }
 
     @Subscribe
-    fun onRefreshLists(event: ReadOnlyUsersListView.RefreshUsersListsEvent) {
+    fun onRefreshLists(event: ChampionshipUsersListView.RefreshUsersListsEvent) {
         model.fetchUsers()
     }
 

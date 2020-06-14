@@ -18,7 +18,7 @@ class StandingsFragment : BaseFragment<StandingsPresenter>() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val championshipId = arguments?.getInt(ReadOnlyUsersListFragment.CHAMPIONSHIP_ID)
+        val championshipId = arguments?.getInt(ChampionshipUsersListFragment.CHAMPIONSHIP_ID)
         presenter = StandingsPresenter(
             StandingsView(this),
             StandingsModel(championshipId ?: return)
