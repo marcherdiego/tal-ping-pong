@@ -6,7 +6,7 @@ import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.ChampionshipsService
 import com.tal.android.pingpong.ui.mvp.model.BaseModel
 
-class StandingsModel(private val championshipId: Int) : BaseModel() {
+class ChampionshipStandingsModel(private val championshipId: Int) : BaseModel() {
     private val championshipsService = ServiceGenerator.createService(ChampionshipsService::class.java)
 
     fun fetchStandings() {

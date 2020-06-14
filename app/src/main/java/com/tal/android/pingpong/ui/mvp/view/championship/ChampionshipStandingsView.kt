@@ -12,7 +12,7 @@ import com.nerdscorner.mvplib.events.view.BaseFragmentView
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.recyclerview.EmptyAdapter
 
-class StandingsView(fragment: Fragment) : BaseFragmentView(fragment) {
+class ChampionshipStandingsView(fragment: Fragment) : BaseFragmentView(fragment) {
     private val emptyListLayout: View? = fragment.view?.findViewById(R.id.empty_list_layout)
     private val emptyListEmoji: ImageView? = emptyListLayout?.findViewById(R.id.emoji)
     private val emptyListMessage: TextView? = emptyListLayout?.findViewById(R.id.message)

@@ -7,7 +7,7 @@ import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.tabs.TabsAdapter
 import com.tal.android.pingpong.ui.fragments.championship.ChampionshipUsersListFragment
 import com.tal.android.pingpong.ui.fragments.championship.ChampionshipMatchesFragment
-import com.tal.android.pingpong.ui.fragments.championship.StandingsFragment
+import com.tal.android.pingpong.ui.fragments.championship.ChampionshipStandingsFragment
 
 import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipModel
 import com.tal.android.pingpong.ui.mvp.view.ChampionshipView
@@ -25,8 +25,8 @@ class ChampionshipPresenter(view: ChampionshipView, model: ChampionshipModel) :
                 val usersFragment = ChampionshipUsersListFragment().apply {
                     arguments = bundleOf(ChampionshipUsersListFragment.CHAMPIONSHIP_ID to championshipId)
                 }
-                val standingsFragment = StandingsFragment().apply {
-                    arguments = bundleOf(StandingsFragment.CHAMPIONSHIP_ID to championshipId)
+                val standingsFragment = ChampionshipStandingsFragment().apply {
+                    arguments = bundleOf(ChampionshipStandingsFragment.CHAMPIONSHIP_ID to championshipId)
                 }
                 val tabsFragment = listOf(
                     matchesFragment,
@@ -36,7 +36,7 @@ class ChampionshipPresenter(view: ChampionshipView, model: ChampionshipModel) :
                 val titles = listOf(
                     ChampionshipMatchesFragment.TITLE,
                     ChampionshipUsersListFragment.TITLE,
-                    StandingsFragment.TITLE
+                    ChampionshipStandingsFragment.TITLE
                 )
                 view.setTabsAdapter(TabsAdapter(this, tabsFragment, titles))
             }
