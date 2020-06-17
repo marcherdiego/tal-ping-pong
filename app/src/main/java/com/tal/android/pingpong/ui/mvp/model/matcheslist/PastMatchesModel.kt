@@ -47,8 +47,4 @@ class PastMatchesModel(sharedPreferences: SharedPreferencesUtils) : BaseMatchesL
 
     class MatchEditedSuccessfullyEvent
     class MatchEditFailedEvent
-
-    class MatchEditDeclinedSuccessfullyEvent
-    class MatchEditDeclineFailedEvent
-
 }

@@ -12,6 +12,7 @@ import com.tal.android.pingpong.exceptions.InvalidChampionshipTimeException
 import com.tal.android.pingpong.exceptions.InvalidChampionshipUsersListException
 import com.tal.android.pingpong.exceptions.InvalidMatchTimeException
 import com.tal.android.pingpong.ui.adapters.recyclerview.MultiSelectUsersListAdapter
+import com.tal.android.pingpong.ui.dialogs.LoadingDialog
 import com.tal.android.pingpong.ui.dialogs.TextInputDialog
 
 import com.tal.android.pingpong.ui.mvp.model.championship.NewChampionshipModel
@@ -22,6 +23,8 @@ import java.util.*
 
 class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionshipModel) :
     BaseActivityPresenter<NewChampionshipView, NewChampionshipModel>(view, model) {
+
+    private var loadingDialog: LoadingDialog? = null
 
     init {
         view.updateSelectedUsersCount(1)
@@ -82,6 +85,7 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
 
     @Subscribe
     fun onChampionshipCreatedSuccessfully(event: NewChampionshipModel.ChampionshipCreatedSuccessfullyEvent) {
+        loadingDialog?.dismiss()
         view.showToast(R.string.championship_created)
         view.activity?.finish()
     }
@@ -89,6 +93,7 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
     @Subscribe
     fun onChampionshipCreationFailed(event: NewChampionshipModel.ChampionshipCreationFailedEvent) {
         view.showToast(R.string.championship_creation_failed)
+        loadingDialog?.dismiss()
     }
 
     private fun openDateSelectionDialog(context: Context) {
@@ -139,6 +144,8 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
             }
             R.id.menu_save -> {
                 try {
+                    val context = view.activity ?: return true
+                    loadingDialog = LoadingDialog().show(context)
                     model.createChampionship()
                 } catch (e: InvalidChampionshipTimeException) {
                     view.showToast(R.string.invalid_championship_time)

@@ -36,30 +36,21 @@ class PastMatchesPresenter(view: BaseMatchesListView, model: PastMatchesModel, b
 
     @Subscribe
     fun onMatchEditButtonClicked(event: MatchEditDialog.MatchEditButtonClickedEvent) {
+        startLoading()
+        matchEditDialog?.dismiss()
         model.editMatch(event.match)
     }
 
     @Subscribe
-    fun onMatchEditDeclinedSuccessfully(event: PastMatchesModel.MatchEditDeclinedSuccessfullyEvent) {
-        view.showToast(R.string.edit_declined)
-        model.notifyUpdateLists()
-        matchEditDialog?.dismiss()
-    }
-
-    @Subscribe
-    fun onMatchEditDeclineFailed(event: PastMatchesModel.MatchEditDeclineFailedEvent) {
-        view.showToast(R.string.edit_decline_failed)
-    }
-
-    @Subscribe
     fun onMatchEditedSuccessfully(event: PastMatchesModel.MatchEditedSuccessfullyEvent) {
-        view.showToast(R.string.edit_request_sent)
+        view.showToast(R.string.match_edited)
         model.notifyUpdateLists()
-        matchEditDialog?.dismiss()
+        stopLoading()
     }
 
     @Subscribe
     fun onMatchEditFailed(event: PastMatchesModel.MatchEditFailedEvent) {
         view.showToast(R.string.edit_request_send_failed)
+        stopLoading()
     }
 }

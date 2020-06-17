@@ -79,9 +79,9 @@ class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: Use
                     val matchDate = getMatchDate(year, monthOfYear, dayOfMonth, hourOfDay, minute)
                     match.matchDate = matchDate.toString()
                     dialog?.dismiss()
-                    bus.post(NewDoublesMatchDialog.CreateNewDoublesMatchButtonClickedEvent(match))
+                    bus.post(CreateNewSinglesMatchButtonClickedEvent(match))
                 } catch (e: InvalidMatchTimeException) {
-                    bus.post(NewDoublesMatchDialog.NewDoublesMatchInvalidTimeSelectedEvent())
+                    bus.post(NewSinglesMatchInvalidTimeSelectedEvent())
                     openChallengeTimeSelectionDialog(context, match, year, monthOfYear, dayOfMonth)
                 }
             },

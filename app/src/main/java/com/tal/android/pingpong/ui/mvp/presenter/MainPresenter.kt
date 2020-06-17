@@ -9,9 +9,7 @@ import com.tal.android.pingpong.events.ChallengeSubmitFailedEvent
 import com.tal.android.pingpong.events.ChallengeSubmittedSuccessfullyEvent
 import com.tal.android.pingpong.notifications.Constants
 import com.tal.android.pingpong.ui.adapters.recyclerview.UnconfirmedMatchesAdapter
-import com.tal.android.pingpong.ui.dialogs.DeclineMatchDialog
-import com.tal.android.pingpong.ui.dialogs.IncomingDoublesMatchDialog
-import com.tal.android.pingpong.ui.dialogs.IncomingSinglesMatchDialog
+import com.tal.android.pingpong.ui.dialogs.*
 import com.tal.android.pingpong.ui.fragments.*
 import com.tal.android.pingpong.ui.fragments.championship.EventsFragment
 
@@ -23,6 +21,8 @@ import org.greenrobot.eventbus.Subscribe
 import java.lang.IllegalArgumentException
 
 class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<MainView, MainModel>(view, model) {
+
+    private var loadingDialog: LoadingDialog? = null
 
     private var incomingSinglesMatchDialog: IncomingSinglesMatchDialog? = null
     private var incomingDoublesMatchDialog: IncomingDoublesMatchDialog? = null
@@ -142,13 +142,25 @@ class MainPresenter(view: MainView, model: MainModel) : BaseActivityPresenter<Ma
     }
 
     @Subscribe
+    fun onCreateNewSinglesMatchButtonClicked(event: NewSinglesMatchDialog.CreateNewSinglesMatchButtonClickedEvent) {
+        loadingDialog = LoadingDialog().show(view.activity ?: return)
+    }
+
+    @Subscribe
+    fun onCreateNewDoublesMatchButtonClicked(event: NewDoublesMatchDialog.CreateNewDoublesMatchButtonClickedEvent) {
+        loadingDialog = LoadingDialog().show(view.activity ?: return)
+    }
+
+    @Subscribe
     fun onChallengeSubmittedSuccessfully(event: ChallengeSubmittedSuccessfullyEvent) {
         view.showToast(R.string.match_request_sent)
         model.notifyUpdateLists()
+        loadingDialog?.dismiss()
     }
 
     @Subscribe
     fun onChallengeSubmittedSuccessfully(event: ChallengeSubmitFailedEvent) {
+        loadingDialog?.dismiss()
         view.showToast(R.string.match_request_failed)
     }
 

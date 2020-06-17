@@ -18,7 +18,6 @@ class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: Cha
 
     private var matchEditDialog: MatchEditDialog? = null
     private var newMatchDialog: NewChampionshipMatchDialog? = null
-    private var loadingDialog: LoadingDialog? = null
 
     @Subscribe
     fun onMatchesFetchedSuccessfully(event: BaseMatchesListModel.MatchesFetchedSuccessfullyEvent) {
@@ -80,8 +79,7 @@ class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: Cha
 
     @Subscribe
     fun onCreateNewChampionshipMatchButtonClicked(event: NewChampionshipMatchDialog.CreateNewChampionshipMatchButtonClickedEvent) {
-        val context = view.context ?: return
-        loadingDialog = LoadingDialog().show(context)
+        startLoading()
         newMatchDialog?.dismiss()
         model.createMatch(event.match)
     }
@@ -89,13 +87,13 @@ class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: Cha
     @Subscribe
     fun onMatchCreatedSuccessfully(event: ChampionshipMatchesModel.MatchCreatedSuccessfullyEvent) {
         view.showToast(R.string.match_created_successfully)
-        loadingDialog?.dismiss()
+        stopLoading()
         model.fetchMatches()
     }
 
     @Subscribe
     fun onMatchCreationFailed(event: ChampionshipMatchesModel.MatchCreationFailedEvent) {
         view.showToast(R.string.match_request_failed)
-        loadingDialog?.dismiss()
+        stopLoading()
     }
 }
