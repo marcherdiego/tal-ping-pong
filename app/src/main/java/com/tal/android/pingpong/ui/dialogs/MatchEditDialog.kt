@@ -8,16 +8,13 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.utils.*
 
-class MatchEditDialog(private val match: MatchRecord, private val bus: Bus) {
-
-    private var dialog: AlertDialog? = null
+class MatchEditDialog(private val match: MatchRecord, private val bus: Bus) : BaseDialog() {
 
     private lateinit var localScore: EditText
     private lateinit var visitorScore: EditText
@@ -116,11 +113,6 @@ class MatchEditDialog(private val match: MatchRecord, private val bus: Bus) {
         dialog?.show()
     }
 
-    fun dismiss() {
-        dialog?.dismiss()
-    }
-
     class MatchEditButtonClickedEvent(val match: MatchRecord)
-    class MatchAcceptChangesButtonClickedEvent(val match: MatchRecord)
     class DeclineMatchEditButtonClickedEvent(val match: MatchRecord)
 }

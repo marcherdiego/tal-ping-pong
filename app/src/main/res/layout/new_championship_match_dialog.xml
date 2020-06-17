@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/local_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/match_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/local_score"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/edit_background_color"
+            android:digits="1234567890"
+            android:gravity="center"
+            android:hint="@string/score_0"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/local_image"
+            app:layout_constraintStart_toEndOf="@+id/local_image"
+            app:layout_constraintTop_toTopOf="@+id/local_image"
+            tools:text="15" />
+
+        <TextView
+            android:id="@+id/local_user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/local"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/local_image"
+            app:layout_constraintStart_toStartOf="@+id/local_image"
+            app:layout_constraintTop_toBottomOf="@+id/local_image" />
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_table_tennis_cross"
+            app:layout_constraintBottom_toBottomOf="@+id/visitor_image"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_image"
+            app:layout_constraintStart_toEndOf="@+id/local_image"
+            app:layout_constraintTop_toTopOf="@+id/visitor_image" />
+
+        <TextView
+            android:id="@+id/match_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_user_name"
+            app:layout_constraintStart_toEndOf="@+id/local_user_name"
+            tools:text="Wed, 3rd Oct 2020 15:50" />
+
+        <EditText
+            android:id="@+id/visitor_score"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/edit_background_color"
+            android:digits="1234567890"
+            android:gravity="center"
+            android:hint="@string/score_0"
+            android:inputType="number"
+            android:maxLength="2"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/visitor_image"
+            app:layout_constraintEnd_toStartOf="@+id/visitor_image"
+            app:layout_constraintTop_toTopOf="@+id/visitor_image"
+            tools:text="4" />
+
+        <ImageView
+            android:id="@+id/visitor_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/match_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/visitor_user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@string/visitor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/visitor_image"
+            app:layout_constraintStart_toStartOf="@+id/visitor_image"
+            app:layout_constraintTop_toBottomOf="@+id/visitor_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

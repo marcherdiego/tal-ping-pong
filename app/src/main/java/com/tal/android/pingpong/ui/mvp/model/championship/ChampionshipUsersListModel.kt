@@ -21,7 +21,7 @@ class ChampionshipUsersListModel(private val sharedPreferencesUtils: SharedPrefe
             .enqueueResponseNotNull(
                 success = {
                     usersList = it
-                    bus.post(UsersFetchedSuccessfullyEvent())
+                    bus.post(UsersFetchedSuccessfullyEvent(it))
                 },
                 fail = {
                     bus.post(UsersFetchFailedEvent())
@@ -34,6 +34,6 @@ class ChampionshipUsersListModel(private val sharedPreferencesUtils: SharedPrefe
         sharedPreferencesUtils.saveUser(user)
     }
 
-    class UsersFetchedSuccessfullyEvent
+    class UsersFetchedSuccessfullyEvent(val users: List<User>)
     class UsersFetchFailedEvent
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import androidx.annotation.IntDef
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
@@ -14,17 +13,14 @@ import com.tal.android.pingpong.utils.*
 import org.greenrobot.eventbus.Subscribe
 
 class UserSelectorDialog(
-    private val users: MutableList<User>, private val bus: Bus, @UserType private val userType: Int, private var selectedUser: User? = null
-) {
+    private val users: MutableList<User>,
+    private val bus: Bus, @UserType
+    private val userType: Int,
+    private var selectedUser: User? = null
+) : BaseDialog() {
 
-    init {
-        selectedUser?.let {
-            users.add(0, it)
-        }
-    }
-
-    private var dialog: AlertDialog? = null
     private val usersAdapterBus = Bus.newInstance
+    private lateinit var usersList: RecyclerView
 
     fun show(context: Context) {
         usersAdapterBus.register(this)
@@ -32,13 +28,8 @@ class UserSelectorDialog(
             .from(context)
             .inflate(R.layout.user_selector_dialog, null)
 
-        val usersList: RecyclerView = view.findViewById(R.id.users_list)
-        usersList.adapter = UsersListAdapter(
-            users,
-            usersAdapterBus,
-            true,
-            selectedUser
-        )
+        usersList = view.findViewById(R.id.users_list)
+        refreshUsersList(users)
 
         val dialogBuilder = DialogFactory
             .Builder()
@@ -69,13 +60,21 @@ class UserSelectorDialog(
         dialog?.show()
     }
 
-    fun dismiss() {
-        dialog?.dismiss()
-    }
-
     @Subscribe
     fun onUserClicked(event: UsersListAdapter.UserClickedEvent) {
         selectedUser = event.user
+    }
+
+    fun refreshUsersList(eligibleUsers: MutableList<User>) {
+        selectedUser?.let {
+            eligibleUsers.add(0, it)
+        }
+        usersList.adapter = UsersListAdapter(
+            eligibleUsers,
+            usersAdapterBus,
+            true,
+            selectedUser
+        )
     }
 
     class UserSelectedEvent(@UserType val userType: Int, val user: User)

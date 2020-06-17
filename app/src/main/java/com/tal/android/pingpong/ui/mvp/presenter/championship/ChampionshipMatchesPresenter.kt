@@ -3,18 +3,22 @@ package com.tal.android.pingpong.ui.mvp.presenter.championship
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.recyclerview.PastMatchesAdapter
+import com.tal.android.pingpong.ui.dialogs.LoadingDialog
 import com.tal.android.pingpong.ui.dialogs.MatchEditDialog
+import com.tal.android.pingpong.ui.dialogs.NewChampionshipMatchDialog
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
 import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipMatchesModel
+import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipUsersListModel
 import com.tal.android.pingpong.ui.mvp.presenter.matcheslist.BaseMatchesListPresenter
 import com.tal.android.pingpong.ui.mvp.view.championship.ChampionshipMatchesListView
-import com.tal.android.pingpong.ui.mvp.view.matcheslist.BaseMatchesListView
 import org.greenrobot.eventbus.Subscribe
 
 class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: ChampionshipMatchesModel, bus: Bus) :
     BaseMatchesListPresenter<ChampionshipMatchesListView, ChampionshipMatchesModel>(view, model, bus) {
 
     private var matchEditDialog: MatchEditDialog? = null
+    private var newMatchDialog: NewChampionshipMatchDialog? = null
+    private var loadingDialog: LoadingDialog? = null
 
     @Subscribe
     fun onMatchesFetchedSuccessfully(event: BaseMatchesListModel.MatchesFetchedSuccessfullyEvent) {
@@ -58,5 +62,40 @@ class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: Cha
         view.showToast(R.string.edit_request_sent)
         model.notifyUpdateLists()
         matchEditDialog?.dismiss()
+    }
+
+    @Subscribe
+    fun onUsersFetchedSuccessfully(event: ChampionshipUsersListModel.UsersFetchedSuccessfullyEvent) {
+        model.updateUsers(event.users)
+        newMatchDialog?.refreshUsersList()
+    }
+
+    @Subscribe
+    fun onNewChampionshipMatchButtonClicked(event: ChampionshipMatchesListView.NewChampionshipMatchButtonClickedEvent) {
+        val context = view.context ?: return
+        val currentUser = model.getCurrentUser() ?: return
+        newMatchDialog = NewChampionshipMatchDialog(model.users, currentUser, model.getBus())
+        newMatchDialog?.show(context)
+    }
+
+    @Subscribe
+    fun onCreateNewChampionshipMatchButtonClicked(event: NewChampionshipMatchDialog.CreateNewChampionshipMatchButtonClickedEvent) {
+        val context = view.context ?: return
+        loadingDialog = LoadingDialog().show(context)
+        newMatchDialog?.dismiss()
+        model.createMatch(event.match)
+    }
+
+    @Subscribe
+    fun onMatchCreatedSuccessfully(event: ChampionshipMatchesModel.MatchCreatedSuccessfullyEvent) {
+        view.showToast(R.string.match_created_successfully)
+        loadingDialog?.dismiss()
+        model.fetchMatches()
+    }
+
+    @Subscribe
+    fun onMatchCreationFailed(event: ChampionshipMatchesModel.MatchCreationFailedEvent) {
+        view.showToast(R.string.match_request_failed)
+        loadingDialog?.dismiss()
     }
 }

@@ -6,7 +6,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
@@ -18,9 +17,7 @@ import com.tal.android.pingpong.utils.SharedPreferencesUtils
 import com.tal.android.pingpong.utils.load
 import java.util.*
 
-class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: User, private val bus: Bus) {
-
-    private var dialog: AlertDialog? = null
+class NewSinglesMatchDialog(private val myUser: User, private val rivalUser: User, private val bus: Bus) : BaseDialog() {
 
     fun show(context: Context) {
         val challengeDialogView = LayoutInflater

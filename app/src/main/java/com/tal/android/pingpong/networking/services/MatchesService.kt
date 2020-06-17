@@ -28,9 +28,6 @@ interface MatchesService {
     @POST("/editMatch.php")
     fun editMatch(@Query("userId") userId: Int, @Body match: MatchRecord): Call<Unit>
 
-    @POST("/declineMatchEdit.php")
-    fun declineMatchEdit(@Query("userId") userId: Int, @Body match: MatchRecord): Call<Unit>
-
     @GET("/getMatches.php")
     fun getMyMatches(
         @Query("userId") userId: Int,

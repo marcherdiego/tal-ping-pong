@@ -2,16 +2,13 @@ package com.tal.android.pingpong.ui.dialogs
 
 import android.content.Context
 import android.view.LayoutInflater
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.utils.DialogFactory
 
-class DeclineMatchDialog(private val match: MatchRecord, private val bus: Bus) {
-
-    private var dialog: AlertDialog? = null
+class DeclineMatchDialog(private val match: MatchRecord, private val bus: Bus) : BaseDialog() {
 
     fun show(context: Context) {
         val challengeDialogView = LayoutInflater
@@ -32,10 +29,6 @@ class DeclineMatchDialog(private val match: MatchRecord, private val bus: Bus) {
             }
             .build(context)
         dialog?.show()
-    }
-
-    fun dismiss() {
-        dialog?.dismiss()
     }
 
     class ConfirmDeclineMatchButtonClickedEvent(val match: MatchRecord, val declineReason: String)

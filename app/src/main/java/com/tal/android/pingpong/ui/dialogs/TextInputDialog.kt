@@ -3,16 +3,13 @@ package com.tal.android.pingpong.ui.dialogs
 import android.content.Context
 import android.view.LayoutInflater
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.utils.DialogFactory
 
-class TextInputDialog(private val bus: Bus, private val allowEmpty: Boolean = false) {
-
-    private var dialog: AlertDialog? = null
+class TextInputDialog(private val bus: Bus, private val allowEmpty: Boolean = false) : BaseDialog() {
 
     fun show(
         context: Context, @StringRes title: Int, @StringRes positiveButtonText: Int, @StringRes negativeButtonText: Int,
@@ -45,10 +42,6 @@ class TextInputDialog(private val bus: Bus, private val allowEmpty: Boolean = fa
             }
             .build(context)
         dialog?.show()
-    }
-
-    fun dismiss() {
-        dialog?.dismiss()
     }
 
     class PositiveButtonClickedEvent(val requestCode: Int, val input: String)

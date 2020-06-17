@@ -15,6 +15,13 @@ interface ChampionshipsService {
         @Body championship: Championship
     ): Call<Unit>
 
+    @POST("/createChampionshipMatch.php")
+    fun createChampionshipMatch(
+        @Query("userId") userId: Int,
+        @Query("championshipId") championshipId: Int,
+        @Body match: MatchRecord
+    ): Call<Unit>
+
     @GET("/getChampionships.php")
     fun getChampionships(
         @Query("userId") userId: Int,

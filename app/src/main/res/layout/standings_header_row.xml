@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Player"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/avatar" />
@@ -20,6 +21,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="4dp"
         android:src="@drawable/ic_incognito"
+        android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/position"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,6 +30,7 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toStartOf="@+id/played"
         app:layout_constraintStart_toEndOf="@+id/avatar"
@@ -41,6 +44,7 @@
         android:maxEms="2"
         android:minEms="2"
         android:text="MP"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toStartOf="@+id/won"
         app:layout_constraintTop_toTopOf="@+id/avatar" />
@@ -53,6 +57,7 @@
         android:maxEms="2"
         android:minEms="2"
         android:text="W"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toStartOf="@+id/lost"
         app:layout_constraintTop_toTopOf="@+id/avatar" />
@@ -65,6 +70,7 @@
         android:maxEms="2"
         android:minEms="2"
         android:text="L"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toStartOf="@+id/goals_scored"
         app:layout_constraintTop_toTopOf="@+id/avatar" />
@@ -77,6 +83,7 @@
         android:maxEms="2"
         android:minEms="2"
         android:text="GF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toStartOf="@+id/goals_against"
         app:layout_constraintTop_toTopOf="@+id/avatar" />
@@ -89,6 +96,7 @@
         android:maxEms="2"
         android:minEms="2"
         android:text="GA"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toStartOf="@+id/goals_difference"
         app:layout_constraintTop_toTopOf="@+id/avatar" />
@@ -101,6 +109,7 @@
         android:maxEms="2"
         android:minEms="2"
         android:text="GD"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toStartOf="@+id/points"
         app:layout_constraintTop_toTopOf="@+id/avatar" />
@@ -113,6 +122,7 @@
         android:maxEms="2"
         android:minEms="2"
         android:text="Pts"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/avatar" />

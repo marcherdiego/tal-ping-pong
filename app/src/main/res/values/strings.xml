@@ -104,6 +104,12 @@
     <string name="starts_on_x">Starts on %1$s</string>
     <string name="created_by_x">Created by %1$s</string>
     <string name="championship_x">Championship: %1$s</string>
+    <string name="new_match_record">New match record</string>
+    <string name="add">Add</string>
+    <string name="match_creation_failed">Match creation failed, please try again later</string>
+    <string name="match_created_successfully">Match created successfully!</string>
+    <string name="invalid_score">Invalid score</string>
+    <string name="please_wait">Please wait…</string>
 
     <plurals name="x_members">
         <item quantity="one">%d member</item>

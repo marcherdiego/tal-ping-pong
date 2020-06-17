@@ -19,7 +19,7 @@ class ChampionshipMatchesFragment : BaseMatchesList<ChampionshipMatchesPresenter
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.matches_list_fragment, container, false)
+    ): View = inflater.inflate(R.layout.championship_matches_list_fragment, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
