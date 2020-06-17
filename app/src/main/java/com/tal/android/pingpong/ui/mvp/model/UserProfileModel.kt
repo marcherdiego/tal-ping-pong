@@ -27,7 +27,7 @@ class UserProfileModel(
         googleSignInClient.signOut()
         usersService
             .logout(user)
-            .fireAndForget(model = this)
+            .fireAndForget()
     }
 
     fun fetchLastMatches() {
