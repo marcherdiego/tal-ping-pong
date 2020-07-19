@@ -20,13 +20,19 @@ class ChampionshipPresenter(view: ChampionshipView, model: ChampionshipModel) :
         with(model.championship) {
             view.withFragmentManager {
                 val matchesFragment = ChampionshipMatchesFragment().apply {
-                    arguments = bundleOf(ChampionshipMatchesFragment.CHAMPIONSHIP_ID to championshipId)
+                    arguments = bundleOf(
+                        ChampionshipMatchesFragment.CHAMPIONSHIP_ID to championshipId,
+                        ChampionshipMatchesFragment.DOUBLES_CHAMPIONSHIP to doubles
+                    )
                 }
                 val usersFragment = ChampionshipUsersListFragment().apply {
                     arguments = bundleOf(ChampionshipUsersListFragment.CHAMPIONSHIP_ID to championshipId)
                 }
                 val standingsFragment = ChampionshipStandingsFragment().apply {
-                    arguments = bundleOf(ChampionshipStandingsFragment.CHAMPIONSHIP_ID to championshipId)
+                    arguments = bundleOf(
+                        ChampionshipStandingsFragment.CHAMPIONSHIP_ID to championshipId,
+                        ChampionshipStandingsFragment.DOUBLES_CHAMPIONSHIP to doubles
+                    )
                 }
                 val tabsFragment = listOf(
                     matchesFragment,

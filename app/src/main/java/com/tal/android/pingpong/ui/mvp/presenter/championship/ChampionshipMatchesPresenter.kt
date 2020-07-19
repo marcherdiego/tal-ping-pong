@@ -3,9 +3,10 @@ package com.tal.android.pingpong.ui.mvp.presenter.championship
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
 import com.tal.android.pingpong.ui.adapters.recyclerview.PastMatchesAdapter
-import com.tal.android.pingpong.ui.dialogs.LoadingDialog
+import com.tal.android.pingpong.ui.dialogs.BaseChampionshipMatchDialog
 import com.tal.android.pingpong.ui.dialogs.MatchEditDialog
-import com.tal.android.pingpong.ui.dialogs.NewChampionshipMatchDialog
+import com.tal.android.pingpong.ui.dialogs.NewChampionshipDoubleMatchDialog
+import com.tal.android.pingpong.ui.dialogs.NewChampionshipSinglesMatchDialog
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
 import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipMatchesModel
 import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipUsersListModel
@@ -17,7 +18,7 @@ class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: Cha
     BaseMatchesListPresenter<ChampionshipMatchesListView, ChampionshipMatchesModel>(view, model, bus) {
 
     private var matchEditDialog: MatchEditDialog? = null
-    private var newMatchDialog: NewChampionshipMatchDialog? = null
+    private var newMatchDialog: BaseChampionshipMatchDialog? = null
 
     @Subscribe
     fun onMatchesFetchedSuccessfully(event: BaseMatchesListModel.MatchesFetchedSuccessfullyEvent) {
@@ -73,12 +74,16 @@ class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: Cha
     fun onNewChampionshipMatchButtonClicked(event: ChampionshipMatchesListView.NewChampionshipMatchButtonClickedEvent) {
         val context = view.context ?: return
         val currentUser = model.getCurrentUser() ?: return
-        newMatchDialog = NewChampionshipMatchDialog(model.users, currentUser, model.getBus())
+        newMatchDialog = if (model.doubles) {
+            NewChampionshipSinglesMatchDialog(model.users, currentUser, model.getBus())
+        } else {
+            NewChampionshipDoubleMatchDialog(model.users, currentUser, model.getBus())
+        }
         newMatchDialog?.show(context)
     }
 
     @Subscribe
-    fun onCreateNewChampionshipMatchButtonClicked(event: NewChampionshipMatchDialog.CreateNewChampionshipMatchButtonClickedEvent) {
+    fun onCreateNewChampionshipMatchButtonClicked(event: BaseChampionshipMatchDialog.CreateNewChampionshipMatchButtonClickedEvent) {
         startLoading()
         newMatchDialog?.dismiss()
         model.createMatch(event.match)

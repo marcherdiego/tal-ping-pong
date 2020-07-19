@@ -111,6 +111,8 @@
     <string name="invalid_score">Invalid score</string>
     <string name="please_wait">Please wait…</string>
     <string name="match_edited">Match edited!</string>
+    <string name="team">Team</string>
+    <string name="player">Player</string>
 
     <plurals name="x_members">
         <item quantity="one">%d member</item>

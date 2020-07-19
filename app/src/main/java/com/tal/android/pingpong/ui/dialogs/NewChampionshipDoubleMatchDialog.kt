@@ -1,13 +1,10 @@
 package com.tal.android.pingpong.ui.dialogs
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
@@ -15,43 +12,52 @@ import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.utils.DialogFactory
 import com.tal.android.pingpong.utils.load
+import com.tal.android.pingpong.utils.multiLet
 import org.greenrobot.eventbus.Subscribe
-import java.util.*
 
-class NewChampionshipMatchDialog(private val users: List<User>, private val myUser: User, private val bus: Bus) : BaseDialog() {
-    private var userSelectorDialog: UserSelectorDialog? = null
+class NewChampionshipDoubleMatchDialog(users: List<User>, myUser: User, bus: Bus) : BaseChampionshipMatchDialog(users, myUser, bus) {
 
     private lateinit var localImage: ImageView
-    private lateinit var localUserName: TextView
-
+    private lateinit var localCompanionImage: ImageView
     private lateinit var visitorImage: ImageView
-    private lateinit var visitorUserName: TextView
+    private lateinit var visitorCompanionImage: ImageView
 
     private lateinit var localScore: EditText
     private lateinit var visitorScore: EditText
 
+    private var localCompanion: User? = null
     private var visitor: User? = null
+    private var visitorCompanion: User? = null
 
-    fun show(context: Context) {
+    override fun show(context: Context) {
         val userSelectorBus = Bus.newInstance
         userSelectorBus.register(this)
         val newMatchDialogView = LayoutInflater
             .from(context)
-            .inflate(R.layout.new_championship_match_dialog, null)
+            .inflate(R.layout.new_championship_doubles_match_dialog, null)
         localImage = newMatchDialogView.findViewById(R.id.local_image)
-        localUserName = newMatchDialogView.findViewById(R.id.local_user_name)
+        localCompanionImage = newMatchDialogView.findViewById(R.id.local_companion_image)
         visitorImage = newMatchDialogView.findViewById(R.id.visitor_image)
-        visitorUserName = newMatchDialogView.findViewById(R.id.visitor_user_name)
+        visitorCompanionImage = newMatchDialogView.findViewById(R.id.visitor_companion_image)
 
         localScore = newMatchDialogView.findViewById(R.id.local_score)
         visitorScore = newMatchDialogView.findViewById(R.id.visitor_score)
 
         localImage.load(myUser.userImage, R.drawable.ic_incognito, true)
-        localUserName.text = myUser.userName
-
+        localCompanionImage.load(fallbackImage = R.drawable.ic_incognito)
         visitorImage.load(fallbackImage = R.drawable.ic_incognito)
+        visitorCompanionImage.load(fallbackImage = R.drawable.ic_incognito)
+
+        localCompanionImage.setOnClickListener {
+            userSelectorDialog = UserSelectorDialog(getEligibleUsers(), userSelectorBus, UserSelectorDialog.LOCAL_COMPANION, localCompanion)
+            userSelectorDialog?.show(it.context)
+        }
         visitorImage.setOnClickListener {
             userSelectorDialog = UserSelectorDialog(getEligibleUsers(), userSelectorBus, UserSelectorDialog.VISITOR, visitor)
+            userSelectorDialog?.show(it.context)
+        }
+        visitorCompanionImage.setOnClickListener {
+            userSelectorDialog = UserSelectorDialog(getEligibleUsers(), userSelectorBus, UserSelectorDialog.VISITOR_COMPANION, visitorCompanion)
             userSelectorDialog?.show(it.context)
         }
 
@@ -78,13 +84,15 @@ class NewChampionshipMatchDialog(private val users: List<User>, private val myUs
 
     private fun validateMatchMembersList() {
         dialog?.context?.let { context ->
-            visitor?.let {
+            multiLet(localCompanion, visitor, visitorCompanion) { localCompanion, visitor, visitorCompanion ->
                 try {
                     openDateSelectionDialog(
                         context,
                         MatchRecord(
                             local = myUser,
+                            localCompanion = localCompanion,
                             visitor = visitor,
+                            visitorCompanion = visitorCompanion,
                             localScore = localScore.text.toString().toInt(),
                             visitorScore = visitorScore.text.toString().toInt()
                         )
@@ -93,84 +101,50 @@ class NewChampionshipMatchDialog(private val users: List<User>, private val myUs
                     Toast.makeText(context, R.string.invalid_score, Toast.LENGTH_SHORT).show()
                 }
             } ?: run {
-                Toast.makeText(context, R.string.select_user, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, R.string.some_participants_are_missing, Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun getEligibleUsers(): MutableList<User> {
-        val eligibleUsers = mutableListOf<User>()
-        eligibleUsers.addAll(
-            users.filterNot {
-                it.userId in arrayOf(myUser.userId, visitor?.userId)
-            }
-        )
-        return eligibleUsers
     }
 
     @Subscribe
     fun onUserSelected(event: UserSelectorDialog.UserSelectedEvent) {
         when (event.userType) {
+            UserSelectorDialog.LOCAL_COMPANION -> {
+                localCompanion = event.user
+                localCompanionImage.load(url = event.user.userImage, rounded = true, fallbackImage = R.drawable.ic_incognito)
+            }
             UserSelectorDialog.VISITOR -> {
                 visitor = event.user
                 visitorImage.load(url = event.user.userImage, rounded = true, fallbackImage = R.drawable.ic_incognito)
-                visitorUserName.text = event.user.userName
+            }
+            UserSelectorDialog.VISITOR_COMPANION -> {
+                visitorCompanion = event.user
+                visitorCompanionImage.load(url = event.user.userImage, rounded = true, fallbackImage = R.drawable.ic_incognito)
             }
             else -> return
         }
+        selectedUsers.add(event.user)
     }
 
     @Subscribe
     fun onUserRemoved(event: UserSelectorDialog.UserRemovedEvent) {
         when (event.userType) {
+            UserSelectorDialog.LOCAL_COMPANION -> {
+                selectedUsers.remove(localCompanion)
+                localCompanion = null
+                localCompanionImage.load(fallbackImage = R.drawable.ic_incognito)
+            }
             UserSelectorDialog.VISITOR -> {
+                selectedUsers.remove(visitor)
                 visitor = null
                 visitorImage.load(fallbackImage = R.drawable.ic_incognito)
-                visitorUserName.setText(R.string.visitor)
+            }
+            UserSelectorDialog.VISITOR_COMPANION -> {
+                selectedUsers.remove(visitorCompanion)
+                visitorCompanion = null
+                visitorCompanionImage.load(fallbackImage = R.drawable.ic_incognito)
             }
             else -> return
         }
     }
-
-    private fun openDateSelectionDialog(context: Context, match: MatchRecord) {
-        val today = Calendar.getInstance()
-        val datePickerDialog = DatePickerDialog(
-            context,
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                openTimeSelectionDialog(context, match, year, monthOfYear, dayOfMonth)
-            },
-            today[Calendar.YEAR],
-            today[Calendar.MONTH],
-            today[Calendar.DAY_OF_MONTH]
-        )
-        datePickerDialog.datePicker.minDate = today.timeInMillis
-        datePickerDialog.show()
-    }
-
-    private fun openTimeSelectionDialog(context: Context, match: MatchRecord, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        val now = Calendar.getInstance()
-        val timePickerDialog = TimePickerDialog(
-            context,
-            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                match.matchDate = Calendar
-                    .getInstance()
-                    .apply {
-                        set(year, monthOfYear, dayOfMonth, hourOfDay, minute)
-                    }
-                    .time
-                    .toString()
-                bus.post(CreateNewChampionshipMatchButtonClickedEvent(match))
-            },
-            now[Calendar.HOUR_OF_DAY],
-            now[Calendar.MINUTE],
-            false
-        )
-        timePickerDialog.show()
-    }
-
-    fun refreshUsersList() {
-        userSelectorDialog?.refreshUsersList(getEligibleUsers())
-    }
-
-    class CreateNewChampionshipMatchButtonClickedEvent(val match: MatchRecord)
 }

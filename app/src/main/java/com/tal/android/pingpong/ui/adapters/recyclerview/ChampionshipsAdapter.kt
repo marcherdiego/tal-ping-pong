@@ -46,11 +46,7 @@ class ChampionshipsAdapter(private val championships: List<Championship>, privat
             val usersCount = championship.usersCount ?: 0
             championshipUsersCount.text = context.resources.getQuantityString(R.plurals.x_members, usersCount, usersCount)
             itemView.setOnClickListener {
-                bus.post(
-                    ChampionshipClickedEvent(
-                        championship
-                    )
-                )
+                bus.post(ChampionshipClickedEvent(championship))
             }
         }
     }

@@ -1,17 +1,18 @@
-package com.tal.android.pingpong.ui.adapters
+package com.tal.android.pingpong.ui.adapters.recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tal.android.pingpong.R
-import com.tal.android.pingpong.ui.adapters.StandingsAdapter.ViewHolder
+import com.tal.android.pingpong.ui.adapters.recyclerview.StandingsAdapter.ViewHolder
 import android.widget.TextView
 import android.widget.ImageView
 import com.tal.android.pingpong.domain.Standing
 import com.tal.android.pingpong.utils.load
 
-class StandingsAdapter(private val standings: List<Standing>) : RecyclerView.Adapter<ViewHolder>() {
+class StandingsAdapter(private var doublesChampionship: Boolean, private val standings: List<Standing>) :
+    RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -44,8 +45,7 @@ class StandingsAdapter(private val standings: List<Standing>) : RecyclerView.Ada
             val standing = standings[index - 1]
             with(holder) {
                 position.text = index.toString()
-                val doublesMatch = standing.team != null
-                if (doublesMatch) {
+                if (doublesChampionship) {
                     user2Avatar?.visibility = View.VISIBLE
                     user2Separator?.visibility = View.VISIBLE
                     user2Name?.visibility = View.VISIBLE
@@ -80,6 +80,14 @@ class StandingsAdapter(private val standings: List<Standing>) : RecyclerView.Ada
                 goalsDifference.text = standing.getGoalsDifference().toString()
                 points.text = standing.points.toString()
             }
+        } else if (holder.itemViewType == HEADER) {
+            holder.position.setText(
+                if (doublesChampionship) {
+                    R.string.team
+                } else {
+                    R.string.player
+                }
+            )
         }
     }
 

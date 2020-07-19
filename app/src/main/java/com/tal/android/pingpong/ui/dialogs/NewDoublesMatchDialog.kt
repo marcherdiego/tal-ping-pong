@@ -20,7 +20,7 @@ import com.tal.android.pingpong.utils.multiLet
 import org.greenrobot.eventbus.Subscribe
 import java.util.*
 
-class NewDoublesMatchDialog(private val users: List<User>, private val myUser: User, private val bus: Bus) : BaseDialog(){
+class NewDoublesMatchDialog(private val users: List<User>, private val myUser: User, private val bus: Bus) : BaseDialog() {
 
     private val userSelectorBus = Bus.newInstance
 

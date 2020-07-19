@@ -18,15 +18,17 @@ class ChampionshipStandingsFragment : BaseFragment<ChampionshipStandingsPresente
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val championshipId = arguments?.getInt(ChampionshipUsersListFragment.CHAMPIONSHIP_ID)
+        val championshipId = arguments?.getInt(ChampionshipUsersListFragment.CHAMPIONSHIP_ID) ?: return
+        val doubles = arguments?.getBoolean(DOUBLES_CHAMPIONSHIP) ?: false
         presenter = ChampionshipStandingsPresenter(
             ChampionshipStandingsView(this),
-            ChampionshipStandingsModel(championshipId ?: return)
+            ChampionshipStandingsModel(championshipId, doubles)
         )
     }
 
     companion object {
         const val CHAMPIONSHIP_ID = "championship_id"
+        const val DOUBLES_CHAMPIONSHIP = "doubles_championship"
         const val TITLE = "Standings"
     }
 }

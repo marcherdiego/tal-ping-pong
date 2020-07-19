@@ -9,8 +9,11 @@ import com.tal.android.pingpong.networking.services.ChampionshipsService
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
 
-class ChampionshipMatchesModel(private val sharedPreferences: SharedPreferencesUtils, private val championshipId: Int) :
-    BaseMatchesListModel(sharedPreferences) {
+class ChampionshipMatchesModel(
+    private val sharedPreferences: SharedPreferencesUtils,
+    private val championshipId: Int,
+    val doubles: Boolean
+) : BaseMatchesListModel(sharedPreferences) {
 
     private val championshipsService = ServiceGenerator.createService(ChampionshipsService::class.java)
     val users = mutableListOf<User>()

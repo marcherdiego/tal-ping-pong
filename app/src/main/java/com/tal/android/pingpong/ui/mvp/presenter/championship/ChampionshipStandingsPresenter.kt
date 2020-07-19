@@ -1,7 +1,7 @@
 package com.tal.android.pingpong.ui.mvp.presenter.championship
 
 import com.nerdscorner.mvplib.events.presenter.BaseFragmentPresenter
-import com.tal.android.pingpong.ui.adapters.StandingsAdapter
+import com.tal.android.pingpong.ui.adapters.recyclerview.StandingsAdapter
 import com.tal.android.pingpong.ui.mvp.view.championship.ChampionshipStandingsView
 import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipStandingsModel
 import org.greenrobot.eventbus.Subscribe
@@ -12,7 +12,12 @@ class ChampionshipStandingsPresenter(view: ChampionshipStandingsView, model: Cha
     @Subscribe
     fun onStandingsFetchedSuccessfully(event: ChampionshipStandingsModel.StandingsFetchedSuccessfullyEvent) {
         view.setRefreshing(false)
-        view.setStandingsAdapter(StandingsAdapter(event.standings))
+        view.setStandingsAdapter(
+            StandingsAdapter(
+                model.doubles,
+                event.standings
+            )
+        )
     }
 
     @Subscribe
