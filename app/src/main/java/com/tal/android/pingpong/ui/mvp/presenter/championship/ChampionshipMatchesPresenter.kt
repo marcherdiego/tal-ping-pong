@@ -75,9 +75,9 @@ class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: Cha
         val context = view.context ?: return
         val currentUser = model.getCurrentUser() ?: return
         newMatchDialog = if (model.doubles) {
-            NewChampionshipSinglesMatchDialog(model.users, currentUser, model.getBus())
-        } else {
             NewChampionshipDoubleMatchDialog(model.users, currentUser, model.getBus())
+        } else {
+            NewChampionshipSinglesMatchDialog(model.users, currentUser, model.getBus())
         }
         newMatchDialog?.show(context)
     }
