@@ -35,6 +35,6 @@ class ChampionshipUsersListFragment : BaseFragment<ChampionshipUsersListPresente
 
     companion object {
         const val CHAMPIONSHIP_ID = "championship_id"
-        const val TITLE = "Members"
+        const val TITLE = "Participants"
     }
 }

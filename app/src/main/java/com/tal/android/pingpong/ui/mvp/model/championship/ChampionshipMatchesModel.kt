@@ -27,11 +27,7 @@ class ChampionshipMatchesModel(private val sharedPreferences: SharedPreferencesU
             .getChampionshipMatches(championshipId)
             .enqueueResponseNotNull(
                 success = {
-                    bus.post(
-                        MatchesFetchedSuccessfullyEvent(
-                            it
-                        )
-                    )
+                    bus.post(MatchesFetchedSuccessfullyEvent(it))
                 },
                 fail = {
                     bus.post(MatchesFetchFailedEvent())

@@ -23,5 +23,8 @@ data class Championship(
     var users: List<User> = arrayListOf(),
 
     @SerializedName("usersCount")
-    var usersCount: Int? = null
+    var usersCount: Int? = null,
+
+    @SerializedName("doubles")
+    var doubles: Boolean? = null
 ) : Serializable

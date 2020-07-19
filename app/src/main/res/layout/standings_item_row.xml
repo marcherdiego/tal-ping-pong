@@ -25,18 +25,47 @@
         app:layout_constraintStart_toEndOf="@+id/position"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/user_2_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_incognito"
+        app:layout_constraintStart_toEndOf="@+id/position"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/user_2_separator"
+        android:layout_width="4dp"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toEndOf="@+id/avatar"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:maxEms="2"
-        android:minEms="2"
+        android:ellipsize="end"
+        android:lines="1"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toStartOf="@+id/played"
-        app:layout_constraintStart_toEndOf="@+id/avatar"
+        app:layout_constraintStart_toEndOf="@+id/user_2_separator"
         app:layout_constraintTop_toTopOf="@+id/avatar"
-        tools:text="Diego Marcher" />
+        tools:text="Diego\nMarcher" />
+
+    <TextView
+        android:id="@+id/user_2_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        app:layout_constraintBottom_toBottomOf="@+id/user_2_avatar"
+        app:layout_constraintEnd_toStartOf="@+id/played"
+        app:layout_constraintStart_toStartOf="@+id/name"
+        app:layout_constraintTop_toTopOf="@+id/user_2_avatar"
+        tools:text="Diego\nMarcher" />
 
     <TextView
         android:id="@+id/played"
@@ -45,7 +74,7 @@
         android:gravity="center"
         android:maxEms="2"
         android:minEms="2"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/name"
         app:layout_constraintEnd_toStartOf="@+id/won"
         app:layout_constraintTop_toTopOf="@+id/avatar"
@@ -58,7 +87,7 @@
         android:gravity="center"
         android:maxEms="2"
         android:minEms="2"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/lost"
         app:layout_constraintTop_toTopOf="@+id/avatar"
         tools:text="100" />
@@ -70,7 +99,7 @@
         android:gravity="center"
         android:maxEms="2"
         android:minEms="2"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/goals_scored"
         app:layout_constraintTop_toTopOf="@+id/avatar"
         tools:text="100" />
@@ -82,7 +111,7 @@
         android:gravity="center"
         android:maxEms="2"
         android:minEms="2"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/goals_against"
         app:layout_constraintTop_toTopOf="@+id/avatar"
         tools:text="100" />
@@ -94,7 +123,7 @@
         android:gravity="center"
         android:maxEms="2"
         android:minEms="2"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/goals_difference"
         app:layout_constraintTop_toTopOf="@+id/avatar"
         tools:text="100" />
@@ -106,7 +135,7 @@
         android:gravity="center"
         android:maxEms="2"
         android:minEms="2"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/points"
         app:layout_constraintTop_toTopOf="@+id/avatar"
         tools:text="100" />
@@ -118,7 +147,7 @@
         android:gravity="center"
         android:maxEms="2"
         android:minEms="2"
-        app:layout_constraintBottom_toBottomOf="@+id/avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/avatar"
         tools:text="100" />

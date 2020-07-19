@@ -6,6 +6,9 @@ data class Standing(
     @SerializedName("user")
     var user: User? = null,
 
+    @SerializedName("team")
+    var team: Team? = null,
+
     @SerializedName("played")
     var played: Int? = null,
 
