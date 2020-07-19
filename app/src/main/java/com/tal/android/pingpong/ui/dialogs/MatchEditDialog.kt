@@ -99,16 +99,11 @@ class MatchEditDialog(private val match: MatchRecord, private val bus: Bus) : Ba
                     dismiss()
                 }
             }
-        if (match.hasRequestedChanges == false) {
-            dialogBuilder.setPositiveButtonText(R.string.close)
-        } else {
-            dialogBuilder
-                .setPositiveButtonText(R.string.accept)
-                .setNegativeButtonText(R.string.decline)
-                .setNegativeButtonListener {
-                    bus.post(DeclineMatchEditButtonClickedEvent(match))
-                }
-        }
+            .setPositiveButtonText(R.string.accept)
+            .setNegativeButtonText(R.string.decline)
+            .setNegativeButtonListener {
+                bus.post(DeclineMatchEditButtonClickedEvent(match))
+            }
         dialog = dialogBuilder.build(activity)
         dialog?.show()
     }

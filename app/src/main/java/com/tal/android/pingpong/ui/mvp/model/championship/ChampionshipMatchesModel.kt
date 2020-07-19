@@ -7,7 +7,9 @@ import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.ChampionshipsService
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
+import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
+import java.util.*
 
 class ChampionshipMatchesModel(
     private val sharedPreferences: SharedPreferencesUtils,
@@ -82,6 +84,18 @@ class ChampionshipMatchesModel(
             )
     }
 
+    fun fetchUsers() {
+        championshipsService
+            .getChampionshipMembers(championshipId)
+            .enqueueResponseNotNull(
+                success = {
+                    updateUsers(it)
+                    bus.post(UsersFetchedSuccessfullyEvent())
+                },
+                model = this
+            )
+    }
+
     class MatchEditedSuccessfullyEvent
     class MatchEditFailedEvent
 
@@ -90,4 +104,6 @@ class ChampionshipMatchesModel(
 
     class MatchCreatedSuccessfullyEvent
     class MatchCreationFailedEvent
+
+    class UsersFetchedSuccessfullyEvent
 }

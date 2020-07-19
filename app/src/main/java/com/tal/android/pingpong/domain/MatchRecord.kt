@@ -31,11 +31,8 @@ data class MatchRecord(
     @SerializedName("confirmed")
     var confirmed: Boolean? = null,
 
-    @SerializedName("hasRequestedChanges")
-    var hasRequestedChanges: Boolean? = null,
-
-    @SerializedName("changeRequestUserId")
-    var changeRequestUserId: Int = 0,
+    @SerializedName("declined")
+    var declined: Boolean? = null,
 
     @SerializedName("requestedLocalScore")
     var requestedLocalScore: Int = UNSET,
@@ -91,19 +88,9 @@ data class MatchRecord(
         return false
     }
 
-    fun isLocalUser(user: User): Boolean {
-        if (local?.userId == user.userId || localCompanion?.userId == user.userId) {
-            return true
-        }
-        return false
-    }
+    fun isLocalUser(user: User) = local?.userId == user.userId || localCompanion?.userId == user.userId
 
-    fun isLocalUser(userId: Int?): Boolean {
-        if (local?.userId == userId || localCompanion?.userId == userId) {
-            return true
-        }
-        return false
-    }
+    fun isLocalUser(userId: Int?) = local?.userId == userId || localCompanion?.userId == userId
 
     companion object {
         const val UNSET = -1

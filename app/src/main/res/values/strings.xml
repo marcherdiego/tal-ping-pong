@@ -113,6 +113,10 @@
     <string name="match_edited">Match edited!</string>
     <string name="team">Team</string>
     <string name="player">Player</string>
+    <string name="declined">Declined</string>
+    <string name="victory">Victory!</string>
+    <string name="defeat">Defeat</string>
+    <string name="not_played_yet">Not played yet</string>
 
     <plurals name="x_members">
         <item quantity="one">%d member</item>

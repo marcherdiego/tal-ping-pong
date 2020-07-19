@@ -17,6 +17,8 @@ import com.tal.android.pingpong.utils.load
 
 class IncomingSinglesMatchDialog(private val match: MatchRecord, private val myUserId: Int?, private val bus: Bus) : BaseDialog() {
 
+    private var declineMatchDialog: DeclineMatchDialog? = null
+
     fun show(fragmentActivity: FragmentActivity) {
         val challengeDialogView = LayoutInflater
             .from(fragmentActivity)
@@ -78,11 +80,17 @@ class IncomingSinglesMatchDialog(private val match: MatchRecord, private val myU
                     bus.post(AcceptChallengeButtonClickedEvent(match))
                 }
                 .setNegativeButtonListener {
-                    DeclineMatchDialog(match, bus).show(fragmentActivity)
+                    declineMatchDialog = DeclineMatchDialog(match, bus)
+                    declineMatchDialog?.show(fragmentActivity)
                 }
         }
         dialog = dialogBuilder.build(fragmentActivity)
         dialog?.show()
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        declineMatchDialog?.dismiss()
     }
 
     class AcceptChallengeButtonClickedEvent(val match: MatchRecord)

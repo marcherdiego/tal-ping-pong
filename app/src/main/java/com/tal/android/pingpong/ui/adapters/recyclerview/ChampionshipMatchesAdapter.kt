@@ -16,7 +16,7 @@ import com.tal.android.pingpong.utils.DateUtils
 import java.lang.IllegalArgumentException
 import java.util.*
 
-class PastMatchesAdapter(private val matches: List<Match>, private val userEmail: String?, private val bus: Bus) :
+class ChampionshipMatchesAdapter(private val matches: List<Match>, private val userEmail: String?, private val bus: Bus) :
     RecyclerView.Adapter<BaseMatchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseMatchViewHolder {
@@ -71,42 +71,31 @@ class PastMatchesAdapter(private val matches: List<Match>, private val userEmail
             visitorScore?.text = visitorPlayerScore.toString()
 
             val matchDate = DateUtils.parseDate(matchRecord.matchDate)
-            val matchNotPlayed = matchDate?.before(Date()) == true && matchRecord.confirmed == false
-            when {
-                matchRecord.confirmed == true -> {
-                    confirmedLabel?.setText(R.string.confirmed)
-                    confirmedIcon?.setImageResource(R.drawable.ic_verified)
-                }
-                matchRecord.declined == true -> {
-                    confirmedLabel?.setText(R.string.declined)
-                    confirmedIcon?.setImageResource(R.drawable.ic_declined)
-                }
-                matchNotPlayed -> {
-                    confirmedLabel?.setText(R.string.not_played)
-                    confirmedIcon?.setImageResource(R.drawable.ic_close)
-                }
-                else -> {
-                    confirmedLabel?.setText(R.string.unconfirmed)
-                    confirmedIcon?.setImageResource(R.drawable.ic_warning)
-                }
-            }
-
+            val matchNotPlayed = matchDate?.after(Date()) == true
+            val myVictory = matchRecord.myVictory(userEmail)
             itemView.setBackgroundColor(
                 ContextCompat.getColor(
                     context,
-                    if (matchRecord.confirmed == true) {
-                        if (matchRecord.myVictory(userEmail)) {
-                            R.color.victory_background_color
-                        } else {
-                            R.color.defeat_background_color
-                        }
-                    } else if (matchNotPlayed) {
-                        R.color.match_not_played
-                    } else {
-                        R.color.changes_requested_background_color
+                    when {
+                        matchNotPlayed -> R.color.match_not_played
+                        myVictory -> R.color.victory_background_color
+                        else -> R.color.defeat_background_color
                     }
                 )
             )
+            if (matchNotPlayed) {
+                confirmedIcon?.setImageResource(R.drawable.ic_hourglass)
+                confirmedLabel?.setText(R.string.not_played_yet)
+            } else {
+                if (myVictory) {
+                    confirmedIcon?.setImageResource(R.drawable.ic_first_place_trophy)
+                    confirmedLabel?.setText(R.string.victory)
+                } else {
+                    confirmedIcon?.setImageResource(R.drawable.ic_sad)
+                    confirmedLabel?.setText(R.string.defeat)
+                }
+            }
+
             itemView.setOnClickListener {
                 bus.post(MatchClickedEvent(matchRecord))
             }

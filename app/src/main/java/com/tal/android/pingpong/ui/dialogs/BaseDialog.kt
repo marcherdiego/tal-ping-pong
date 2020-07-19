@@ -21,7 +21,7 @@ open class BaseDialog {
         ALPHA_30
     }
 
-    fun dismiss() {
+    open fun dismiss() {
         dialog?.dismiss()
     }
 }

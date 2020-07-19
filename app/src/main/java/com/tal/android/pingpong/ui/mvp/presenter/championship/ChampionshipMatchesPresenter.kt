@@ -2,6 +2,7 @@ package com.tal.android.pingpong.ui.mvp.presenter.championship
 
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
+import com.tal.android.pingpong.ui.adapters.recyclerview.ChampionshipMatchesAdapter
 import com.tal.android.pingpong.ui.adapters.recyclerview.PastMatchesAdapter
 import com.tal.android.pingpong.ui.dialogs.BaseChampionshipMatchDialog
 import com.tal.android.pingpong.ui.dialogs.MatchEditDialog
@@ -24,7 +25,7 @@ class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: Cha
     fun onMatchesFetchedSuccessfully(event: BaseMatchesListModel.MatchesFetchedSuccessfullyEvent) {
         view.setRefreshing(false)
         view.setMatchesAdapter(
-            PastMatchesAdapter(
+            ChampionshipMatchesAdapter(
                 event.matches,
                 model.getUserEmail(),
                 model.getBus()
@@ -71,9 +72,17 @@ class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: Cha
     }
 
     @Subscribe
+    fun onUsersFetchedSuccessfully(event: ChampionshipMatchesModel.UsersFetchedSuccessfullyEvent) {
+        newMatchDialog?.refreshUsersList()
+    }
+
+    @Subscribe
     fun onNewChampionshipMatchButtonClicked(event: ChampionshipMatchesListView.NewChampionshipMatchButtonClickedEvent) {
         val context = view.context ?: return
         val currentUser = model.getCurrentUser() ?: return
+        if (model.users.isEmpty()) {
+            model.fetchUsers()
+        }
         newMatchDialog = if (model.doubles) {
             NewChampionshipDoubleMatchDialog(model.users, currentUser, model.getBus())
         } else {
