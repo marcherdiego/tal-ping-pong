@@ -1,6 +1,7 @@
 package com.tal.android.pingpong.domain
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Standing(
     @SerializedName("user")
@@ -26,7 +27,7 @@ data class Standing(
 
     @SerializedName("points")
     var points: Int? = null
-) : Comparable<Standing> {
+) : Serializable, Comparable<Standing> {
     fun getGoalsDifference() = (goalsScored ?: 0) - (goalsAgainst ?: 0)
 
     override fun compareTo(other: Standing): Int {

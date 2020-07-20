@@ -83,8 +83,9 @@ class ChampionshipMatchesPresenter(view: ChampionshipMatchesListView, model: Cha
         if (model.users.isEmpty()) {
             model.fetchUsers()
         }
-        newMatchDialog = if (model.doubles) {
-            NewChampionshipDoubleMatchDialog(model.users, currentUser, model.getBus())
+        newMatchDialog = if (model.isDoubledChampionship()) {
+            val myTeamMate = model.getMyTeamMate() ?: return
+            NewChampionshipDoubleMatchDialog(model.users, currentUser, myTeamMate, model.getBus())
         } else {
             NewChampionshipSinglesMatchDialog(model.users, currentUser, model.getBus())
         }

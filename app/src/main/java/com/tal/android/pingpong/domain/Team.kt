@@ -1,6 +1,7 @@
 package com.tal.android.pingpong.domain
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Team(
     @SerializedName("id")
@@ -11,4 +12,4 @@ data class Team(
 
     @SerializedName("user2")
     var user2: User? = null
-)
+) : Serializable

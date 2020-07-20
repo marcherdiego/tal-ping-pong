@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.nerdscorner.mvplib.events.bus.Bus
 import com.tal.android.pingpong.R
+import com.tal.android.pingpong.domain.Championship
 import com.tal.android.pingpong.ui.fragments.matcheslist.BaseMatchesList
 import com.tal.android.pingpong.ui.mvp.model.championship.ChampionshipMatchesModel
 import com.tal.android.pingpong.ui.mvp.presenter.championship.ChampionshipMatchesPresenter
@@ -22,15 +23,13 @@ class ChampionshipMatchesFragment : BaseMatchesList<ChampionshipMatchesPresenter
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val championshipId = arguments?.getInt(CHAMPIONSHIP_ID)
-        val doublesChampionship = arguments?.getBoolean(DOUBLES_CHAMPIONSHIP)
-        multiLet(championshipId, context, doublesChampionship) { championshipId, context, doublesChampionship ->
+        val championship = arguments?.getSerializable(CHAMPIONSHIP) as? Championship
+        multiLet(championship, context) { championship, context ->
             presenter = ChampionshipMatchesPresenter(
                 ChampionshipMatchesListView(this),
                 ChampionshipMatchesModel(
                     SharedPreferencesUtils(context),
-                    championshipId,
-                    doublesChampionship
+                    championship
                 ),
                 Bus.newInstance
             )
@@ -38,8 +37,7 @@ class ChampionshipMatchesFragment : BaseMatchesList<ChampionshipMatchesPresenter
     }
 
     companion object {
-        const val CHAMPIONSHIP_ID = "championship_id"
-        const val DOUBLES_CHAMPIONSHIP = "doubles_championship"
+        const val CHAMPIONSHIP = "championship"
         const val TITLE = "Matches"
     }
 }

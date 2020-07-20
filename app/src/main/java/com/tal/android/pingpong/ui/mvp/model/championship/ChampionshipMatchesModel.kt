@@ -1,5 +1,6 @@
 package com.tal.android.pingpong.ui.mvp.model.championship
 
+import com.tal.android.pingpong.domain.Championship
 import com.tal.android.pingpong.domain.MatchRecord
 import com.tal.android.pingpong.domain.User
 import com.tal.android.pingpong.extensions.enqueue
@@ -7,20 +8,19 @@ import com.tal.android.pingpong.extensions.enqueueResponseNotNull
 import com.tal.android.pingpong.networking.ServiceGenerator
 import com.tal.android.pingpong.networking.services.ChampionshipsService
 import com.tal.android.pingpong.ui.mvp.model.matcheslist.BaseMatchesListModel
-import com.tal.android.pingpong.utils.DateUtils
 import com.tal.android.pingpong.utils.SharedPreferencesUtils
-import java.util.*
 
 class ChampionshipMatchesModel(
     private val sharedPreferences: SharedPreferencesUtils,
-    private val championshipId: Int,
-    val doubles: Boolean
+    private val championship: Championship
 ) : BaseMatchesListModel(sharedPreferences) {
 
     private val championshipsService = ServiceGenerator.createService(ChampionshipsService::class.java)
     val users = mutableListOf<User>()
 
     fun getCurrentUser() = sharedPreferences.getUser()
+
+    fun isDoubledChampionship() = championship.doubles == true
 
     override fun fetchMatches() {
         val userId = getUserId()
@@ -29,7 +29,7 @@ class ChampionshipMatchesModel(
             return
         }
         championshipsService
-            .getChampionshipMatches(championshipId)
+            .getChampionshipMatches(championship.championshipId ?: return)
             .enqueueResponseNotNull(
                 success = {
                     bus.post(MatchesFetchedSuccessfullyEvent(it))
@@ -72,7 +72,7 @@ class ChampionshipMatchesModel(
             return
         }
         championshipsService
-            .createChampionshipMatch(userId, championshipId, match)
+            .createChampionshipMatch(userId, championship.championshipId ?: return, match)
             .enqueue(
                 success = {
                     bus.post(MatchCreatedSuccessfullyEvent())
@@ -86,7 +86,7 @@ class ChampionshipMatchesModel(
 
     fun fetchUsers() {
         championshipsService
-            .getChampionshipMembers(championshipId)
+            .getChampionshipMembers(championship.championshipId ?: return)
             .enqueueResponseNotNull(
                 success = {
                     updateUsers(it)
@@ -94,6 +94,20 @@ class ChampionshipMatchesModel(
                 },
                 model = this
             )
+    }
+
+    fun getMyTeamMate(): User? {
+        val myUserId = getCurrentUser()?.userId
+        championship
+            .teams
+            .forEach {
+                if (it.user1?.userId == myUserId) {
+                    return it.user2
+                } else if (it.user2?.userId == myUserId) {
+                    return it.user1
+                }
+            }
+        return null
     }
 
     class MatchEditedSuccessfullyEvent

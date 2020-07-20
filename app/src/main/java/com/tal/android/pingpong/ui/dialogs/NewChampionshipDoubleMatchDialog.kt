@@ -15,17 +15,15 @@ import com.tal.android.pingpong.utils.load
 import com.tal.android.pingpong.utils.multiLet
 import org.greenrobot.eventbus.Subscribe
 
-class NewChampionshipDoubleMatchDialog(users: List<User>, myUser: User, bus: Bus) : BaseChampionshipMatchDialog(users, myUser, bus) {
+class NewChampionshipDoubleMatchDialog(users: List<User>, myUser: User, private val myTeamMate: User, bus: Bus)
+    : BaseChampionshipMatchDialog(users, myUser, bus) {
 
-    private lateinit var localImage: ImageView
-    private lateinit var localCompanionImage: ImageView
     private lateinit var visitorImage: ImageView
     private lateinit var visitorCompanionImage: ImageView
 
     private lateinit var localScore: EditText
     private lateinit var visitorScore: EditText
 
-    private var localCompanion: User? = null
     private var visitor: User? = null
     private var visitorCompanion: User? = null
 
@@ -35,8 +33,8 @@ class NewChampionshipDoubleMatchDialog(users: List<User>, myUser: User, bus: Bus
         val newMatchDialogView = LayoutInflater
             .from(context)
             .inflate(R.layout.new_championship_doubles_match_dialog, null)
-        localImage = newMatchDialogView.findViewById(R.id.local_image)
-        localCompanionImage = newMatchDialogView.findViewById(R.id.local_companion_image)
+        val localImage = newMatchDialogView.findViewById<ImageView>(R.id.local_image)
+        val localCompanionImage = newMatchDialogView.findViewById<ImageView>(R.id.local_companion_image)
         visitorImage = newMatchDialogView.findViewById(R.id.visitor_image)
         visitorCompanionImage = newMatchDialogView.findViewById(R.id.visitor_companion_image)
 
@@ -44,14 +42,10 @@ class NewChampionshipDoubleMatchDialog(users: List<User>, myUser: User, bus: Bus
         visitorScore = newMatchDialogView.findViewById(R.id.visitor_score)
 
         localImage.load(myUser.userImage, R.drawable.ic_incognito, true)
-        localCompanionImage.load(fallbackImage = R.drawable.ic_incognito)
+        localCompanionImage.load(myTeamMate.userImage, R.drawable.ic_incognito, true)
         visitorImage.load(fallbackImage = R.drawable.ic_incognito)
         visitorCompanionImage.load(fallbackImage = R.drawable.ic_incognito)
 
-        localCompanionImage.setOnClickListener {
-            userSelectorDialog = UserSelectorDialog(getEligibleUsers(), userSelectorBus, UserSelectorDialog.LOCAL_COMPANION, localCompanion)
-            userSelectorDialog?.show(it.context)
-        }
         visitorImage.setOnClickListener {
             userSelectorDialog = UserSelectorDialog(getEligibleUsers(), userSelectorBus, UserSelectorDialog.VISITOR, visitor)
             userSelectorDialog?.show(it.context)
@@ -84,13 +78,13 @@ class NewChampionshipDoubleMatchDialog(users: List<User>, myUser: User, bus: Bus
 
     private fun validateMatchMembersList() {
         dialog?.context?.let { context ->
-            multiLet(localCompanion, visitor, visitorCompanion) { localCompanion, visitor, visitorCompanion ->
+            multiLet(visitor, visitorCompanion) { visitor, visitorCompanion ->
                 try {
                     openDateSelectionDialog(
                         context,
                         MatchRecord(
                             local = myUser,
-                            localCompanion = localCompanion,
+                            localCompanion = myTeamMate,
                             visitor = visitor,
                             visitorCompanion = visitorCompanion,
                             localScore = localScore.text.toString().toInt(),
@@ -109,10 +103,6 @@ class NewChampionshipDoubleMatchDialog(users: List<User>, myUser: User, bus: Bus
     @Subscribe
     fun onUserSelected(event: UserSelectorDialog.UserSelectedEvent) {
         when (event.userType) {
-            UserSelectorDialog.LOCAL_COMPANION -> {
-                localCompanion = event.user
-                localCompanionImage.load(url = event.user.userImage, rounded = true, fallbackImage = R.drawable.ic_incognito)
-            }
             UserSelectorDialog.VISITOR -> {
                 visitor = event.user
                 visitorImage.load(url = event.user.userImage, rounded = true, fallbackImage = R.drawable.ic_incognito)
@@ -129,11 +119,6 @@ class NewChampionshipDoubleMatchDialog(users: List<User>, myUser: User, bus: Bus
     @Subscribe
     fun onUserRemoved(event: UserSelectorDialog.UserRemovedEvent) {
         when (event.userType) {
-            UserSelectorDialog.LOCAL_COMPANION -> {
-                selectedUsers.remove(localCompanion)
-                localCompanion = null
-                localCompanionImage.load(fallbackImage = R.drawable.ic_incognito)
-            }
             UserSelectorDialog.VISITOR -> {
                 selectedUsers.remove(visitor)
                 visitor = null

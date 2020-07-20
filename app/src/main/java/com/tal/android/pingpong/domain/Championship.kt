@@ -22,6 +22,9 @@ data class Championship(
     @SerializedName("users")
     var users: List<User> = arrayListOf(),
 
+    @SerializedName("teams")
+    var teams: List<Team> = arrayListOf(),
+
     @SerializedName("usersCount")
     var usersCount: Int? = null,
 
