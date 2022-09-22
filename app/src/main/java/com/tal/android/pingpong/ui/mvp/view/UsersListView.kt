@@ -113,7 +113,7 @@ class UsersListView(fragment: Fragment) : BaseFragmentView(fragment) {
             newSinglesMatchButtonLabel?.animate()?.alpha(0F)
 
             overlay?.animate()?.alpha(0F)?.setListener(object : SimpleAnimatorListener() {
-                override fun onAnimationEnd(animation: Animator?) {
+                override fun onAnimationEnd(animation: Animator) {
                     super.onAnimationEnd(animation)
                     overlay.animate().setListener(null)
                     overlay.visibility = View.GONE

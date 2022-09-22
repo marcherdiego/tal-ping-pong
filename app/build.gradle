@@ -4,14 +4,34 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.tal.android.pingpong"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("../keystore")
+            storePassword "Uphijmw8c9!"
+            keyAlias "keystore"
+            keyPassword "Uphijmw8c9!"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+
+        debug {
+            storeFile file("../keystore")
+            storePassword "Uphijmw8c9!"
+            keyAlias "keystore"
+            keyPassword "Uphijmw8c9!"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
     }
 
     buildTypes {

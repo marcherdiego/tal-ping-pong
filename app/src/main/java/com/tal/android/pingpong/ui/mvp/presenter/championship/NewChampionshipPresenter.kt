@@ -100,7 +100,7 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
         val today = Calendar.getInstance()
         val datePickerDialog = DatePickerDialog(
             context,
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            { _, year, monthOfYear, dayOfMonth ->
                 openTimeSelectionDialog(context, year, monthOfYear, dayOfMonth)
             },
             today[Calendar.YEAR],
@@ -115,7 +115,7 @@ class NewChampionshipPresenter(view: NewChampionshipView, model: NewChampionship
         val now = Calendar.getInstance()
         val timePickerDialog = TimePickerDialog(
             context,
-            TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            { _, hourOfDay, minute ->
                 try {
                     model.saveChampionshipDate(year, monthOfYear, dayOfMonth, hourOfDay, minute)
                     val formattedDate = DateUtils.formatDate(model.championshipDate)
